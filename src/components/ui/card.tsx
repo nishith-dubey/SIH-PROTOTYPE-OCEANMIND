@@ -2,10 +2,32 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
-));
-Card.displayName = "Card";
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  elevated?: boolean;
+}
+
+function Card({
+  className,
+  elevated = false,
+  children,
+  ...props
+}: CardProps) {
+  return (
+    <div
+      className={cn(
+        "relative rounded-xl overflow-hidden bg-charcoal/30",
+        "backdrop-blur-xl backdrop-saturate-150",
+        "border border-white/10",
+        elevated && "hover:translate-y-[-2px] transition-transform",
+        className
+      )}
+      {...props}
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary/5 to-transparent" />
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+}
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (

@@ -1,415 +1,477 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { HeroButton } from '@/components/ui/hero-button';
 import { Badge } from '@/components/ui/badge';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
-  BookOpen, 
-  ChevronDown, 
-  ChevronRight, 
-  AlertTriangle, 
-  Clock, 
-  Thermometer, 
-  Waves, 
-  BarChart3,
-  HelpCircle,
-  Lightbulb
+  BookOpen, CheckCircle, AlertCircle, XCircle, Clock, Database, TrendingUp, 
+  Waves, Thermometer, Droplets, Wind, Eye, Brain, Target, Info, Sparkles,
+  Globe, Zap, GraduationCap, Award, Languages
 } from 'lucide-react';
-import { mockGlossary } from '@/data/mockData';
+
+// Ocean Background Component
+const OceanBackground = () => (
+  <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 800">
+      <defs>
+        <linearGradient id="oceanGradientTeach" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="rgba(236, 72, 153, 0.1)" />
+          <stop offset="100%" stopColor="rgba(219, 39, 119, 0.05)" />
+        </linearGradient>
+      </defs>
+      
+      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(236, 72, 153, 0.05)">
+        <animateTransform attributeName="transform" type="translate" values="0,0;50,0;0,0" dur="11s" repeatCount="indefinite"/>
+      </path>
+      
+      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(219, 39, 119, 0.03)">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-30,0;0,0" dur="16s" repeatCount="indefinite"/>
+      </path>
+    </svg>
+  </div>
+);
+
+// Floating Particles
+const FloatingParticles = () => (
+  <div className="fixed inset-0 pointer-events-none z-10">
+    {Array.from({ length: 25 }).map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-1.5 h-1.5 bg-pink-400/25 rounded-full animate-bounce"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 6}s`,
+          animationDuration: `${3 + Math.random() * 4}s`
+        }}
+      />
+    ))}
+  </div>
+);
 
 const TeachMe = () => {
-  const { language, t } = useApp();
-  const [openSections, setOpenSections] = useState<string[]>(['qc-flags']);
+  const { t } = useApp();
+  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'hi'>('en');
+  const [isAnimated, setIsAnimated] = useState(false);
 
-  const toggleSection = (sectionId: string) => {
-    setOpenSections(prev =>
-      prev.includes(sectionId)
-        ? prev.filter(id => id !== sectionId)
-        : [...prev, sectionId]
-    );
-  };
+  useEffect(() => {
+    setIsAnimated(true);
+  }, []);
 
-  const educationalSections = [
-    {
-      id: 'qc-flags',
-      title: 'Quality Control Flags',
-      icon: AlertTriangle,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50',
-      content: {
-        en: (
-          <div className="space-y-4">
-            <p>
-              Quality Control (QC) flags are essential for understanding data reliability. 
-              Each measurement has an associated flag indicating its quality:
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <div className="flex items-center space-x-3 p-3 border rounded">
-                  <Badge variant="default" className="bg-green-500">1</Badge>
-                  <div>
-                    <h4 className="font-medium">Good Data</h4>
-                    <p className="text-sm text-muted-foreground">Passed all quality tests</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 border rounded">
-                  <Badge variant="secondary">2</Badge>
-                  <div>
-                    <h4 className="font-medium">Probably Good</h4>
-                    <p className="text-sm text-muted-foreground">Minor quality concerns</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 border rounded">
-                  <Badge variant="outline">3</Badge>
-                  <div>
-                    <h4 className="font-medium">Probably Bad</h4>
-                    <p className="text-sm text-muted-foreground">Failed some quality tests</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-3 p-3 border rounded">
-                  <Badge variant="destructive">4</Badge>
-                  <div>
-                    <h4 className="font-medium">Bad Data</h4>
-                    <p className="text-sm text-muted-foreground">Failed quality tests</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 border rounded">
-                  <Badge variant="outline">8</Badge>
-                  <div>
-                    <h4 className="font-medium">Estimated</h4>
-                    <p className="text-sm text-muted-foreground">Interpolated values</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 border rounded">
-                  <Badge variant="outline">9</Badge>
-                  <div>
-                    <h4 className="font-medium">Missing</h4>
-                    <p className="text-sm text-muted-foreground">No data available</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ),
-        hi: (
-          <div className="space-y-4">
-            <p>
-              गुणवत्ता नियंत्रण (QC) फ्लैग डेटा की विश्वसनीयता को समझने के लिए आवश्यक हैं। 
-              प्रत्येक माप का एक संबद्ध फ्लैग होता है जो इसकी गुणवत्ता को दर्शाता है:
-            </p>
-            <div className="text-sm space-y-2">
-              <p><strong>1:</strong> अच्छा डेटा - सभी गुणवत्ता परीक्षणों में उत्तीर्ण</p>
-              <p><strong>2:</strong> शायद अच्छा - मामूली गुणवत्ता संबंधी चिंताएं</p>
-              <p><strong>3:</strong> शायद खराब - कुछ गुणवत्ता परीक्षणों में असफल</p>
-              <p><strong>4:</strong> खराब डेटा - गुणवत्ता परीक्षणों में असफल</p>
-            </div>
-          </div>
-        )
-      }
-    },
-    {
-      id: 'rt-vs-dm',
-      title: 'Real-time vs Delayed Mode',
-      icon: Clock,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-      content: {
-        en: (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-4 border rounded-lg bg-green-50">
-                <h4 className="font-semibold text-green-800 mb-2">Real-time (RT)</h4>
-                <ul className="text-sm space-y-1 text-green-700">
-                  <li>• Available within 24 hours</li>
-                  <li>• Automated processing</li>
-                  <li>• Basic quality checks</li>
-                  <li>• May contain errors</li>
-                  <li>• Good for operational use</li>
-                </ul>
-              </div>
-              <div className="p-4 border rounded-lg bg-purple-50">
-                <h4 className="font-semibold text-purple-800 mb-2">Delayed Mode (DM)</h4>
-                <ul className="text-sm space-y-1 text-purple-700">
-                  <li>• Available after 6-12 months</li>
-                  <li>• Expert scientific review</li>
-                  <li>• Comprehensive quality control</li>
-                  <li>• Calibration adjustments</li>
-                  <li>• Research quality data</li>
-                </ul>
-              </div>
-            </div>
-            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <h4 className="font-medium text-yellow-800 mb-2">Best Practice</h4>
-              <p className="text-sm text-yellow-700">
-                Always prefer *_ADJUSTED variables in Delayed Mode data for scientific analysis. 
-                Real-time data is valuable for monitoring but should be used with caution for research.
-              </p>
-            </div>
-          </div>
-        ),
-        hi: (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 gap-4">
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-2">रीयल-टाइम डेटा</h4>
-                <p className="text-sm">24 घंटे के भीतर उपलब्ध, स्वचालित प्रसंस्करण</p>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-2">विलंबित मोड डेटा</h4>
-                <p className="text-sm">6-12 महीने बाद उपलब्ध, वैज्ञानिक समीक्षा के साथ</p>
-              </div>
-            </div>
-          </div>
-        )
-      }
-    },
-    {
-      id: 'float-types',
-      title: 'Argo Float Types',
-      icon: Waves,
-      color: 'text-cyan-600',
-      bgColor: 'bg-cyan-50',
-      content: {
-        en: (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-2">SOLO / SOLO-II</h4>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Scripps Institution profiling float
-                </p>
-                <ul className="text-xs space-y-1">
-                  <li>• Temperature & Salinity</li>
-                  <li>• 2000m depth capability</li>
-                  <li>• 10-day cycle</li>
-                </ul>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-2">APEX</h4>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Teledyne Webb Research float
-                </p>
-                <ul className="text-xs space-y-1">
-                  <li>• Temperature & Salinity</li>
-                  <li>• 2000m depth capability</li>
-                  <li>• Configurable cycles</li>
-                </ul>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-2">NAVIS</h4>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Sea-Bird Scientific float
-                </p>
-                <ul className="text-xs space-y-1">
-                  <li>• Enhanced sensor packages</li>
-                  <li>• BGC capabilities</li>
-                  <li>• Deep profiling variants</li>
-                </ul>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-semibold mb-2">BGC Floats</h4>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Biogeochemical sensors
-                </p>
-                <ul className="text-xs space-y-1">
-                  <li>• Oxygen, pH, Chlorophyll</li>
-                  <li>• Nitrate, Backscatter</li>
-                  <li>• Downward irradiance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        ),
-        hi: (
-          <div className="space-y-4">
-            <p>आर्गो फ्लोट्स विभिन्न प्रकार के होते हैं, प्रत्येक के अपने विशेष सेंसर और क्षमताएं होती हैं।</p>
-          </div>
-        )
-      }
-    },
-    {
-      id: 'oceanography',
-      title: 'Oceanographic Concepts',
-      icon: Thermometer,
-      color: 'text-emerald-600',
-      bgColor: 'bg-emerald-50',
-      content: {
-        en: (
-          <div className="space-y-4">
-            <div className="space-y-4">
-              {Object.entries(mockGlossary).map(([term, definition]) => (
-                <div key={term} className="p-3 border rounded-lg">
-                  <h4 className="font-medium mb-2">{term}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {definition[language as keyof typeof definition]}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ),
-        hi: (
-          <div className="space-y-4">
-            <div className="space-y-4">
-              {Object.entries(mockGlossary).map(([term, definition]) => (
-                <div key={term} className="p-3 border rounded-lg">
-                  <h4 className="font-medium mb-2">{term}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {definition[language as keyof typeof definition]}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )
-      }
-    },
-    {
-      id: 'data-interpretation',
-      title: 'Data Interpretation Tips',
-      icon: BarChart3,
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-50',
-      content: {
-        en: (
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <div className="p-4 border-l-4 border-blue-500 bg-blue-50">
-                <h4 className="font-medium text-blue-800">Temperature Profiles</h4>
-                <p className="text-sm text-blue-700 mt-1">
-                  Look for the mixed layer (uniform temperature near surface), 
-                  thermocline (rapid temperature drop), and deep water characteristics.
-                </p>
-              </div>
-              <div className="p-4 border-l-4 border-green-500 bg-green-50">
-                <h4 className="font-medium text-green-800">Salinity Patterns</h4>
-                <p className="text-sm text-green-700 mt-1">
-                  Surface salinity reflects evaporation/precipitation balance. 
-                  Subsurface maxima often indicate water mass origins.
-                </p>
-              </div>
-              <div className="p-4 border-l-4 border-purple-500 bg-purple-50">
-                <h4 className="font-medium text-purple-800">Oxygen Levels</h4>
-                <p className="text-sm text-purple-700 mt-1">
-                  High surface oxygen from air-sea exchange. Oxygen minimum zones 
-                  indicate biological consumption and limited ventilation.
-                </p>
-              </div>
-            </div>
-          </div>
-        ),
-        hi: (
-          <div className="space-y-4">
-            <p>डेटा की व्याख्या करने के लिए महत्वपूर्ण सुझाव और पैटर्न की पहचान।</p>
-          </div>
-        )
-      }
-    }
+  const qcFlags = [
+    { flag: '1', label: 'Good', desc: 'Passed all quality tests', color: 'bg-green-600', icon: CheckCircle },
+    { flag: '2', label: 'Probably Good', desc: 'Minor quality concerns', color: 'bg-blue-600', icon: Info },
+    { flag: '3', label: 'Probably Bad', desc: 'Failed some quality tests', color: 'bg-yellow-600', icon: AlertCircle },
+    { flag: '4', label: 'Bad', desc: 'Failed quality tests', color: 'bg-red-600', icon: XCircle },
+    { flag: '5', label: 'Changed', desc: 'Interpolated values', color: 'bg-purple-600', icon: TrendingUp },
+    { flag: '9', label: 'Missing', desc: 'No data available', color: 'bg-zinc-600', icon: Clock }
   ];
 
-  return (
-    <div className="container mx-auto px-4 py-6 max-w-6xl">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold gradient-ocean bg-clip-text text-transparent mb-2">
-          Learn About Argo Floats
-        </h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Understanding oceanographic data, quality control, and how to interpret Argo float measurements
-        </p>
-      </div>
+  const qcFlagsHindi = [
+    { flag: '1', label: 'अच्छा डेटा', desc: 'सभी गुणवत्ता परीक्षणों में उत्तीर्ण', color: 'bg-green-600', icon: CheckCircle },
+    { flag: '2', label: 'शायद अच्छा', desc: 'मामूली गुणवत्ता संबंधी चिंताएं', color: 'bg-blue-600', icon: Info },
+    { flag: '3', label: 'शायद खराब', desc: 'कुछ गुणवत्ता परीक्षणों में असफल', color: 'bg-yellow-600', icon: AlertCircle },
+    { flag: '4', label: 'खराब डेटा', desc: 'गुणवत्ता परीक्षणों में असफल', color: 'bg-red-600', icon: XCircle },
+    { flag: '5', label: 'परिवर्तित', desc: 'इंटरपोलेटेड मान', color: 'bg-purple-600', icon: TrendingUp },
+    { flag: '9', label: 'अनुपस्थित', desc: 'कोई डेटा उपलब्ध नहीं', color: 'bg-zinc-600', icon: Clock }
+  ];
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        
-        {/* Quick Navigation */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-24">
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <BookOpen className="h-5 w-5 mr-2 text-primary" />
-                Quick Navigation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {educationalSections.map((section) => {
-                  const Icon = section.icon;
-                  return (
-                    <Button
-                      key={section.id}
-                      variant={openSections.includes(section.id) ? "default" : "ghost"}
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => toggleSection(section.id)}
-                    >
-                      <Icon className={`h-4 w-4 mr-2 ${section.color}`} />
-                      {section.title}
-                    </Button>
-                  );
-                })}
+  const dataModes = {
+    en: [
+      { 
+        title: 'Real-time Mode', 
+        desc: 'Available within 24 hours, automated processing', 
+        color: 'bg-orange-600', 
+        icon: Clock, 
+        details: 'Data transmitted via satellite and processed automatically. Quality control is limited but provides immediate access to measurements.' 
+      },
+      { 
+        title: 'Delayed Mode', 
+        desc: 'Available after 6-12 months, scientific review', 
+        color: 'bg-green-600', 
+        icon: CheckCircle, 
+        details: 'Extensively quality controlled and calibrated data. Preferred for scientific research and analysis.' 
+      }
+    ],
+    hi: [
+      { 
+        title: 'रियल-टाइम मोड', 
+        desc: '24 घंटे के भीतर उपलब्ध, स्वचालित प्रसंस्करण', 
+        color: 'bg-orange-600', 
+        icon: Clock, 
+        details: 'सैटेलाइट के माध्यम से डेटा प्रसारित और स्वचालित रूप से संसाधित। गुणवत्ता नियंत्रण सीमित है लेकिन माप तक तत्काल पहुंच प्रदान करता है।' 
+      },
+      { 
+        title: 'देरी मोड', 
+        desc: '6-12 महीने बाद उपलब्ध, वैज्ञानिक समीक्षा के साथ', 
+        color: 'bg-green-600', 
+        icon: CheckCircle, 
+        details: 'व्यापक गुणवत्ता नियंत्रण और कैलिब्रेटेड डेटा। वैज्ञानिक अनुसंधान और विश्लेषण के लिए पसंदीदा।' 
+      }
+    ]
+  };
+
+  const floatTypes = [
+    { name: 'APEX', desc: 'Scripps Institution profiling float', icon: Waves, color: 'bg-blue-600' },
+    { name: 'SOLO', desc: 'Teledyne Webb Research float', icon: Target, color: 'bg-green-600' },
+    { name: 'NAVIS', desc: 'Sea-Bird Scientific float', icon: Database, color: 'bg-purple-600' },
+    { name: 'BGC', desc: 'Biogeochemical sensors', icon: Brain, color: 'bg-orange-600' }
+  ];
+
+  const oceanographicTerms = {
+    en: {
+      thermocline: "A layer in water where temperature decreases rapidly with increasing depth",
+      halocline: "A layer where salinity changes rapidly with depth", 
+      pycnocline: "A layer where water density increases rapidly with depth",
+      mixedlayer: "Surface layer with relatively uniform temperature and salinity due to mixing"
+    },
+    hi: {
+      thermocline: "पानी में एक परत जहाँ गहराई बढ़ने के साथ तापमान तेजी से घटता है",
+      halocline: "एक परत जहाँ गहराई के साथ लवणता तेजी से बदलती है",
+      pycnocline: "एक परत जहाँ पानी का घनत्व गहराई के साथ तेजी से बढ़ता है",
+      mixedlayer: "मिश्रण के कारण अपेक्षाकृत समान तापमान और लवणता वाली सतही परत"
+    }
+  };
+
+  const interpretationTips = {
+    en: [
+      { 
+        title: 'Temperature Profiles', 
+        desc: 'Look for the mixed layer (uniform temperature near surface), thermocline (rapid temperature drop), and deep water characteristics.', 
+        icon: Thermometer, 
+        color: 'bg-red-600' 
+      },
+      { 
+        title: 'Salinity Patterns', 
+        desc: 'Surface salinity reflects evaporation/precipitation balance. Subsurface maxima often indicate water mass origins.', 
+        icon: Droplets, 
+        color: 'bg-blue-600' 
+      },
+      { 
+        title: 'Oxygen Distribution', 
+        desc: 'High surface oxygen from air-sea exchange. Oxygen minimum zones indicate biological consumption and limited ventilation.', 
+        icon: Wind, 
+        color: 'bg-green-600' 
+      }
+    ],
+    hi: [
+      { 
+        title: 'तापमान प्रोफाइल', 
+        desc: 'मिश्रित परत (सतह के पास समान तापमान), थर्मोक्लाइन (तेज़ तापमान गिरावट), और गहरे पानी की विशेषताओं को देखें।', 
+        icon: Thermometer, 
+        color: 'bg-red-600' 
+      },
+      { 
+        title: 'लवणता पैटर्न', 
+        desc: 'सतही लवणता वाष्पीकरण/वर्षा संतुलन को दर्शाती है। उप-सतही अधिकतम अक्सर पानी के द्रव्यमान की उत्पत्ति का संकेत देते हैं।', 
+        icon: Droplets, 
+        color: 'bg-blue-600' 
+      },
+      { 
+        title: 'ऑक्सीजन वितरण', 
+        desc: 'हवा-समुद्र के आदान-प्रदान से उच्च सतही ऑक्सीजन। ऑक्सीजन न्यूनतम क्षेत्र जैविक उपभोग और सीमित वेंटिलेशन का संकेत देते हैं।', 
+        icon: Wind, 
+        color: 'bg-green-600' 
+      }
+    ]
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-pink-950 to-slate-900 text-white relative overflow-hidden">
+      <OceanBackground />
+      <FloatingParticles />
+
+      <div className="relative z-20">
+        {/* Enhanced Header */}
+        <div className="border-b border-pink-500/20 bg-white/5 backdrop-blur-xl">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className={`flex items-center justify-between transition-all duration-1000 ${
+              isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
+              <div className="flex items-center space-x-4">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
+                  <div className="relative p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-pink-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <BookOpen className="h-8 w-8 text-pink-400" />
+                  </div>
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    Ocean Learning Hub
+                  </h1>
+                  <p className="text-pink-200/80">
+                    Understanding oceanographic data, quality control, and interpretation
+                  </p>
+                </div>
               </div>
-              
-              <div className="mt-6 pt-4 border-t">
-                <h4 className="font-medium mb-2">Need Help?</h4>
-                <HeroButton variant="coral" size="sm" className="w-full">
-                  <HelpCircle className="h-4 w-4 mr-2" />
-                  Ask ChatBot
-                </HeroButton>
+
+              <div className="flex items-center space-x-4">
+                <Badge className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 text-pink-300 border-pink-500/30 px-4 py-2 backdrop-blur-sm">
+                  <Brain className="h-4 w-4 mr-2 animate-pulse" />
+                  Interactive Learning
+                </Badge>
+                
+                {/* Language Toggle */}
+                <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                  <Button
+                    size="sm"
+                    variant={selectedLanguage === 'en' ? 'default' : 'ghost'}
+                    onClick={() => setSelectedLanguage('en')}
+                    className={`${selectedLanguage === 'en' 
+                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white' 
+                      : 'text-pink-300 hover:text-white'} transition-all duration-300`}
+                  >
+                    <Languages className="h-3 w-3 mr-1" />
+                    EN
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={selectedLanguage === 'hi' ? 'default' : 'ghost'}
+                    onClick={() => setSelectedLanguage('hi')}
+                    className={`${selectedLanguage === 'hi' 
+                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white' 
+                      : 'text-pink-300 hover:text-white'} transition-all duration-300`}
+                  >
+                    हिं
+                  </Button>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
-        {/* Educational Content */}
-        <div className="lg:col-span-3 space-y-6">
-          {educationalSections.map((section) => {
-            const Icon = section.icon;
-            const isOpen = openSections.includes(section.id);
-            
-            return (
-              <Card key={section.id} className={isOpen ? `border-l-4 border-l-primary` : ''}>
-                <Collapsible
-                  open={isOpen}
-                  onOpenChange={() => toggleSection(section.id)}
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className={`transition-all duration-1200 delay-300 ${
+            isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+            <Tabs defaultValue="quality-control" className="space-y-8">
+              
+              {/* Enhanced Tab List */}
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-white/5 backdrop-blur-xl border border-white/10 p-1 rounded-xl">
+                <TabsTrigger 
+                  value="quality-control" 
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 text-white transition-all duration-300 hover:scale-105"
                 >
-                  <CollapsibleTrigger asChild>
-                    <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                      <CardTitle className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <div className={`p-2 rounded-lg ${section.bgColor} mr-3`}>
-                            <Icon className={`h-5 w-5 ${section.color}`} />
-                          </div>
-                          {section.title}
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  Quality Control
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="data-modes"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 text-white transition-all duration-300 hover:scale-105"
+                >
+                  <Database className="h-4 w-4 mr-2" />
+                  Data Modes
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="float-types"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 text-white transition-all duration-300 hover:scale-105"
+                >
+                  <Waves className="h-4 w-4 mr-2" />
+                  Float Types
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="interpretation"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-600 text-white transition-all duration-300 hover:scale-105"
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  Interpretation
+                </TabsTrigger>
+              </TabsList>
+
+              {/* Quality Control Tab */}
+              <TabsContent value="quality-control" className="space-y-6">
+                <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-pink-500/30 transition-all duration-300">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Award className="h-6 w-6 mr-3 text-pink-400" />
+                      Quality Control Flags
+                    </CardTitle>
+                    <p className="text-pink-200/80">
+                      {selectedLanguage === 'en' 
+                        ? "Quality Control (QC) flags are essential for understanding data reliability. Each measurement has an associated flag indicating its quality:" 
+                        : "गुणवत्ता नियंत्रण (QC) फ्लैग डेटा की विश्वसनीयता को समझने के लिए आवश्यक हैं। प्रत्येक माप का एक संबद्ध फ्लैग होता है जो इसकी गुणवत्ता को दर्शाता है:"
+                      }
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {(selectedLanguage === 'en' ? qcFlags : qcFlagsHindi).map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Card key={item.flag} className="bg-white/5 backdrop-blur-sm border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105">
+                            <CardContent className="p-4">
+                              <div className="flex items-center space-x-3 mb-3">
+                                <div className={`p-2 ${item.color} rounded-lg`}>
+                                  <Icon className="h-5 w-5 text-white" />
+                                </div>
+                                <div>
+                                  <div className="flex items-center space-x-2">
+                                    <Badge className="bg-white text-black font-mono text-xs">{item.flag}</Badge>
+                                    <span className="font-semibold text-white">{item.label}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <p className="text-sm text-slate-300 leading-relaxed">{item.desc}</p>
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                    
+                    <Card className="mt-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border-purple-500/20">
+                      <CardContent className="p-4">
+                        <div className="flex items-start space-x-3">
+                          <Zap className="h-5 w-5 text-yellow-400 mt-1" />
+                          <p className="text-sm text-purple-200 leading-relaxed">
+                            <strong>
+                              {selectedLanguage === 'en' 
+                                ? "Pro Tip:" 
+                                : "महत्वपूर्ण सुझाव:"
+                              }
+                            </strong>{" "}
+                            {selectedLanguage === 'en' 
+                              ? "Always prefer *_ADJUSTED variables in Delayed Mode data for scientific analysis. Real-time data is valuable for monitoring but should be used with caution for research."
+                              : "वैज्ञानिक विश्लेषण के लिए देरी मोड डेटा में हमेशा *_ADJUSTED चर को प्राथमिकता दें। रियल-टाइम डेटा मॉनिटरिंग के लिए मूल्यवान है लेकिन अनुसंधान के लिए सावधानी से उपयोग किया जाना चाहिए।"
+                            }
+                          </p>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          {isOpen && (
-                            <Badge variant="outline" className="text-xs">
-                              <Lightbulb className="h-3 w-3 mr-1" />
-                              Learning
-                            </Badge>
-                          )}
-                          {isOpen ? (
-                            <ChevronDown className="h-4 w-4" />
-                          ) : (
-                            <ChevronRight className="h-4 w-4" />
-                          )}
-                        </div>
-                      </CardTitle>
-                    </CardHeader>
-                  </CollapsibleTrigger>
-                  
-                  <CollapsibleContent>
-                    <CardContent className="pt-0">
-                      {section.content[language as keyof typeof section.content]}
-                    </CardContent>
-                  </CollapsibleContent>
-                </Collapsible>
-              </Card>
-            );
-          })}
+                      </CardContent>
+                    </Card>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Data Modes Tab */}
+              <TabsContent value="data-modes" className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {dataModes[selectedLanguage].map((mode, index) => {
+                    const Icon = mode.icon;
+                    return (
+                      <Card key={index} className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-blue-500/30 transition-all duration-300 hover:scale-105">
+                        <CardHeader>
+                          <CardTitle className="text-white flex items-center">
+                            <div className={`p-3 ${mode.color} rounded-xl mr-4`}>
+                              <Icon className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold">{mode.title}</h3>
+                              <p className="text-sm text-blue-200 font-normal">{mode.desc}</p>
+                            </div>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-slate-300 leading-relaxed">{mode.details}</p>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </TabsContent>
+
+              {/* Float Types Tab */}
+              <TabsContent value="float-types" className="space-y-6">
+                <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Waves className="h-6 w-6 mr-3 text-green-400" />
+                      Argo Float Types
+                    </CardTitle>
+                    <p className="text-green-200/80">
+                      {selectedLanguage === 'en' 
+                        ? "Argo floats come in various types, each with their own specialized sensors and capabilities."
+                        : "आर्गो फ्लोट्स विभिन्न प्रकार के होते हैं, प्रत्येक के अपने विशेष सेंसर और क्षमताएं होती हैं।"
+                      }
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {floatTypes.map((float, index) => {
+                        const Icon = float.icon;
+                        return (
+                          <Card key={float.name} className="bg-white/5 backdrop-blur-sm border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105">
+                            <CardContent className="p-4">
+                              <div className="flex items-center space-x-4">
+                                <div className={`p-3 ${float.color} rounded-xl`}>
+                                  <Icon className="h-6 w-6 text-white" />
+                                </div>
+                                <div>
+                                  <h4 className="font-bold text-white text-lg">{float.name}</h4>
+                                  <p className="text-sm text-slate-300">{float.desc}</p>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Oceanographic Terms */}
+                <Card className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border-cyan-500/20">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Globe className="h-6 w-6 mr-3 text-cyan-400" />
+                      Key Oceanographic Terms
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {Object.entries(oceanographicTerms[selectedLanguage]).map(([term, definition]) => (
+                        <Card key={term} className="bg-white/5 backdrop-blur-sm border-white/10 hover:border-cyan-500/30 transition-all duration-300 hover:scale-105">
+                          <CardContent className="p-4">
+                            <h4 className="font-bold text-cyan-300 mb-2 capitalize">{term}</h4>
+                            <p className="text-sm text-slate-300 leading-relaxed">{definition}</p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Interpretation Tab */}
+              <TabsContent value="interpretation" className="space-y-6">
+                <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <GraduationCap className="h-6 w-6 mr-3 text-orange-400" />
+                      Data Interpretation Guide
+                    </CardTitle>
+                    <p className="text-orange-200/80">
+                      {selectedLanguage === 'en' 
+                        ? "Key tips and patterns for interpreting oceanographic data."
+                        : "डेटा की व्याख्या करने के लिए महत्वपूर्ण सुझाव और पैटर्न की पहचान।"
+                      }
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {interpretationTips[selectedLanguage].map((tip, index) => {
+                        const Icon = tip.icon;
+                        return (
+                          <Card key={index} className="bg-white/5 backdrop-blur-sm border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105">
+                            <CardHeader>
+                              <div className="flex items-center space-x-3">
+                                <div className={`p-3 ${tip.color} rounded-xl`}>
+                                  <Icon className="h-6 w-6 text-white" />
+                                </div>
+                                <CardTitle className="text-white text-lg">{tip.title}</CardTitle>
+                              </div>
+                            </CardHeader>
+                            <CardContent>
+                              <p className="text-slate-300 text-sm leading-relaxed">{tip.desc}</p>
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
     </div>

@@ -14,14 +14,17 @@ import {
   Globe,
   Waves,
   Moon,
-  Sun
+  Sun,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-const Navigation = () => {
+const Sidebar = () => {
   const { language, setLanguage, t } = useApp();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -37,80 +40,98 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 font-bold text-xl gradient-ocean bg-clip-text text-transparent">
-            <Waves className="h-6 w-6 text-primary animate-wave" />
-            <span>FloatChat</span>
+    <div 
+      className={`
+        fixed left-0 top-0 h-screen bg-white dark:bg-slate-900 
+        border-r border-slate-200 dark:border-slate-800 
+        transition-all duration-300 z-50
+        ${isCollapsed ? 'w-16' : 'w-64'}
+      `}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+        {!isCollapsed && (
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <Waves className="h-5 w-5 text-white" />
+            </div>
+            <span className="font-bold text-lg text-slate-900 dark:text-white">
+              FloatChat
+            </span>
           </Link>
-
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link key={item.path} to={item.path}>
-                  <Button 
-                    variant={isActive(item.path) ? "default" : "ghost"} 
-                    size="sm"
-                    className={isActive(item.path) ? "bg-primary text-primary-foreground" : ""}
-                  >
-                    <Icon className="h-4 w-4 mr-2" />
-                    {item.label}
-                  </Button>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Theme and Language Toggle */}
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-              className="min-w-[60px]"
-            >
-              <Globe className="h-4 w-4 mr-1" />
-              {language.toUpperCase()}
-            </Button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="md:hidden pb-4">
-          <div className="grid grid-cols-4 gap-1">
-            {navItems.slice(0, 8).map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link key={item.path} to={item.path}>
-                  <Button 
-                    variant={isActive(item.path) ? "default" : "ghost"} 
-                    size="sm"
-                    className={`w-full text-xs ${isActive(item.path) ? "bg-primary text-primary-foreground" : ""}`}
-                  >
-                    <Icon className="h-3 w-3 mr-1" />
-                    {item.label}
-                  </Button>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+        )}
+        
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="h-8 w-8 p-0"
+        >
+          {isCollapsed ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
+        </Button>
       </div>
-    </nav>
+
+      {/* Navigation Items */}
+      <div className="p-2 space-y-1">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const active = isActive(item.path);
+          
+          return (
+            <Link key={item.path} to={item.path}>
+              <div
+                className={`
+                  flex items-center px-3 py-2 rounded-lg transition-colors cursor-pointer
+                  ${active 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }
+                  ${isCollapsed ? 'justify-center' : 'justify-start'}
+                `}
+              >
+                <Icon className={`h-5 w-5 ${isCollapsed ? '' : 'mr-3'}`} />
+                {!isCollapsed && (
+                  <span className="font-medium">{item.label}</span>
+                )}
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Bottom Controls */}
+      <div className="absolute bottom-4 left-0 right-0 p-2 space-y-2">
+        {/* Theme Toggle */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className={`w-full ${isCollapsed ? 'px-0' : 'justify-start'}`}
+        >
+          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          {!isCollapsed && <span className="ml-2">Toggle Theme</span>}
+        </Button>
+
+        {/* Language Toggle */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+          className={`w-full ${isCollapsed ? 'px-0' : 'justify-start'}`}
+        >
+          <Globe className="h-4 w-4" />
+          {!isCollapsed && (
+            <span className="ml-2">{language === 'en' ? 'English' : 'हिंदी'}</span>
+          )}
+        </Button>
+      </div>
+    </div>
   );
 };
 
-export default Navigation;
+export default Sidebar;
