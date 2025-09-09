@@ -7,7 +7,7 @@ import {
   MessageSquare, 
   Map, 
   LineChart, 
-  Activity, 
+  Activity,
   BarChart3, 
   BookOpen, 
   FileText,
@@ -18,6 +18,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { BarChart3 as DashboardIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
 const Sidebar = () => {
@@ -31,6 +32,7 @@ const Sidebar = () => {
   const navItems = [
     { path: '/', icon: Home, label: t('home') },
     { path: '/chat', icon: MessageSquare, label: t('chat') },
+    { path: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
     { path: '/explore', icon: Map, label: t('explore') },
     { path: '/profiles', icon: LineChart, label: t('profiles') },
     { path: '/hovmoller', icon: Activity, label: t('hovmoller') },

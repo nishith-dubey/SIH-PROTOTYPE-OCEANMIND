@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { HeroButton } from '@/components/ui/hero-button';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -220,6 +221,14 @@ const Index = () => {
       hoverGlow: 'hover:shadow-cyan-500/25'
     },
     {
+      title: 'Analytics Dashboard',
+      desc: 'Advanced geospatial visualizations with Plotly, Cesium 3D globe, and comprehensive data export',
+      icon: BarChart3,
+      path: '/dashboard',
+      color: 'bg-gradient-to-br from-indigo-500 to-purple-600',
+      accent: 'border-indigo-400',
+      hoverGlow: 'hover:shadow-indigo-500/25'
+    },
       title: 'Learn & Guide',
       desc: 'Educational resources and tutorials for understanding oceanographic data analysis',
       icon: BookOpen,
@@ -305,6 +314,17 @@ const Index = () => {
                   Start Exploring
                   <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </HeroButton>
+              </Link>
+              
+              <Link to="/dashboard">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="group bg-white/5 backdrop-blur-xl border-indigo-400/30 hover:border-indigo-400/60 text-white hover:text-indigo-300 px-8 py-4 rounded-xl text-lg font-semibold transform hover:scale-105 hover:-translate-y-1 transition-all duration-300"
+                >
+                  <BarChart3 className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
+                  View Dashboard
+                </Button>
               </Link>
               
               <Link to="/chat">

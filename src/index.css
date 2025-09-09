@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Cesium CSS */
+@import url('https://cesium.com/downloads/cesiumjs/releases/1.110/Build/Cesium/Widgets/widgets.css');
+
 /* FloatChat Ocean-themed Design System */
+
 
 @layer base {
   :root {
@@ -183,4 +187,56 @@
   .leaflet-container {
     @apply rounded-lg;
   }
+
+  /* Cesium viewer styles */
+  .cesium-viewer {
+    @apply rounded-lg overflow-hidden;
+  }
+
+  /* Plotly responsive styles */
+  .plotly-graph-div {
+    @apply w-full h-full;
+  }
+}
+
+/* Custom scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+.scrollbar-track-transparent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Table responsive styles */
+@media (max-width: 768px) {
+  .table-responsive {
+    @apply text-xs;
+  }
+  
+  .table-responsive th,
+  .table-responsive td {
+    @apply px-2 py-1;
+  }
+}
+
+/* Animation for data loading */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.loading-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200px 100%;
 }
