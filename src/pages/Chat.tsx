@@ -7,6 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { ChatMessage } from '@/components/chat/ChatMessage';
+import { QuickQuestionCard } from '@/components/chat/QuickQuestionCard';
+import { DataVisualizationPanel } from '@/components/chat/DataVisualizationPanel';
 import { 
   Send, Download, FileText, Database, Bot, User, Sparkles, MessageCircle,
   Brain, Waves, Zap, Globe, Search, Copy, Share
@@ -30,7 +33,7 @@ const OceanBackground = () => (
 );
 
 const Chat = () => {
-  const { chatMessages, addChatMessage, t, isLoading } = useApp();
+  const { chatMessages, addChatMessage, t, isLoading, floats, selectedFloats } = useApp();
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
@@ -69,13 +72,6 @@ const Chat = () => {
     a.download = `float_data.${format}`;
     a.click();
   };
-
-  const quickQuestions = [
-    "What is the average temperature at 100m depth?",
-    "Show me salinity profiles for the North Atlantic",
-    "Compare oxygen levels between floats",
-    "Explain the mixed layer depth pattern"
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white relative overflow-hidden">
@@ -132,28 +128,14 @@ const Chat = () => {
             
             {/* Sidebar */}
             <div className="xl:col-span-1 space-y-6">
-              {/* Quick Actions */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-cyan-500/30 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center">
-                    <Zap className="h-5 w-5 mr-2 text-cyan-400" />
-                    Quick Actions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {quickQuestions.map((question, index) => (
-                    <Button
-                      key={index}
-                      variant="ghost"
-                      className="w-full text-left justify-start text-sm bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all duration-300"
-                      onClick={() => setInputMessage(question)}
-                    >
-                      <MessageCircle className="h-4 w-4 mr-2" />
-                      {question}
-                    </Button>
-                  ))}
-                </CardContent>
-              </Card>
+              {/* Quick Questions */}
+              <QuickQuestionCard onQuestionSelect={setInputMessage} />
+
+              {/* Data Visualization Panel */}
+              <DataVisualizationPanel 
+                floats={floats} 
+                selectedFloats={selectedFloats}
+              />
 
               {/* Export Options */}
               <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-cyan-500/30 transition-all duration-300">
@@ -180,26 +162,6 @@ const Chat = () => {
                 </CardContent>
               </Card>
 
-              {/* Tips */}
-              <Card className="bg-gradient-to-br from-purple-500/10 to-cyan-500/10 backdrop-blur-xl border-purple-500/20">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center">
-                    <Globe className="h-5 w-5 mr-2 text-purple-400" />
-                    Pro Tips
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    Ask me anything about oceanographic data! I can help you:
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm text-cyan-200">
-                    <li>• Analyze temperature profiles</li>
-                    <li>• Compare float data</li>
-                    <li>• Explain ocean patterns</li>
-                    <li>• Export visualizations</li>
-                  </ul>
-                </CardContent>
-              </Card>
             </div>
 
             {/* Main Chat Area */}
@@ -225,8 +187,8 @@ const Chat = () => {
                 <CardContent className="flex-1 p-0">
                   <ScrollArea className="h-[500px] p-6">
                     <div className="space-y-4">
-                      {/* Welcome Message */}
-                      {chatMessages.length === 0 && (
+                      {/* Welcome Message - only show if no messages */}
+                      {chatMessages.length === 1 && chatMessages[0].type === 'assistant' && (
                         <div className="text-center py-12">
                           <div className="relative mb-6">
                             <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-full blur-xl animate-pulse"></div>
@@ -244,35 +206,12 @@ const Chat = () => {
                       )}
 
                       {/* Chat Messages */}
-                      {chatMessages.map((message, index) => (
-                        <div
-                          key={index}
-                          className={`flex items-start space-x-3 ${
-                            message.type === 'user' ? 'justify-end' : 'justify-start'
-                          }`}
-                        >
-                          {message.type === 'assistant' && (
-                            <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                              <Bot className="h-5 w-5 text-white" />
-                            </div>
-                          )}
-                          
-                          <div
-                            className={`max-w-md p-4 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${
-                              message.type === 'user'
-                                ? 'bg-gradient-to-br from-cyan-600 to-blue-700 text-white ml-auto'
-                                : 'bg-white/10 border border-white/20 text-slate-100'
-                            }`}
-                          >
-                            <p className="leading-relaxed">{message.content}</p>
-                          </div>
-                          
-                          {message.type === 'user' && (
-                            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
-                              <User className="h-5 w-5 text-white" />
-                            </div>
-                          )}
-                        </div>
+                      {chatMessages.slice(1).map((message, index) => (
+                        <ChatMessage 
+                          key={message.id || index} 
+                          message={message} 
+                          floats={floats}
+                        />
                       ))}
 
                       {/* Typing Indicator */}

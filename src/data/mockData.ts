@@ -163,6 +163,34 @@ export const mockChatResponses = [
     floatIds: ["13857", "15855"],
     plotType: "comparison",
     variable: "oxygen"
+  },
+  {
+    query: "temperature profile analysis",
+    response: "Temperature profile analysis reveals a well-defined thermocline structure. Surface mixed layer extends to ~50m with temperatures around 28°C, followed by rapid decrease through the thermocline to ~7°C at 500m depth.",
+    floatIds: ["13857"],
+    plotType: "profile", 
+    variable: "temperature"
+  },
+  {
+    query: "salinity distribution patterns",
+    response: "Salinity distribution shows typical ocean stratification. Surface salinity reflects evaporation-precipitation balance, with subsurface maximum indicating water mass origins and mixing processes.",
+    floatIds: ["15855", "16789"],
+    plotType: "comparison",
+    variable: "salinity"
+  },
+  {
+    query: "oxygen minimum zone analysis", 
+    response: "Oxygen minimum zone is clearly visible between 200-400m depth. This feature indicates biological oxygen consumption and limited ventilation in intermediate waters.",
+    floatIds: ["13857", "15855"],
+    plotType: "profile",
+    variable: "oxygen"
+  },
+  {
+    query: "multi-float comparison",
+    response: "Multi-float comparison reveals significant regional differences. Atlantic floats show different temperature-salinity characteristics compared to Indian Ocean floats, reflecting distinct water mass properties.",
+    floatIds: ["13857", "15855", "16789"],
+    plotType: "comparison",
+    variable: "temperature"
   }
 ];
 
