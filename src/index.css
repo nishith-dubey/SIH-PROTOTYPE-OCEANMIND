@@ -1,127 +1,110 @@
+/* Import Cesium CSS first */
+@import url('https://cesium.com/downloads/cesiumjs/releases/1.110/Build/Cesium/Widgets/widgets.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import Cesium CSS */
-@import url('https://cesium.com/downloads/cesiumjs/releases/1.110/Build/Cesium/Widgets/widgets.css');
-
-/* FloatChat Ocean-themed Design System */
+/* Indian Government Website Design System */
 
 
 @layer base {
   :root {
-    /* Ocean-themed color palette */
-    --background: 210 40% 98%;
-    --foreground: 215 25% 27%;
+    /* Government color palette */
+    --background: 0 0% 99%;
+    --foreground: 220 13% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 27%;
+    --card-foreground: 220 13% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 27%;
+    --popover-foreground: 220 13% 18%;
 
-    /* Deep ocean primary */
-    --primary: 215 84% 32%;
-    --primary-foreground: 210 40% 98%;
-    --primary-hover: 215 84% 28%;
+    /* Government Navy Blue Primary */
+    --primary: 220 100% 25%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 100% 20%;
 
-    /* Aqua secondary */
-    --secondary: 187 72% 45%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-hover: 187 72% 40%;
+    /* Government Gray Secondary */
+    --secondary: 210 11% 85%;
+    --secondary-foreground: 220 13% 18%;
+    --secondary-hover: 210 11% 80%;
 
-    /* Coral accent */
-    --accent: 14 78% 60%;
+    /* Government Saffron Accent */
+    --accent: 30 100% 60%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 14 78% 55%;
+    --accent-hover: 30 100% 55%;
 
-    /* Soft ocean muted */
-    --muted: 210 45% 95%;
-    --muted-foreground: 215 15% 50%;
+    /* Light muted */
+    --muted: 210 20% 95%;
+    --muted-foreground: 220 8% 45%;
 
-    /* Ocean surface */
-    --surface: 195 53% 79%;
-    --surface-foreground: 215 25% 27%;
+    /* Surface */
+    --surface: 210 20% 98%;
+    --surface-foreground: 220 13% 18%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 210 30% 88%;
-    --input: 210 30% 88%;
-    --ring: 215 84% 32%;
+    --border: 210 20% 88%;
+    --input: 210 20% 96%;
+    --ring: 220 100% 25%;
 
-    /* Ocean gradients */
-    --gradient-ocean: linear-gradient(135deg, hsl(215, 84%, 32%), hsl(187, 72%, 45%));
-    --gradient-deep: linear-gradient(180deg, hsl(215, 84%, 32%), hsl(215, 84%, 22%));
-    --gradient-surface: linear-gradient(135deg, hsl(187, 72%, 45%), hsl(195, 53%, 79%));
-    --gradient-coral: linear-gradient(135deg, hsl(14, 78%, 60%), hsl(25, 88%, 65%));
-
-    /* Animations */
-    --wave-duration: 3s;
-    --flow-duration: 8s;
-
-    --radius: 0.5rem;
+    --radius: 0.375rem;
 
     --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-foreground: 220 13% 18%;
+    --sidebar-primary: 220 100% 25%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 95%;
+    --sidebar-accent-foreground: 220 13% 18%;
+    --sidebar-border: 210 20% 88%;
+    --sidebar-ring: 220 100% 25%;
   }
 
   .dark {
-    --background: 215 25% 12%;
-    --foreground: 210 40% 95%;
+    --background: 220 13% 9%;
+    --foreground: 0 0% 95%;
 
-    --card: 215 25% 15%;
-    --card-foreground: 210 40% 95%;
+    --card: 220 13% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 215 25% 15%;
-    --popover-foreground: 210 40% 95%;
+    --popover: 220 13% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 187 72% 45%;
-    --primary-foreground: 215 25% 12%;
-    --primary-hover: 187 72% 50%;
+    --primary: 220 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 100% 40%;
 
-    --secondary: 215 84% 32%;
-    --secondary-foreground: 210 40% 95%;
-    --secondary-hover: 215 84% 36%;
+    --secondary: 220 13% 18%;
+    --secondary-foreground: 0 0% 95%;
+    --secondary-hover: 220 13% 22%;
 
-    --accent: 14 78% 60%;
+    --accent: 30 100% 60%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 14 78% 65%;
+    --accent-hover: 30 100% 65%;
 
-    --muted: 215 25% 18%;
-    --muted-foreground: 215 15% 65%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 220 8% 65%;
 
-    --surface: 215 25% 20%;
-    --surface-foreground: 210 40% 95%;
+    --surface: 220 13% 18%;
+    --surface-foreground: 0 0% 95%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 215 25% 22%;
-    --input: 215 25% 22%;
-    --ring: 187 72% 45%;
+    --border: 220 13% 20%;
+    --input: 220 13% 18%;
+    --ring: 220 100% 35%;
 
-    --sidebar-background: 215 25% 15%;
-    --sidebar-foreground: 210 40% 95%;
-    --sidebar-primary: 187 72% 45%;
-    --sidebar-primary-foreground: 215 25% 12%;
-    --sidebar-accent: 215 25% 18%;
-    --sidebar-accent-foreground: 210 40% 95%;
-    --sidebar-border: 215 25% 22%;
-    --sidebar-ring: 187 72% 45%;
+    --sidebar-background: 220 13% 12%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 220 100% 35%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 18%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 220 100% 35%;
   }
 }
 
@@ -132,55 +115,51 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
-  /* Ocean wave animations */
-  @keyframes wave {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-4px); }
+  /* Government website typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
   }
 
-  @keyframes flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  .gov-header {
+    @apply bg-primary text-primary-foreground;
+    border-bottom: 3px solid hsl(30, 100%, 60%);
   }
 
-  @keyframes float-drift {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    33% { transform: translate(2px, -2px) rotate(1deg); }
-    66% { transform: translate(-1px, 1px) rotate(-1deg); }
+  .gov-card {
+    @apply bg-card border border-border rounded-md shadow-sm;
+  }
+
+  .gov-btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .gov-btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90;
   }
 }
 
 @layer components {
-  .gradient-ocean {
-    background: var(--gradient-ocean);
+  .gov-section {
+    @apply py-8 px-4;
   }
 
-  .gradient-deep {
-    background: var(--gradient-deep);
+  .gov-container {
+    @apply max-w-7xl mx-auto;
   }
 
-  .gradient-surface {
-    background: var(--gradient-surface);
+  .gov-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
   }
 
-  .gradient-coral {
-    background: var(--gradient-coral);
+  .gov-form {
+    @apply space-y-4;
   }
 
-  .animate-wave {
-    animation: wave var(--wave-duration) ease-in-out infinite;
-  }
-
-  .animate-flow {
-    background-size: 400% 400%;
-    animation: flow var(--flow-duration) ease infinite;
-  }
-
-  .animate-float-drift {
-    animation: float-drift 6s ease-in-out infinite;
+  .gov-input {
+    @apply w-full px-3 py-2 border border-border rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-ring;
   }
 
   /* Leaflet map styles */

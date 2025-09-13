@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { HeroButton } from '@/components/ui/hero-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, BarChart, Bar, ScatterChart, Scatter, Cell, PieChart, Pie } from 'recharts';
 import { 
   LineChart as LineChartIcon, Download, TrendingUp, Activity, Layers, Zap,
   Waves, Globe, Target, Brain, Sparkles, Thermometer, Droplets, Wind
@@ -158,7 +158,7 @@ const Profiles = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-slate-900 text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       <FloatingParticles />
 
@@ -273,7 +273,7 @@ const Profiles = () => {
               </Card>
 
               {/* Variable Info */}
-              <Card className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-xl border-blue-500/20 hover:scale-105 transition-all duration-300">
+              <Card className="bg-slate-800 border-blue-500/30 hover:scale-105 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
                     {React.createElement(getVariableIcon(), { className: "h-5 w-5 mr-2 text-blue-400 animate-pulse" })}
@@ -408,28 +408,125 @@ const Profiles = () => {
                 </CardContent>
               </Card>
               
-              {/* Analysis Tips */}
+              {/* Additional Charts */}
               {profileData.length > 0 && (
-                <Card className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 backdrop-blur-xl border-indigo-500/20 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                  {/* Depth Distribution Chart */}
+                  <Card className="bg-slate-800 border-blue-500/30">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center">
+                        <BarChart className="h-5 w-5 mr-2 text-blue-400" />
+                        Depth Distribution
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={profileData.slice(0, 15)}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                            <XAxis dataKey="depth" stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                            <YAxis stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Bar dataKey={Object.keys(profileData[0] || {}).filter(k => k !== 'depth')[0]} fill="#3b82f6" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Area Chart for Trend Analysis */}
+                  <Card className="bg-slate-800 border-green-500/30">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center">
+                        <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
+                        Trend Analysis
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <AreaChart data={profileData.slice(0, 20)}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                            <XAxis dataKey="depth" stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                            <YAxis stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Area 
+                              type="monotone" 
+                              dataKey={Object.keys(profileData[0] || {}).filter(k => k !== 'depth')[0]} 
+                              stroke="#10b981" 
+                              fill="#10b981" 
+                              fillOpacity={0.3}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+
+              {/* Statistics Summary */}
+              {profileData.length > 0 && (
+                <Card className="bg-slate-800 border-purple-500/30 mt-6">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center">
-                      <Brain className="h-5 w-5 mr-2 text-indigo-400 animate-pulse" />
+                      <Brain className="h-5 w-5 mr-2 text-purple-400" />
+                      Statistical Summary
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
+                        <div className="text-2xl font-bold text-purple-300">
+                          {Math.min(...profileData.map(d => d.depth || 0))}m
+                        </div>
+                        <div className="text-sm text-gray-300">Min Depth</div>
+                      </div>
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
+                        <div className="text-2xl font-bold text-purple-300">
+                          {Math.max(...profileData.map(d => d.depth || 0))}m
+                        </div>
+                        <div className="text-sm text-gray-300">Max Depth</div>
+                      </div>
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
+                        <div className="text-2xl font-bold text-purple-300">
+                          {profileData.length}
+                        </div>
+                        <div className="text-sm text-gray-300">Data Points</div>
+                      </div>
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
+                        <div className="text-2xl font-bold text-purple-300">
+                          {maxCycles}
+                        </div>
+                        <div className="text-sm text-gray-300">Cycles</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Analysis Insights */}
+              {profileData.length > 0 && (
+                <Card className="bg-slate-800 border-indigo-500/30 mt-6">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Brain className="h-5 w-5 mr-2 text-indigo-400" />
                       Analysis Insights
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="text-center p-3 bg-white/5 rounded-lg border border-indigo-500/30">
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-indigo-500/30">
                         <Target className="h-8 w-8 mx-auto mb-2 text-indigo-400" />
                         <h4 className="font-semibold text-white mb-1">Data Quality</h4>
                         <p className="text-sm text-indigo-200">High resolution vertical profiles</p>
                       </div>
-                      <div className="text-center p-3 bg-white/5 rounded-lg border border-indigo-500/30">
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-indigo-500/30">
                         <TrendingUp className="h-8 w-8 mx-auto mb-2 text-indigo-400" />
                         <h4 className="font-semibold text-white mb-1">Temporal Analysis</h4>
                         <p className="text-sm text-indigo-200">Compare cycles over time</p>
                       </div>
-                      <div className="text-center p-3 bg-white/5 rounded-lg border border-indigo-500/30">
+                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-indigo-500/30">
                         <Waves className="h-8 w-8 mx-auto mb-2 text-indigo-400" />
                         <h4 className="font-semibold text-white mb-1">Ocean Structure</h4>
                         <p className="text-sm text-indigo-200">Identify mixing layers and thermoclines</p>

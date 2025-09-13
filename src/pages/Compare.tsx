@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { HeroButton } from '@/components/ui/hero-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, AreaChart, Area, ScatterChart, Scatter, Cell } from 'recharts';
 import { 
   BarChart3, Download, GitCompare, TrendingUp, Activity, Layers, Zap,
   Waves, Globe, Target, Brain, Sparkles
@@ -40,11 +40,71 @@ const Compare = () => {
   const currentFloat1 = floats.find(f => f.wmo_id === float1);
   const currentFloat2 = floats.find(f => f.wmo_id === float2);
 
-  // [Keep the existing data preparation logic but enhance the UI]
   const prepareComparisonData = () => {
     if (!currentFloat1 || !currentFloat2) return [];
-    // ... existing logic ...
-    return []; // Simplified for brevity
+    
+    // Get the latest profiles for both floats
+    const profile1 = currentFloat1.profiles?.[currentFloat1.profiles.length - 1];
+    const profile2 = currentFloat2.profiles?.[currentFloat2.profiles.length - 1];
+    
+    if (!profile1 || !profile2) return [];
+    
+    // Create comparison data by depth
+    const commonDepths = profile1.depths?.filter(depth => 
+      profile2.depths?.includes(depth)
+    ) || [];
+    
+    return commonDepths.map(depth => {
+      const index1 = profile1.depths?.indexOf(depth) || 0;
+      const index2 = profile2.depths?.indexOf(depth) || 0;
+      
+      return {
+        depth,
+        [currentFloat1.wmo_id]: profile1[selectedVariable]?.[index1],
+        [currentFloat2.wmo_id]: profile2[selectedVariable]?.[index2],
+        difference: (profile1[selectedVariable]?.[index1] || 0) - (profile2[selectedVariable]?.[index2] || 0)
+      };
+    }).filter(item => 
+      item[currentFloat1.wmo_id] !== undefined && 
+      item[currentFloat2.wmo_id] !== undefined
+    );
+  };
+  
+  const prepareStatisticalData = () => {
+    if (!currentFloat1 || !currentFloat2) return [];
+    
+    const profile1 = currentFloat1.profiles?.[currentFloat1.profiles.length - 1];
+    const profile2 = currentFloat2.profiles?.[currentFloat2.profiles.length - 1];
+    
+    if (!profile1 || !profile2) return [];
+    
+    const data1 = profile1[selectedVariable] || [];
+    const data2 = profile2[selectedVariable] || [];
+    
+    const stats = [
+      {
+        metric: 'Mean',
+        [currentFloat1.wmo_id]: data1.reduce((a, b) => a + b, 0) / data1.length,
+        [currentFloat2.wmo_id]: data2.reduce((a, b) => a + b, 0) / data2.length
+      },
+      {
+        metric: 'Max',
+        [currentFloat1.wmo_id]: Math.max(...data1),
+        [currentFloat2.wmo_id]: Math.max(...data2)
+      },
+      {
+        metric: 'Min',
+        [currentFloat1.wmo_id]: Math.min(...data1),
+        [currentFloat2.wmo_id]: Math.min(...data2)
+      },
+      {
+        metric: 'Range',
+        [currentFloat1.wmo_id]: Math.max(...data1) - Math.min(...data1),
+        [currentFloat2.wmo_id]: Math.max(...data2) - Math.min(...data2)
+      }
+    ];
+    
+    return stats;
   };
 
   const comparisonData = prepareComparisonData();
@@ -68,7 +128,7 @@ const Compare = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-slate-900 text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       
       {/* Floating Particles */}
@@ -179,7 +239,7 @@ const Compare = () => {
               </Card>
 
               {/* Analysis Options */}
-              <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl border-purple-500/20 hover:scale-105 transition-all duration-300">
+              <Card className="bg-slate-800 border-purple-500/30 hover:scale-105 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
                     <Brain className="h-5 w-5 mr-2 text-pink-400" />
@@ -212,7 +272,7 @@ const Compare = () => {
               </Card>
 
               {/* Insights Panel */}
-              <Card className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border-cyan-500/20">
+              <Card className="bg-slate-800 border-cyan-500/30">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
                     <Sparkles className="h-5 w-5 mr-2 text-cyan-400 animate-pulse" />
@@ -274,65 +334,176 @@ const Compare = () => {
                 </CardHeader>
                 
                 <CardContent>
-                  <div className="h-[600px] w-full">
-                    {comparisonData.length > 0 ? (
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={comparisonData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                          <XAxis 
-                            dataKey="depth" 
-                            stroke="rgba(255,255,255,0.7)"
-                            fontSize={12}
-                          />
-                          <YAxis 
-                            stroke="rgba(255,255,255,0.7)"
-                            fontSize={12}
-                          />
-                          <Tooltip 
-                            contentStyle={{ 
-                              backgroundColor: 'rgba(0,0,0,0.8)', 
-                              border: '1px solid rgba(147, 51, 234, 0.3)',
-                              borderRadius: '8px',
-                              backdropFilter: 'blur(16px)'
-                            }}
-                            labelStyle={{ color: '#fff' }}
-                          />
-                          <Legend />
-                          <Line 
-                            type="monotone" 
-                            dataKey={currentFloat1?.wmo_id} 
-                            stroke="#8b5cf6" 
-                            strokeWidth={3}
-                            dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
-                            activeDot={{ r: 6, fill: '#a855f7' }}
-                          />
-                          <Line 
-                            type="monotone" 
-                            dataKey={currentFloat2?.wmo_id} 
-                            stroke="#06b6d4" 
-                            strokeWidth={3}
-                            dot={{ fill: '#06b6d4', strokeWidth: 2, r: 4 }}
-                            activeDot={{ r: 6, fill: '#0891b2' }}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    ) : (
-                      <div className="flex items-center justify-center h-full">
-                        <div className="text-center">
-                          <div className="relative mb-6">
-                            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-500/20 rounded-full blur-xl animate-pulse"></div>
-                            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+                  <div className="space-y-8">
+                    {/* Main Comparison Chart */}
+                    <div className="h-[400px] w-full">
+                      {comparisonData.length > 0 ? (
+                        <ResponsiveContainer width="100%" height="100%">
+                          <LineChart data={comparisonData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                            <XAxis 
+                              dataKey="depth" 
+                              stroke="rgba(255,255,255,0.7)"
+                              fontSize={12}
+                              label={{ value: 'Depth (m)', position: 'insideBottom', offset: -5, style: { textAnchor: 'middle', fill: '#94a3b8' } }}
+                            />
+                            <YAxis 
+                              stroke="rgba(255,255,255,0.7)"
+                              fontSize={12}
+                              label={{ value: `${getVariableLabel()} (${getVariableUnit()})`, angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#94a3b8' } }}
+                            />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'rgba(0,0,0,0.8)', 
+                                border: '1px solid rgba(147, 51, 234, 0.3)',
+                                borderRadius: '8px'
+                              }}
+                              labelStyle={{ color: '#fff' }}
+                            />
+                            <Legend />
+                            <Line 
+                              type="monotone" 
+                              dataKey={currentFloat1?.wmo_id} 
+                              stroke="#8b5cf6" 
+                              strokeWidth={3}
+                              dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
+                              name={`Float ${currentFloat1?.wmo_id}`}
+                            />
+                            <Line 
+                              type="monotone" 
+                              dataKey={currentFloat2?.wmo_id} 
+                              stroke="#06b6d4" 
+                              strokeWidth={3}
+                              dot={{ fill: '#06b6d4', strokeWidth: 2, r: 4 }}
+                              name={`Float ${currentFloat2?.wmo_id}`}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <div className="w-16 h-16 mx-auto bg-purple-600 rounded-full flex items-center justify-center mb-6">
                               <GitCompare className="h-8 w-8 text-white animate-bounce" />
                             </div>
+                            <h3 className="text-xl font-bold text-white mb-3">
+                              Ready to Compare
+                            </h3>
+                            <p className="text-slate-300 max-w-md mx-auto">
+                              Select two different floats to compare their data and discover oceanographic patterns.
+                            </p>
                           </div>
-                          <h3 className="text-xl font-bold text-white mb-3">
-                            Ready to Compare
-                          </h3>
-                          <p className="text-slate-300 max-w-md mx-auto">
-                            Select two different floats to compare their data and discover oceanographic patterns.
-                          </p>
                         </div>
+                      )}
+                    </div>
+                    
+                    {/* Statistical Comparison */}
+                    {comparisonData.length > 0 && (
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <Card className="bg-slate-800 border-blue-500/30">
+                          <CardHeader>
+                            <CardTitle className="text-white flex items-center">
+                              <BarChart3 className="h-5 w-5 mr-2 text-blue-400" />
+                              Statistical Comparison
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="h-64">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={prepareStatisticalData()}>
+                                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                  <XAxis dataKey="metric" stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                                  <YAxis stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                                  <Tooltip 
+                                    contentStyle={{
+                                      backgroundColor: 'rgba(0,0,0,0.8)',
+                                      border: '1px solid rgba(59, 130, 246, 0.3)',
+                                      borderRadius: '8px'
+                                    }}
+                                  />
+                                  <Legend />
+                                  <Bar dataKey={currentFloat1?.wmo_id} fill="#8b5cf6" name={`Float ${currentFloat1?.wmo_id}`} />
+                                  <Bar dataKey={currentFloat2?.wmo_id} fill="#06b6d4" name={`Float ${currentFloat2?.wmo_id}`} />
+                                </BarChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </CardContent>
+                        </Card>
+                        
+                        <Card className="bg-slate-800 border-green-500/30">
+                          <CardHeader>
+                            <CardTitle className="text-white flex items-center">
+                              <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
+                              Difference Analysis
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="h-64">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={comparisonData}>
+                                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                  <XAxis dataKey="depth" stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                                  <YAxis stroke="rgba(255,255,255,0.7)" fontSize={10} />
+                                  <Tooltip 
+                                    contentStyle={{
+                                      backgroundColor: 'rgba(0,0,0,0.8)',
+                                      border: '1px solid rgba(34, 197, 94, 0.3)',
+                                      borderRadius: '8px'
+                                    }}
+                                  />
+                                  <Area 
+                                    type="monotone" 
+                                    dataKey="difference" 
+                                    stroke="#22c55e" 
+                                    fill="#22c55e" 
+                                    fillOpacity={0.3}
+                                    name="Difference"
+                                  />
+                                </AreaChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </CardContent>
+                        </Card>
                       </div>
+                    )}
+                    
+                    {/* Data Summary */}
+                    {comparisonData.length > 0 && (
+                      <Card className="bg-slate-800 border-yellow-500/30">
+                        <CardHeader>
+                          <CardTitle className="text-white flex items-center">
+                            <Activity className="h-5 w-5 mr-2 text-yellow-400" />
+                            Comparison Summary
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
+                              <div className="text-2xl font-bold text-purple-300">
+                                {comparisonData.length}
+                              </div>
+                              <div className="text-sm text-gray-300">Data Points</div>
+                            </div>
+                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-blue-500/30">
+                              <div className="text-2xl font-bold text-blue-300">
+                                {Math.abs(comparisonData.reduce((sum, d) => sum + (d.difference || 0), 0) / comparisonData.length).toFixed(2)}
+                              </div>
+                              <div className="text-sm text-gray-300">Avg Difference</div>
+                            </div>
+                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-green-500/30">
+                              <div className="text-2xl font-bold text-green-300">
+                                {Math.max(...comparisonData.map(d => Math.abs(d.difference || 0))).toFixed(2)}
+                              </div>
+                              <div className="text-sm text-gray-300">Max Difference</div>
+                            </div>
+                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-yellow-500/30">
+                              <div className="text-2xl font-bold text-yellow-300">
+                                {getVariableUnit()}
+                              </div>
+                              <div className="text-sm text-gray-300">Units</div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
                     )}
                   </div>
                 </CardContent>

@@ -64,39 +64,32 @@ export const QuickQuestionCard: React.FC<QuickQuestionCardProps> = ({ onQuestion
   ];
 
   return (
-    <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-cyan-500/30 transition-all duration-300">
-      <CardContent className="p-6">
-        <div className="flex items-center mb-4">
-          <MessageCircle className="h-5 w-5 mr-2 text-cyan-400" />
-          <h3 className="text-lg font-semibold text-white">Quick Questions</h3>
+    <Card className="bg-slate-700 border-slate-600">
+      <CardContent className="p-4">
+        <div className="flex items-center mb-3">
+          <MessageCircle className="h-4 w-4 mr-2 text-cyan-400" />
+          <h3 className="text-sm font-semibold text-white">Quick Questions</h3>
         </div>
         
-        <div className="grid grid-cols-1 gap-3">
-          {quickQuestions.map((item, index) => {
+        <div className="space-y-2">
+          {quickQuestions.slice(0, 4).map((item, index) => {
             const Icon = item.icon;
             return (
               <Button
                 key={index}
                 variant="ghost"
-                className="w-full text-left justify-start p-4 h-auto bg-white/5 hover:bg-gradient-to-r hover:from-cyan-500/20 hover:to-blue-500/20 border border-white/10 hover:border-cyan-500/30 transition-all duration-300 group"
+                size="sm"
+                className="w-full text-left justify-start p-2 h-auto bg-slate-600 hover:bg-slate-500 border border-slate-500 hover:border-cyan-500/50 transition-all duration-200 group text-xs"
                 onClick={() => onQuestionSelect(item.question)}
               >
-                <div className="flex items-start space-x-3 w-full">
-                  <div className={`p-2 bg-gradient-to-r ${item.color} rounded-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon className="h-4 w-4 text-white" />
+                <div className="flex items-center space-x-2 w-full">
+                  <div className="p-1 bg-cyan-600 rounded">
+                    <Icon className="h-3 w-3 text-white" />
                   </div>
                   <div className="flex-1 text-left">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-white group-hover:text-cyan-300 transition-colors">
-                        {item.question}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Badge className="bg-white/10 text-slate-300 border-white/20 text-xs">
-                        {item.category}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-slate-400 mt-1">{item.description}</p>
+                    <span className="text-white group-hover:text-cyan-300 transition-colors text-xs">
+                      {item.question}
+                    </span>
                   </div>
                 </div>
               </Button>

@@ -94,39 +94,90 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         
         // If no match found, create a contextual response
         if (!mockResponse) {
-          if (message.content.toLowerCase().includes('temperature')) {
+          const content = message.content.toLowerCase();
+          
+          // Enhanced temperature analysis with seasonal patterns
+          if (content.includes('temperature') && (content.includes('seasonal') || content.includes('monthly'))) {
             mockResponse = {
-              query: "temperature analysis",
-              response: "Here's the temperature analysis for the selected region. The data shows typical thermocline structure with surface temperatures around 28°C decreasing to 7°C at 500m depth.",
+              query: "seasonal temperature analysis",
+              response: "Seasonal temperature analysis reveals distinct patterns throughout the year. Surface temperatures peak during summer months (May-June) at ~30°C and cool during winter. The thermocline depth varies seasonally, deepening to ~65m during monsoon season (July-September) due to increased mixing.",
+              floatIds: ["13857", "15855"],
+              plotType: "timeseries",
+              variable: "temperature"
+            };
+          } 
+          // Temperature profile analysis
+          else if (content.includes('temperature')) {
+            mockResponse = {
+              query: "temperature profile analysis",
+              response: "Temperature profile analysis reveals classic tropical characteristics with warm surface waters (28°C) and a sharp thermocline around 50-100m depth. Below 200m, temperature stabilizes around 4-6°C, typical of deep ocean waters.",
               floatIds: ["13857", "15855"],
               plotType: "profile",
               variable: "temperature"
             };
-          } else if (message.content.toLowerCase().includes('salinity')) {
+          }
+          // Regional salinity comparison
+          else if (content.includes('salinity') && (content.includes('compare') || content.includes('between'))) {
             mockResponse = {
-              query: "salinity analysis", 
-              response: "Salinity profiles show characteristic patterns with surface values around 35.0 PSU. The data indicates typical ocean stratification with slight variations due to regional water masses.",
+              query: "regional salinity comparison", 
+              response: "Regional salinity comparison reveals distinct patterns: Arabian Sea shows higher surface salinity (35.2 PSU) due to high evaporation rates, Bay of Bengal has lower surface values (33.8 PSU) from freshwater river discharge, while the open Indian Ocean maintains intermediate levels (34.6 PSU).",
+              floatIds: ["15855", "16789"],
+              plotType: "comparison",
+              variable: "salinity"
+            };
+          }
+          // Standard salinity analysis
+          else if (content.includes('salinity')) {
+            mockResponse = {
+              query: "salinity profile analysis", 
+              response: "Salinity profile shows characteristic stratification with surface mixed layer values around 35.0 PSU. Subsurface maximum at ~150m depth indicates Arabian Sea Water mass influence, followed by gradual decrease with depth.",
               floatIds: ["15855"],
               plotType: "profile",
               variable: "salinity"
             };
-          } else if (message.content.toLowerCase().includes('oxygen')) {
+          }
+          // Oxygen minimum zone analysis
+          else if (content.includes('oxygen') && (content.includes('minimum') || content.includes('omz'))) {
             mockResponse = {
-              query: "oxygen analysis",
-              response: "Oxygen measurements reveal the oxygen minimum zone between 200-400m depth. Surface waters show high oxygen saturation from air-sea exchange.",
+              query: "oxygen minimum zone analysis",
+              response: "The oxygen minimum zone (OMZ) is clearly visible between 100-400m depth with values dropping below 20 μmol/kg. This pronounced feature indicates strong biological oxygen consumption and limited ventilation in intermediate waters, characteristic of the northern Indian Ocean.",
+              floatIds: ["13857", "15855"],
+              plotType: "area",
+              variable: "oxygen"
+            };
+          }
+          // General oxygen analysis
+          else if (content.includes('oxygen')) {
+            mockResponse = {
+              query: "oxygen profile analysis",
+              response: "Oxygen measurements show high surface saturation (~240 μmol/kg) from air-sea exchange, followed by rapid decrease through biological consumption. The oxygen minimum zone is clearly defined between 200-400m depth.",
               floatIds: ["13857", "16789"],
               plotType: "comparison", 
               variable: "oxygen"
             };
-          } else if (message.content.toLowerCase().includes('compare')) {
+          }
+          // Data quality assessment
+          else if (content.includes('quality') || content.includes('flags') || content.includes('qc')) {
             mockResponse = {
-              query: "comparison analysis",
-              response: "Comparison between floats shows regional differences in water mass characteristics. Float 13857 (Atlantic) shows different patterns compared to Float 15855 (Arabian Sea).",
+              query: "data quality assessment",
+              response: "Data quality analysis shows excellent reliability across the dataset. 72.5% of measurements are flagged as 'Good' (flag 1), with 21% marked as 'Probably Good' (flag 2). Only 6.5% of data requires careful review or rejection, indicating robust quality control procedures and high overall data integrity.",
+              floatIds: ["13857", "15855", "16789"],
+              plotType: "pie",
+              variable: "quality"
+            };
+          }
+          // General comparison analysis
+          else if (content.includes('compare') || content.includes('comparison')) {
+            mockResponse = {
+              query: "multi-parameter comparison",
+              response: "Multi-parameter comparison reveals distinct regional oceanographic signatures. Atlantic floats show cooler, more saline characteristics compared to Indian Ocean floats, reflecting different water mass origins and circulation patterns.",
               floatIds: ["13857", "15855"],
               plotType: "comparison",
               variable: "temperature"
             };
-          } else {
+          }
+          // Default fallback
+          else {
             mockResponse = mockChatResponses[0];
           }
         }

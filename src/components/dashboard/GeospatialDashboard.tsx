@@ -25,7 +25,11 @@ import {
   Thermometer,
   Droplets,
   Wind,
-  Activity
+  Activity,
+  Target,
+  Zap,
+  Eye,
+  Clock
 } from 'lucide-react';
 
 export const GeospatialDashboard: React.FC = () => {
@@ -53,35 +57,71 @@ export const GeospatialDashboard: React.FC = () => {
     return floatData;
   }, [floats]);
 
-  // Plotly configurations for different chart types
+  // Enhanced Plotly configurations for different chart types
   const scatterMapData = [{
     type: 'scattergeo',
-    mode: 'markers',
+    mode: 'markers+text',
     lon: dashboardData.map(d => d.longitude),
     lat: dashboardData.map(d => d.latitude),
-    text: dashboardData.map(d => `${d.wmo_id}<br>${d.institution}<br>Profiles: ${d.profiles_count}`),
+    text: dashboardData.map(d => `<b>Float ${d.wmo_id}</b><br>🏛️ ${d.institution}<br>📊 ${d.profiles_count} profiles<br>🌡️ ${d.avg_temperature.toFixed(1)}°C<br>🧂 ${d.avg_salinity.toFixed(2)} PSU`),
+    hovertemplate: '%{text}<extra></extra>',
     marker: {
-      size: dashboardData.map(d => Math.max(8, Math.min(20, d.profiles_count / 5))),
-      color: dashboardData.map(d => selectedFloats.includes(d.wmo_id) ? '#00E5FF' : '#FFD700'),
-      colorscale: 'Viridis',
-      line: { color: 'white', width: 1 }
+      size: dashboardData.map(d => Math.max(12, Math.min(25, d.profiles_count / 3))),
+      color: dashboardData.map(d => selectedFloats.includes(d.wmo_id) ? '#00E5FF' : d.avg_temperature),
+      colorscale: [
+        [0, '#1e3a8a'],    // Deep blue for cold
+        [0.2, '#3b82f6'],  // Blue
+        [0.4, '#06b6d4'],  // Cyan
+        [0.6, '#10b981'],  // Green
+        [0.8, '#f59e0b'],  // Yellow
+        [1, '#ef4444']     // Red for warm
+      ],
+      showscale: true,
+      colorbar: {
+        title: 'Temperature (°C)',
+        titlefont: { color: '#ffffff' },
+        tickfont: { color: '#ffffff' },
+        bgcolor: 'rgba(0,0,0,0.5)',
+        bordercolor: '#4a5568',
+        borderwidth: 1,
+        x: 1.02
+      },
+      line: { 
+        color: dashboardData.map(d => selectedFloats.includes(d.wmo_id) ? '#ffffff' : '#1a365d'),
+        width: 2
+      },
+      opacity: 0.8,
+      symbol: 'circle'
     },
-    name: 'Argo Floats'
+    name: 'Argo Floats',
+    selectedpoints: selectedFloats.map(id => dashboardData.findIndex(d => d.wmo_id === id)).filter(idx => idx !== -1)
   }];
 
   const scatterMapLayout = {
-    title: 'Global Argo Float Distribution',
+    title: {
+      text: 'Global Argo Float Distribution',
+      font: { size: 18, color: '#ffffff' },
+      x: 0.5,
+      xanchor: 'center'
+    },
     geo: {
       projection: { type: 'natural earth' },
       showland: true,
-      landcolor: 'rgb(243, 243, 243)',
-      coastlinecolor: 'rgb(204, 204, 204)',
+      landcolor: '#2d3748',
+      coastlinecolor: '#4a5568',
       showocean: true,
-      oceancolor: 'rgb(0, 100, 200)',
+      oceancolor: '#1a365d',
       showlakes: true,
-      lakecolor: 'rgb(0, 100, 200)'
+      lakecolor: '#2b6cb0',
+      showcountries: true,
+      countrycolor: '#4a5568',
+      showsubunits: false,
+      bgcolor: '#0f172a'
     },
-    height: 500
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    height: 600,
+    margin: { l: 0, r: 0, t: 40, b: 0 }
   };
 
   const temperatureHistData = [{
@@ -92,9 +132,24 @@ export const GeospatialDashboard: React.FC = () => {
   }];
 
   const temperatureHistLayout = {
-    title: 'Average Temperature Distribution',
-    xaxis: { title: 'Temperature (°C)' },
-    yaxis: { title: 'Count' },
+    title: {
+      text: 'Average Temperature Distribution',
+      font: { color: '#ffffff', size: 16 }
+    },
+    xaxis: { 
+      title: { text: 'Temperature (°C)', font: { color: '#ffffff' } },
+      tickfont: { color: '#ffffff' },
+      gridcolor: '#374151',
+      zerolinecolor: '#4b5563'
+    },
+    yaxis: { 
+      title: { text: 'Count', font: { color: '#ffffff' } },
+      tickfont: { color: '#ffffff' },
+      gridcolor: '#374151',
+      zerolinecolor: '#4b5563'
+    },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: '#1f2937',
     height: 400
   };
 
@@ -115,9 +170,24 @@ export const GeospatialDashboard: React.FC = () => {
   }];
 
   const salinityScatterLayout = {
-    title: 'Temperature-Salinity Relationship',
-    xaxis: { title: 'Temperature (°C)' },
-    yaxis: { title: 'Salinity (PSU)' },
+    title: {
+      text: 'Temperature-Salinity Relationship',
+      font: { color: '#ffffff', size: 16 }
+    },
+    xaxis: { 
+      title: { text: 'Temperature (°C)', font: { color: '#ffffff' } },
+      tickfont: { color: '#ffffff' },
+      gridcolor: '#374151',
+      zerolinecolor: '#4b5563'
+    },
+    yaxis: { 
+      title: { text: 'Salinity (PSU)', font: { color: '#ffffff' } },
+      tickfont: { color: '#ffffff' },
+      gridcolor: '#374151',
+      zerolinecolor: '#4b5563'
+    },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: '#1f2937',
     height: 400
   };
 
@@ -140,9 +210,25 @@ export const GeospatialDashboard: React.FC = () => {
   }];
 
   const institutionBarLayout = {
-    title: 'Float Distribution by Institution',
-    xaxis: { title: 'Institution' },
-    yaxis: { title: 'Number of Floats' },
+    title: {
+      text: 'Float Distribution by Institution',
+      font: { color: '#ffffff', size: 16 }
+    },
+    xaxis: { 
+      title: { text: 'Institution', font: { color: '#ffffff' } },
+      tickfont: { color: '#ffffff', size: 10 },
+      tickangle: -45,
+      gridcolor: '#374151',
+      zerolinecolor: '#4b5563'
+    },
+    yaxis: { 
+      title: { text: 'Number of Floats', font: { color: '#ffffff' } },
+      tickfont: { color: '#ffffff' },
+      gridcolor: '#374151',
+      zerolinecolor: '#4b5563'
+    },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: '#1f2937',
     height: 400
   };
 
@@ -191,21 +277,21 @@ export const GeospatialDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header with Export Options */}
-      <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+      <Card className="gov-card">
         <CardHeader>
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             <div>
-              <CardTitle className="text-white flex items-center text-2xl">
-                <Globe className="h-6 w-6 mr-3 text-blue-400" />
+              <CardTitle className="text-gray-900 flex items-center text-2xl font-semibold">
+                <Globe className="h-6 w-6 mr-3 text-blue-600" />
                 Geospatial Analytics Dashboard
               </CardTitle>
-              <p className="text-gray-400 mt-2">
+              <p className="text-gray-600 mt-2">
                 Interactive visualizations and data analysis for Argo float network
               </p>
             </div>
             
             <div className="flex flex-wrap items-center gap-3">
-              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+              <Badge className="bg-accent text-accent-foreground">
                 <Activity className="h-4 w-4 mr-1" />
                 {dashboardData.length} Active Floats
               </Badge>
@@ -214,7 +300,7 @@ export const GeospatialDashboard: React.FC = () => {
                 <Button
                   size="sm"
                   onClick={() => handleExport('csv')}
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  className="gov-btn-primary"
                 >
                   <Download className="h-4 w-4 mr-1" />
                   CSV
@@ -222,7 +308,7 @@ export const GeospatialDashboard: React.FC = () => {
                 <Button
                   size="sm"
                   onClick={() => handleExport('ascii')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="gov-btn-secondary"
                 >
                   <Download className="h-4 w-4 mr-1" />
                   ASCII
@@ -230,7 +316,7 @@ export const GeospatialDashboard: React.FC = () => {
                 <Button
                   size="sm"
                   onClick={() => handleExport('netcdf')}
-                  className="bg-purple-600 hover:bg-purple-700 text-white"
+                  className="gov-btn-primary"
                 >
                   <Download className="h-4 w-4 mr-1" />
                   NetCDF
@@ -243,20 +329,20 @@ export const GeospatialDashboard: React.FC = () => {
 
       {/* Main Dashboard Tabs */}
       <Tabs defaultValue="maps" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 bg-white/5 backdrop-blur-xl border border-white/10">
-          <TabsTrigger value="maps" className="data-[state=active]:bg-blue-600 text-white">
+        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 bg-muted">
+          <TabsTrigger value="maps" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             <Map className="h-4 w-4 mr-2" />
             Maps
           </TabsTrigger>
-          <TabsTrigger value="charts" className="data-[state=active]:bg-green-600 text-white">
+          <TabsTrigger value="charts" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             <BarChart3 className="h-4 w-4 mr-2" />
             Charts
           </TabsTrigger>
-          <TabsTrigger value="data" className="data-[state=active]:bg-purple-600 text-white">
+          <TabsTrigger value="data" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             <Table className="h-4 w-4 mr-2" />
             Data
           </TabsTrigger>
-          <TabsTrigger value="analysis" className="data-[state=active]:bg-orange-600 text-white">
+          <TabsTrigger value="analysis" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             <TrendingUp className="h-4 w-4 mr-2" />
             Analysis
           </TabsTrigger>
@@ -264,52 +350,235 @@ export const GeospatialDashboard: React.FC = () => {
 
         {/* Maps Tab */}
         <TabsContent value="maps" className="space-y-6">
-          <div className="flex gap-4 mb-4">
-            <Button
-              variant={activeView === '2d' ? 'default' : 'outline'}
-              onClick={() => setActiveView('2d')}
-              className="text-white"
-            >
-              <Map className="h-4 w-4 mr-2" />
-              2D Map
-            </Button>
-            <Button
-              variant={activeView === '3d' ? 'default' : 'outline'}
-              onClick={() => setActiveView('3d')}
-              className="text-white"
-            >
-              <Globe className="h-4 w-4 mr-2" />
-              3D Globe
-            </Button>
+          {/* Interactive Map Controls */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+            <Card className="gov-card hover:shadow-md transition-shadow">
+              <CardContent className="p-4 text-center">
+                <Globe className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {dashboardData.length}
+                </div>
+                <div className="text-gray-600 text-sm">Active Floats</div>
+              </CardContent>
+            </Card>
+            
+            <Card className="gov-card hover:shadow-md transition-shadow">
+              <CardContent className="p-4 text-center">
+                <Activity className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {selectedFloats.length}
+                </div>
+                <div className="text-gray-600 text-sm">Selected</div>
+              </CardContent>
+            </Card>
+            
+            <Card className="gov-card hover:shadow-md transition-shadow">
+              <CardContent className="p-4 text-center">
+                <TrendingUp className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {(dashboardData.reduce((sum, d) => sum + d.avg_temperature, 0) / dashboardData.length).toFixed(1)}°C
+                </div>
+                <div className="text-gray-600 text-sm">Avg Temp</div>
+              </CardContent>
+            </Card>
+            
+            <Card className="gov-card hover:shadow-md transition-shadow">
+              <CardContent className="p-4 text-center">
+                <Waves className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {new Set(dashboardData.map(d => d.institution)).size}
+                </div>
+                <div className="text-gray-600 text-sm">Institutions</div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div className="flex gap-2">
+              <Button
+                variant={activeView === '2d' ? 'default' : 'outline'}
+                onClick={() => setActiveView('2d')}
+              >
+                <Map className="h-4 w-4 mr-2" />
+                2D Map
+              </Button>
+              <Button
+                variant={activeView === '3d' ? 'default' : 'outline'}
+                onClick={() => setActiveView('3d')}
+              >
+                <Globe className="h-4 w-4 mr-2" />
+                3D Globe
+              </Button>
+            </div>
+            
+            {/* Map View Options */}
+            <div className="flex items-center gap-2">
+              <Button size="sm" className="gov-btn-primary">
+                <TrendingUp className="h-4 w-4 mr-1" />
+                Temperature View
+              </Button>
+              <Button size="sm" variant="outline">
+                <Droplets className="h-4 w-4 mr-1" />
+                Salinity View
+              </Button>
+              <Button size="sm" variant="outline">
+                <Wind className="h-4 w-4 mr-1" />
+                Depth View
+              </Button>
+            </div>
           </div>
 
-          <Card className="bg-white/5 backdrop-blur-xl border-white/10">
-            <CardContent className="p-6">
-              {activeView === '2d' ? (
-                <PlotlyChart
-                  data={scatterMapData}
-                  layout={scatterMapLayout}
-                  className="h-[600px]"
-                />
-              ) : (
-                <CesiumViewer
-                  floats={floats}
-                  selectedFloats={selectedFloats}
-                  onFloatSelect={handleFloatSelect}
-                  className="h-[600px] rounded-lg"
-                />
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+            {/* Main Map */}
+            <div className="xl:col-span-3">
+              <Card className="gov-card">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-gray-900 flex items-center font-semibold">
+                      <Globe className="h-5 w-5 mr-2 text-blue-600" />
+                      Ocean Data Visualization
+                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-gray-600">Live Data</span>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  {activeView === '2d' ? (
+                    <PlotlyChart
+                      data={scatterMapData}
+                      layout={scatterMapLayout}
+                      className="h-[600px]"
+                    />
+                  ) : (
+                    <CesiumViewer
+                      floats={floats}
+                      selectedFloats={selectedFloats}
+                      onFloatSelect={handleFloatSelect}
+                      className="h-[600px] rounded-lg"
+                    />
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+            
+            {/* Side Panel with Interactive Information */}
+            <div className="xl:col-span-1 space-y-4">
+              {/* Real-time Stats */}
+              <Card className="gov-card">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 text-sm flex items-center font-medium">
+                    <Activity className="h-4 w-4 mr-2 text-blue-600 animate-pulse" />
+                    Live Statistics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 text-sm">Total Profiles</span>
+                    <span className="text-gray-900 font-mono font-bold">
+                      {dashboardData.reduce((sum, d) => sum + d.profiles_count, 0).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 text-sm">Temp Range</span>
+                    <span className="text-gray-900 font-mono font-bold">
+                      {Math.min(...dashboardData.map(d => d.avg_temperature)).toFixed(1)}° - {Math.max(...dashboardData.map(d => d.avg_temperature)).toFixed(1)}°C
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 text-sm">Data Quality</span>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-gray-900 font-mono font-bold text-sm">98.5%</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Selected Float Info */}
+              {selectedFloats.length > 0 && (
+                <Card className="gov-card">
+                  <CardHeader>
+                    <CardTitle className="text-gray-900 text-sm flex items-center font-medium">
+                      <Target className="h-4 w-4 mr-2 text-blue-600" />
+                      Selected Float{selectedFloats.length > 1 ? 's' : ''}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 space-y-2">
+                    {selectedFloats.slice(0, 3).map(floatId => {
+                      const floatData = dashboardData.find(d => d.wmo_id === floatId);
+                      return floatData ? (
+                        <div key={floatId} className="p-2 bg-gray-100 rounded text-xs">
+                          <div className="font-mono text-gray-900 font-medium">{floatData.wmo_id}</div>
+                          <div className="text-gray-600">{floatData.institution}</div>
+                        </div>
+                      ) : null;
+                    })}
+                    {selectedFloats.length > 3 && (
+                      <div className="text-center text-gray-600 text-xs">
+                        +{selectedFloats.length - 3} more
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               )}
-            </CardContent>
-          </Card>
+              
+              {/* Quick Actions */}
+              <Card className="gov-card">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 text-sm flex items-center font-medium">
+                    <Zap className="h-4 w-4 mr-2 text-orange-500" />
+                    Quick Actions
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 space-y-2">
+                  <Button size="sm" className="w-full gov-btn-primary">
+                    <Download className="h-4 w-4 mr-1" />
+                    Export Visible Data
+                  </Button>
+                  <Button size="sm" variant="outline" className="w-full">
+                    <Eye className="h-4 w-4 mr-1" />
+                    Focus Selected
+                  </Button>
+                  <Button size="sm" variant="outline" className="w-full">
+                    <Globe className="h-4 w-4 mr-1" />
+                    Reset View
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              {/* Recent Activity */}
+              <Card className="gov-card">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 text-sm flex items-center font-medium">
+                    <Clock className="h-4 w-4 mr-2 text-blue-600" />
+                    Recent Updates
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 space-y-2">
+                  {dashboardData.slice(0, 4).map((float, idx) => (
+                    <div key={idx} className="flex items-center space-x-2 text-xs">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <div className="flex-1">
+                        <div className="text-gray-900 font-mono font-medium">{float.wmo_id}</div>
+                        <div className="text-gray-600">Updated recently</div>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </TabsContent>
 
         {/* Charts Tab */}
         <TabsContent value="charts" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+            <Card className="gov-card">
               <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Thermometer className="h-5 w-5 mr-2 text-red-400" />
+                <CardTitle className="text-gray-900 flex items-center font-semibold">
+                  <Thermometer className="h-5 w-5 mr-2 text-red-500" />
                   Temperature Distribution
                 </CardTitle>
               </CardHeader>
@@ -321,10 +590,10 @@ export const GeospatialDashboard: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+            <Card className="gov-card">
               <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Droplets className="h-5 w-5 mr-2 text-blue-400" />
+                <CardTitle className="text-gray-900 flex items-center font-semibold">
+                  <Droplets className="h-5 w-5 mr-2 text-blue-500" />
                   T-S Relationship
                 </CardTitle>
               </CardHeader>
@@ -336,10 +605,10 @@ export const GeospatialDashboard: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/5 backdrop-blur-xl border-white/10 lg:col-span-2">
+            <Card className="gov-card lg:col-span-2">
               <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <BarChart3 className="h-5 w-5 mr-2 text-green-400" />
+                <CardTitle className="text-gray-900 flex items-center font-semibold">
+                  <BarChart3 className="h-5 w-5 mr-2 text-green-500" />
                   Institution Distribution
                 </CardTitle>
               </CardHeader>
@@ -354,8 +623,8 @@ export const GeospatialDashboard: React.FC = () => {
         </TabsContent>
 
         {/* Data Tab */}
-        <TabsContent value="data" className="space-y-6">
-          <DataTable
+        <TabsContent value="data" className="space-y-6 bg-background">
+          <DataTable className = "bg-background"
             data={dashboardData}
             columns={tableColumns}
             title="Argo Float Data Summary"
@@ -366,76 +635,76 @@ export const GeospatialDashboard: React.FC = () => {
         {/* Analysis Tab */}
         <TabsContent value="analysis" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-xl border-blue-500/30">
+            <Card className="gov-card hover:shadow-md transition-shadow">
               <CardContent className="p-6 text-center">
-                <Globe className="h-12 w-12 mx-auto mb-4 text-blue-400" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <Globe className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+                <div className="text-3xl font-bold text-gray-900 mb-2">
                   {dashboardData.length}
                 </div>
-                <div className="text-blue-200">Total Floats</div>
+                <div className="text-gray-600">Total Floats</div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-xl border-green-500/30">
+            <Card className="gov-card hover:shadow-md transition-shadow">
               <CardContent className="p-6 text-center">
-                <Activity className="h-12 w-12 mx-auto mb-4 text-green-400" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <Activity className="h-12 w-12 mx-auto mb-4 text-green-600" />
+                <div className="text-3xl font-bold text-gray-900 mb-2">
                   {dashboardData.reduce((sum, d) => sum + d.profiles_count, 0).toLocaleString()}
                 </div>
-                <div className="text-green-200">Total Profiles</div>
+                <div className="text-gray-600">Total Profiles</div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-red-500/20 to-orange-500/20 backdrop-blur-xl border-red-500/30">
+            <Card className="gov-card hover:shadow-md transition-shadow">
               <CardContent className="p-6 text-center">
-                <Thermometer className="h-12 w-12 mx-auto mb-4 text-red-400" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <Thermometer className="h-12 w-12 mx-auto mb-4 text-red-600" />
+                <div className="text-3xl font-bold text-gray-900 mb-2">
                   {(dashboardData.reduce((sum, d) => sum + d.avg_temperature, 0) / dashboardData.length).toFixed(1)}°C
                 </div>
-                <div className="text-red-200">Avg Temperature</div>
+                <div className="text-gray-600">Avg Temperature</div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl border-purple-500/30">
+            <Card className="gov-card hover:shadow-md transition-shadow">
               <CardContent className="p-6 text-center">
-                <Wind className="h-12 w-12 mx-auto mb-4 text-purple-400" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <Wind className="h-12 w-12 mx-auto mb-4 text-purple-600" />
+                <div className="text-3xl font-bold text-gray-900 mb-2">
                   {new Set(dashboardData.map(d => d.institution)).size}
                 </div>
-                <div className="text-purple-200">Institutions</div>
+                <div className="text-gray-600">Institutions</div>
               </CardContent>
             </Card>
           </div>
 
-          <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+          <Card className="gov-card">
             <CardHeader>
-              <CardTitle className="text-white">Data Quality Summary</CardTitle>
+              <CardTitle className="text-gray-900 font-semibold">Data Quality Summary</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-green-500/20 p-4 rounded-lg border border-green-500/30">
-                    <div className="text-green-300 text-sm font-medium">High Quality Data</div>
-                    <div className="text-2xl font-bold text-white">
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div className="text-gray-900 text-sm font-medium">High Quality Data</div>
+                    <div className="text-2xl font-bold text-gray-900">
                       {Math.round(dashboardData.length * 0.85)}
                     </div>
-                    <div className="text-green-200 text-sm">85% of floats</div>
+                    <div className="text-green-600 text-sm">85% of floats</div>
                   </div>
                   
-                  <div className="bg-yellow-500/20 p-4 rounded-lg border border-yellow-500/30">
-                    <div className="text-yellow-300 text-sm font-medium">Moderate Quality</div>
-                    <div className="text-2xl font-bold text-white">
+                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <div className="text-gray-900 text-sm font-medium">Moderate Quality</div>
+                    <div className="text-2xl font-bold text-gray-900">
                       {Math.round(dashboardData.length * 0.12)}
                     </div>
-                    <div className="text-yellow-200 text-sm">12% of floats</div>
+                    <div className="text-yellow-600 text-sm">12% of floats</div>
                   </div>
                   
-                  <div className="bg-red-500/20 p-4 rounded-lg border border-red-500/30">
-                    <div className="text-red-300 text-sm font-medium">Needs Review</div>
-                    <div className="text-2xl font-bold text-white">
+                  <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                    <div className="text-gray-900 text-sm font-medium">Needs Review</div>
+                    <div className="text-2xl font-bold text-gray-900">
                       {Math.round(dashboardData.length * 0.03)}
                     </div>
-                    <div className="text-red-200 text-sm">3% of floats</div>
+                    <div className="text-orange-600 text-sm">3% of floats</div>
                   </div>
                 </div>
               </div>

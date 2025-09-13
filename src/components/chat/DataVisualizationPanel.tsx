@@ -88,107 +88,73 @@ export const DataVisualizationPanel: React.FC<DataVisualizationPanelProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Network Overview */}
-      <Card className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-xl border-blue-500/20">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center justify-between">
-            <div className="flex items-center">
-              <Globe className="h-5 w-5 mr-2 text-blue-400" />
-              Network Overview
+    <div className="space-y-4">
+      {/* Quick Stats */}
+      <Card className="bg-slate-700 border-slate-600">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-white flex items-center text-sm">
+            <BarChart3 className="h-4 w-4 mr-2 text-blue-400" />
+            Data Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="text-center p-3 bg-slate-600 rounded">
+              <Activity className="h-5 w-5 mx-auto mb-1 text-green-400" />
+              <div className="text-lg font-bold text-white">
+                {floats.reduce((sum, f) => sum + (f.profiles?.length || 0), 0)}
+              </div>
+              <div className="text-green-200 text-xs">Profiles</div>
             </div>
-            <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+            
+            <div className="text-center p-3 bg-slate-600 rounded">
+              <Layers className="h-5 w-5 mx-auto mb-1 text-purple-400" />
+              <div className="text-lg font-bold text-white">
+                {new Set(floats.map(f => f.institution)).size}
+              </div>
+              <div className="text-purple-200 text-xs">Institutions</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Mini Chart */}
+      <Card className="bg-slate-700 border-slate-600">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-white flex items-center justify-between text-sm">
+            <div className="flex items-center">
+              <Globe className="h-4 w-4 mr-2 text-blue-400" />
+              Network
+            </div>
+            <Badge className="bg-blue-600/20 text-blue-300 border-blue-500/30 text-xs">
               {floats.length} floats
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-64">
+          <div className="h-32">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={overviewData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                 <XAxis 
                   dataKey="institution" 
                   stroke="rgba(255,255,255,0.7)"
-                  fontSize={10}
+                  fontSize={8}
                   angle={-45}
                   textAnchor="end"
-                  height={60}
+                  height={40}
                 />
-                <YAxis stroke="rgba(255,255,255,0.7)" fontSize={11} />
+                <YAxis stroke="rgba(255,255,255,0.7)" fontSize={8} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar 
                   dataKey="count" 
                   fill="#3b82f6"
-                  radius={[4, 4, 0, 0]}
+                  radius={[2, 2, 0, 0]}
                 />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
-
-      {/* Temperature Distribution */}
-      <Card className="bg-gradient-to-br from-red-500/10 to-orange-500/10 backdrop-blur-xl border-red-500/20">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center justify-between">
-            <div className="flex items-center">
-              <Thermometer className="h-5 w-5 mr-2 text-red-400" />
-              Temperature Distribution
-            </div>
-            <Badge className="bg-red-500/20 text-red-300 border-red-500/30">
-              Global Data
-            </Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={temperatureData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis 
-                  dataKey="range" 
-                  stroke="rgba(255,255,255,0.7)"
-                  fontSize={10}
-                  angle={-45}
-                  textAnchor="end"
-                  height={60}
-                />
-                <YAxis stroke="rgba(255,255,255,0.7)" fontSize={11} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar 
-                  dataKey="count" 
-                  fill="#ef4444"
-                  radius={[4, 4, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 gap-4">
-        <Card className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur-xl border-green-500/20">
-          <CardContent className="p-4 text-center">
-            <Activity className="h-8 w-8 mx-auto mb-2 text-green-400" />
-            <div className="text-2xl font-bold text-white">
-              {floats.reduce((sum, f) => sum + (f.profiles?.length || 0), 0).toLocaleString()}
-            </div>
-            <div className="text-green-200 text-sm">Total Profiles</div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl border-purple-500/20">
-          <CardContent className="p-4 text-center">
-            <Layers className="h-8 w-8 mx-auto mb-2 text-purple-400" />
-            <div className="text-2xl font-bold text-white">
-              {new Set(floats.map(f => f.institution)).size}
-            </div>
-            <div className="text-purple-200 text-sm">Institutions</div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 };

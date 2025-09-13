@@ -139,6 +139,120 @@ export const mockFloats: ArgoFloat[] = [
       status: "Active",
       qc_flags: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     }
+  },
+  {
+    wmo_id: "17234",
+    institution: "NIOT",
+    profiler_type: "844 (PROVOR)",
+    last_update: "2018-10-13T12:15:45Z",
+    trajectory: [
+      [75.5, 15.0],
+      [75.7, 15.2],
+      [75.9, 15.4],
+      [76.1, 15.6],
+      [76.3, 15.8],
+      [76.5, 16.0]
+    ],
+    profiles: [
+      {
+        cycle: 1,
+        date: "2018-05-01",
+        depths: [0, 25, 50, 75, 100, 150, 200, 300, 400, 500],
+        temperature: [31.2, 30.8, 30.4, 29.1, 26.8, 22.5, 18.2, 14.7, 11.4, 8.1],
+        salinity: [35.2, 35.1, 35.0, 34.9, 34.8, 34.7, 34.6, 34.5, 34.4, 34.3],
+        oxygen: [200, 195, 190, 185, 180, 160, 140, 120, 100, 80]
+      },
+      {
+        cycle: 2,
+        date: "2018-05-21",
+        depths: [0, 25, 50, 75, 100, 150, 200, 300, 400, 500],
+        temperature: [30.5, 30.1, 29.7, 28.4, 26.1, 21.8, 17.5, 14.0, 10.7, 7.4],
+        salinity: [35.1, 35.0, 34.9, 34.8, 34.7, 34.6, 34.5, 34.4, 34.3, 34.2],
+        oxygen: [205, 200, 195, 190, 185, 165, 145, 125, 105, 85]
+      }
+    ],
+    metadata: {
+      platform_number: "2902824",
+      deployment_date: "2018-03-15",
+      status: "Active",
+      qc_flags: [1, 1, 1, 2, 1, 1, 1, 1, 1, 2]
+    }
+  },
+  {
+    wmo_id: "18456",
+    institution: "WHOI",
+    profiler_type: "831 (APEX)",
+    last_update: "2018-10-14T08:42:18Z",
+    trajectory: [
+      [-45.0, 35.0],
+      [-44.8, 34.8],
+      [-44.6, 34.6],
+      [-44.4, 34.4],
+      [-44.2, 34.2],
+      [-44.0, 34.0]
+    ],
+    profiles: [
+      {
+        cycle: 1,
+        date: "2018-06-01",
+        depths: [0, 25, 50, 75, 100, 150, 200, 300, 400, 500],
+        temperature: [18.5, 18.1, 17.7, 16.4, 14.1, 11.8, 9.5, 7.2, 5.9, 4.6],
+        salinity: [36.0, 35.9, 35.8, 35.7, 35.6, 35.5, 35.4, 35.3, 35.2, 35.1],
+        oxygen: [260, 255, 250, 245, 240, 220, 200, 180, 160, 140]
+      }
+    ],
+    metadata: {
+      platform_number: "4902915",
+      deployment_date: "2018-04-10",
+      status: "Active",
+      qc_flags: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    }
+  },
+  {
+    wmo_id: "19678",
+    institution: "JMA",
+    profiler_type: "846 (NAVIS_A)",
+    last_update: "2018-10-15T14:20:33Z",
+    trajectory: [
+      [140.0, 30.0],
+      [140.2, 30.2],
+      [140.4, 30.4],
+      [140.6, 30.6],
+      [140.8, 30.8],
+      [141.0, 31.0]
+    ],
+    profiles: [
+      {
+        cycle: 1,
+        date: "2018-07-01",
+        depths: [0, 25, 50, 75, 100, 150, 200, 300, 400, 500],
+        temperature: [26.5, 26.1, 25.7, 24.4, 22.1, 18.8, 15.5, 12.2, 9.9, 7.6],
+        salinity: [34.8, 34.7, 34.6, 34.5, 34.4, 34.3, 34.2, 34.1, 34.0, 33.9],
+        oxygen: [230, 225, 220, 215, 210, 190, 170, 150, 130, 110]
+      },
+      {
+        cycle: 2,
+        date: "2018-07-21",
+        depths: [0, 25, 50, 75, 100, 150, 200, 300, 400, 500],
+        temperature: [25.8, 25.4, 25.0, 23.7, 21.4, 18.1, 14.8, 11.5, 9.2, 6.9],
+        salinity: [34.7, 34.6, 34.5, 34.4, 34.3, 34.2, 34.1, 34.0, 33.9, 33.8],
+        oxygen: [235, 230, 225, 220, 215, 195, 175, 155, 135, 115]
+      },
+      {
+        cycle: 3,
+        date: "2018-08-10",
+        depths: [0, 25, 50, 75, 100, 150, 200, 300, 400, 500],
+        temperature: [27.2, 26.8, 26.4, 25.1, 22.8, 19.5, 16.2, 12.9, 10.6, 8.3],
+        salinity: [34.9, 34.8, 34.7, 34.6, 34.5, 34.4, 34.3, 34.2, 34.1, 34.0],
+        oxygen: [228, 223, 218, 213, 208, 188, 168, 148, 128, 108]
+      }
+    ],
+    metadata: {
+      platform_number: "2903456",
+      deployment_date: "2018-05-20",
+      status: "Active",
+      qc_flags: [1, 1, 2, 1, 1, 1, 1, 2, 1, 1]
+    }
   }
 ];
 
@@ -190,6 +304,41 @@ export const mockChatResponses = [
     response: "Multi-float comparison reveals significant regional differences. Atlantic floats show different temperature-salinity characteristics compared to Indian Ocean floats, reflecting distinct water mass properties.",
     floatIds: ["13857", "15855", "16789"],
     plotType: "comparison",
+    variable: "temperature"
+  },
+  {
+    query: "seasonal temperature patterns",
+    response: "Seasonal temperature analysis shows clear annual cycles with surface warming during summer months and thermocline deepening during monsoon periods. Maximum temperatures occur in May-June (~30°C) with cooler periods in December-January.",
+    floatIds: ["15855", "17234"],
+    plotType: "timeseries",
+    variable: "temperature"
+  },
+  {
+    query: "oxygen minimum zone",
+    response: "The oxygen minimum zone analysis reveals a pronounced OMZ between 100-400m depth with oxygen concentrations below 20 μmol/kg. This feature is characteristic of the Arabian Sea and indicates strong biological oxygen consumption coupled with limited ventilation.",
+    floatIds: ["15855"],
+    plotType: "area",
+    variable: "oxygen"
+  },
+  {
+    query: "data quality flags",
+    response: "Quality control analysis demonstrates excellent data reliability with 72.5% of measurements receiving 'Good' flags, 21% 'Probably Good', and only 6.5% requiring review. This reflects robust automated and manual QC procedures.",
+    floatIds: ["13857", "15855", "16789"],
+    plotType: "pie",
+    variable: "quality"
+  },
+  {
+    query: "halocline structure",
+    response: "Salinity stratification analysis shows distinct halocline development. Surface mixed layer salinity varies regionally: Arabian Sea (35.2 PSU), Bay of Bengal (33.8 PSU), with subsurface maximum indicating water mass characteristics.",
+    floatIds: ["15855", "17234"],
+    plotType: "comparison",
+    variable: "salinity"
+  },
+  {
+    query: "thermocline analysis",
+    response: "Thermocline analysis reveals typical tropical structure with surface mixed layer extending to ~50m (28°C), sharp thermocline from 50-200m, and stable deep water temperatures (~5°C below 400m).",
+    floatIds: ["13857"],
+    plotType: "profile",
     variable: "temperature"
   }
 ];

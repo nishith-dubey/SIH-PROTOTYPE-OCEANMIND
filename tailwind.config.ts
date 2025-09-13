@@ -64,6 +64,17 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Indian Government Color Palette
+        gov: {
+          saffron: '#FF9933',
+          white: '#FFFFFF',
+          green: '#138808',
+          navy: '#000080',
+          darkblue: '#003366',
+          lightgray: '#F8F9FA',
+          darkgray: '#6C757D',
+          ashoka: '#000080', // Ashoka Chakra blue
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

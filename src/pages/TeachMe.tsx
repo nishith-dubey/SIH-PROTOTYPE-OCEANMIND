@@ -178,7 +178,7 @@ const TeachMe = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-pink-950 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-slate-900 text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       <FloatingParticles />
 
@@ -214,27 +214,27 @@ const TeachMe = () => {
                 
                 {/* Language Toggle */}
                 <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-                  <Button
-                    size="sm"
-                    variant={selectedLanguage === 'en' ? 'default' : 'ghost'}
-                    onClick={() => setSelectedLanguage('en')}
-                    className={`${selectedLanguage === 'en' 
-                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white' 
-                      : 'text-pink-300 hover:text-white'} transition-all duration-300`}
-                  >
-                    <Languages className="h-3 w-3 mr-1" />
-                    EN
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={selectedLanguage === 'hi' ? 'default' : 'ghost'}
-                    onClick={() => setSelectedLanguage('hi')}
-                    className={`${selectedLanguage === 'hi' 
-                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white' 
-                      : 'text-pink-300 hover:text-white'} transition-all duration-300`}
-                  >
-                    हिं
-                  </Button>
+                    <Button
+                      size="sm"
+                      variant={selectedLanguage === 'en' ? 'default' : 'ghost'}
+                      onClick={() => setSelectedLanguage('en')}
+                      className={`${selectedLanguage === 'en' 
+                        ? 'bg-pink-600 text-white' 
+                        : 'text-pink-300 hover:text-white hover:bg-pink-600/20'} transition-all duration-300`}
+                    >
+                      <Languages className="h-3 w-3 mr-1" />
+                      EN
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={selectedLanguage === 'hi' ? 'default' : 'ghost'}
+                      onClick={() => setSelectedLanguage('hi')}
+                      className={`${selectedLanguage === 'hi' 
+                        ? 'bg-pink-600 text-white' 
+                        : 'text-pink-300 hover:text-white hover:bg-pink-600/20'} transition-all duration-300`}
+                    >
+                      हिं
+                    </Button>
                 </div>
               </div>
             </div>
@@ -248,34 +248,41 @@ const TeachMe = () => {
             <Tabs defaultValue="quality-control" className="space-y-8">
               
               {/* Enhanced Tab List */}
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-white/5 backdrop-blur-xl border border-white/10 p-1 rounded-xl">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-slate-800 border border-slate-700 p-1 rounded-xl">
                 <TabsTrigger 
                   value="quality-control" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 text-white transition-all duration-300 hover:scale-105"
+                  className="data-[state=active]:bg-pink-600 text-white transition-all duration-300 hover:scale-105"
                 >
                   <CheckCircle className="h-4 w-4 mr-2" />
                   Quality Control
                 </TabsTrigger>
                 <TabsTrigger 
                   value="data-modes"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 text-white transition-all duration-300 hover:scale-105"
+                  className="data-[state=active]:bg-blue-600 text-white transition-all duration-300 hover:scale-105"
                 >
                   <Database className="h-4 w-4 mr-2" />
                   Data Modes
                 </TabsTrigger>
                 <TabsTrigger 
                   value="float-types"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 text-white transition-all duration-300 hover:scale-105"
+                  className="data-[state=active]:bg-green-600 text-white transition-all duration-300 hover:scale-105"
                 >
                   <Waves className="h-4 w-4 mr-2" />
                   Float Types
                 </TabsTrigger>
                 <TabsTrigger 
                   value="interpretation"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-600 text-white transition-all duration-300 hover:scale-105"
+                  className="data-[state=active]:bg-orange-600 text-white transition-all duration-300 hover:scale-105"
                 >
                   <Eye className="h-4 w-4 mr-2" />
                   Interpretation
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="tutorials"
+                  className="data-[state=active]:bg-purple-600 text-white transition-all duration-300 hover:scale-105"
+                >
+                  <GraduationCap className="h-4 w-4 mr-2" />
+                  Tutorials
                 </TabsTrigger>
               </TabsList>
 
@@ -319,7 +326,7 @@ const TeachMe = () => {
                       })}
                     </div>
                     
-                    <Card className="mt-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border-purple-500/20">
+                    <Card className="mt-6 bg-slate-800 border-purple-500/30">
                       <CardContent className="p-4">
                         <div className="flex items-start space-x-3">
                           <Zap className="h-5 w-5 text-yellow-400 mt-1" />
@@ -409,7 +416,7 @@ const TeachMe = () => {
                 </Card>
 
                 {/* Oceanographic Terms */}
-                <Card className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border-cyan-500/20">
+                <Card className="bg-slate-800 border-cyan-500/30">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center">
                       <Globe className="h-6 w-6 mr-3 text-cyan-400" />
@@ -466,6 +473,197 @@ const TeachMe = () => {
                           </Card>
                         );
                       })}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              {/* New Tutorials Tab */}
+              <TabsContent value="tutorials" className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Beginner Tutorial */}
+                  <Card className="bg-slate-800 border-green-500/30">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center">
+                        <div className="p-3 bg-green-600 rounded-xl mr-4">
+                          <Target className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold">Beginner's Guide</h3>
+                          <p className="text-sm text-green-200 font-normal">Start your ocean data journey</p>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3 p-3 bg-slate-700 rounded-lg">
+                          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                          <div>
+                            <h4 className="font-semibold text-white">Understanding Argo Floats</h4>
+                            <p className="text-sm text-gray-300">Learn what Argo floats are and how they work</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-3 bg-slate-700 rounded-lg">
+                          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                          <div>
+                            <h4 className="font-semibold text-white">Reading Basic Profiles</h4>
+                            <p className="text-sm text-gray-300">How to interpret temperature and salinity profiles</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-3 bg-slate-700 rounded-lg">
+                          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                          <div>
+                            <h4 className="font-semibold text-white">Quality Control Basics</h4>
+                            <p className="text-sm text-gray-300">Understanding data quality flags and what they mean</p>
+                          </div>
+                        </div>
+                      </div>
+                      <Button className="w-full bg-green-600 hover:bg-green-500 text-white">
+                        Start Tutorial
+                      </Button>
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Advanced Tutorial */}
+                  <Card className="bg-slate-800 border-purple-500/30">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center">
+                        <div className="p-3 bg-purple-600 rounded-xl mr-4">
+                          <Brain className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold">Advanced Analysis</h3>
+                          <p className="text-sm text-purple-200 font-normal">For experienced researchers</p>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3 p-3 bg-slate-700 rounded-lg">
+                          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                          <div>
+                            <h4 className="font-semibold text-white">Water Mass Analysis</h4>
+                            <p className="text-sm text-gray-300">Identify different water masses using T-S diagrams</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-3 bg-slate-700 rounded-lg">
+                          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                          <div>
+                            <h4 className="font-semibold text-white">Trend Analysis</h4>
+                            <p className="text-sm text-gray-300">Statistical methods for long-term climate studies</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 p-3 bg-slate-700 rounded-lg">
+                          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                          <div>
+                            <h4 className="font-semibold text-white">Data Processing</h4>
+                            <p className="text-sm text-gray-300">Advanced techniques for data calibration and correction</p>
+                          </div>
+                        </div>
+                      </div>
+                      <Button className="w-full bg-purple-600 hover:bg-purple-500 text-white">
+                        Start Advanced Course
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+                
+                {/* Common Data Analysis Patterns */}
+                <Card className="bg-slate-800 border-yellow-500/30">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <TrendingUp className="h-6 w-6 mr-3 text-yellow-400" />
+                      Common Analysis Patterns
+                    </CardTitle>
+                    <p className="text-yellow-200/80">
+                      Recognize these typical patterns in oceanographic data to gain insights into ocean processes.
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Card className="bg-slate-700 border-red-500/30">
+                        <CardContent className="p-4">
+                          <div className="flex items-center space-x-3 mb-3">
+                            <div className="p-2 bg-red-600 rounded-lg">
+                              <Thermometer className="h-5 w-5 text-white" />
+                            </div>
+                            <h4 className="font-semibold text-white">Temperature Inversion</h4>
+                          </div>
+                          <p className="text-sm text-gray-300">Temperature increases with depth, often indicating mixing processes or specific water masses.</p>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card className="bg-slate-700 border-blue-500/30">
+                        <CardContent className="p-4">
+                          <div className="flex items-center space-x-3 mb-3">
+                            <div className="p-2 bg-blue-600 rounded-lg">
+                              <Droplets className="h-5 w-5 text-white" />
+                            </div>
+                            <h4 className="font-semibold text-white">Salinity Maximum</h4>
+                          </div>
+                          <p className="text-sm text-gray-300">Subsurface salinity peaks often indicate Mediterranean or Red Sea water intrusion.</p>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card className="bg-slate-700 border-green-500/30">
+                        <CardContent className="p-4">
+                          <div className="flex items-center space-x-3 mb-3">
+                            <div className="p-2 bg-green-600 rounded-lg">
+                              <Wind className="h-5 w-5 text-white" />
+                            </div>
+                            <h4 className="font-semibold text-white">Oxygen Minimum Zone</h4>
+                          </div>
+                          <p className="text-sm text-gray-300">Low oxygen regions typically found at 200-1000m depth due to biological processes.</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Research Applications */}
+                <Card className="bg-slate-800 border-indigo-500/30">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Sparkles className="h-6 w-6 mr-3 text-indigo-400" />
+                      Research Applications
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold text-white mb-3">Climate Studies</h4>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>Ocean heat content analysis</span>
+                          </li>
+                          <li className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>Sea level rise contributions</span>
+                          </li>
+                          <li className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>Deep water formation rates</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-white mb-3">Ocean Circulation</h4>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>Water mass tracking</span>
+                          </li>
+                          <li className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>Current system monitoring</span>
+                          </li>
+                          <li className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>Mixing process studies</span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

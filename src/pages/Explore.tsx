@@ -462,7 +462,7 @@ const Explore = () => {
   const validFloatsCount = getValidFloats(floats).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-slate-900 text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       <FloatingParticles />
 
@@ -516,7 +516,7 @@ const Explore = () => {
             }`}>
               
               {/* Prediction Controls */}
-              <Card className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-xl border-blue-500/20 hover:scale-105 transition-all duration-300">
+              <Card className="bg-slate-800 border-blue-500/30 hover:scale-105 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
                     <Navigation className="h-5 w-5 mr-2 text-blue-400" />
@@ -530,7 +530,7 @@ const Explore = () => {
                       size="sm"
                       variant={showPredictions ? "default" : "outline"}
                       onClick={() => setShowPredictions(!showPredictions)}
-                      className={showPredictions ? "bg-blue-600 hover:bg-blue-500" : "border-blue-500 text-blue-400"}
+                      className={showPredictions ? "bg-blue-600 hover:bg-blue-500 text-white" : "border-blue-500 text-blue-300 bg-slate-800 hover:bg-slate-700"}
                     >
                       {showPredictions ? "ON" : "OFF"}
                     </Button>
@@ -722,7 +722,7 @@ const Explore = () => {
               </Card>
 
               {/* Enhanced Stats */}
-              <Card className="bg-gradient-to-br from-emerald-500/10 to-green-500/10 backdrop-blur-xl border-emerald-500/20 hover:scale-105 transition-all duration-300">
+              <Card className="bg-slate-800 border-emerald-500/30 hover:scale-105 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
                     <Activity className="h-5 w-5 mr-2 text-emerald-400 animate-pulse" />
