@@ -1,8 +1,8 @@
-# OceanMind Pro - AI-Powered Ocean Data Platform
+# OceanMind - AI-Powered Ocean Data Platform
 
 🌊 A comprehensive oceanographic data visualization platform developed for the Government of India's Ministry of Earth Sciences, featuring advanced ARGO float data analysis with AI-assisted insights.
 
-![OceanMind Pro](https://img.shields.io/badge/Version-1.0.0-blue) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6) ![Vite](https://img.shields.io/badge/Vite-5.4.20-646CFF)
+![OceanMind](https://img.shields.io/badge/Version-1.0.0-blue) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6) ![Vite](https://img.shields.io/badge/Vite-5.4.20-646CFF)
 
 ## 🚀 Features
 
