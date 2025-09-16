@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Home,
   MessageSquare,
@@ -14,9 +14,9 @@ import {
   LogIn,
   Menu,
   X,
-  Waves
-} from 'lucide-react';
-import { BarChart3 as DashboardIcon } from 'lucide-react';
+  Waves,
+} from "lucide-react";
+import { BarChart3 as DashboardIcon } from "lucide-react";
 
 const GovernmentNavigation = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const GovernmentNavigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else {
@@ -39,22 +39,22 @@ const GovernmentNavigation = () => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   const isActive = (path: string) => location.pathname === path;
 
   const navItems = [
-    { path: '/', icon: Home, label: 'Home' },
-    { path: '/chat', icon: MessageSquare, label: 'Chat' },
-    { path: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
-    { path: '/explore', icon: Map, label: 'Explore' },
-    { path: '/analytics', icon: BarChart3, label: 'Analytics' },
-    { path: '/profiles', icon: LineChart, label: 'Profiles' },
-    { path: '/hovmoller', icon: Activity, label: 'Hovmöller' },
-    { path: '/compare', icon: BarChart3, label: 'Compare' },
-    { path: '/provenance', icon: FileText, label: 'Provenance' }
+    { path: "/", icon: Home, label: "Home" },
+    { path: "/chat", icon: MessageSquare, label: "Chat" },
+    { path: "/dashboard", icon: DashboardIcon, label: "Dashboard" },
+    { path: "/explore", icon: Map, label: "Explore" },
+    { path: "/analytics", icon: BarChart3, label: "Analytics" },
+    { path: "/profiles", icon: LineChart, label: "Profiles" },
+    { path: "/hovmoller", icon: Activity, label: "Hovmöller" },
+    { path: "/compare", icon: BarChart3, label: "Compare" },
+    { path: "/provenance", icon: FileText, label: "Provenance" },
   ];
 
   const toggleMobileMenu = () => {
@@ -66,27 +66,23 @@ const GovernmentNavigation = () => {
       {/* Government Header */}
       <header
         className={`fixed top-0 left-0 bg-black right-0 z-50 transition-all duration-300 ease-in-out border-zinc-800 shadow-lg ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
-        } ${
-          isScrolled
-            ? 'border-b'
-            : 'bg-transparent'
-        }`}
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${isScrolled ? "border-b" : "bg-transparent"}`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            
             {/* Logo and Brand */}
             <div className="flex items-center space-x-3 pr-5">
               <Link to="/" className="flex items-center space-x-2 group">
-                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300">
-                  {/* < className="w-6 h-6 text-white" /> */}
-                  <Waves className="w-6 h-6 text-white"/>
-                </div>
+                <img
+                  src="/favicon.ico"
+                  alt="App Logo"
+                  width="36"
+                  height="36"
+                  className="rounded-full"
+                />
                 <div className="hidden sm:block">
-                  <h1 className="text-xl font-bold text-white">
-                    OceanMind
-                  </h1>
+                  <h1 className="text-xl font-bold text-white">OceanMind</h1>
                 </div>
               </Link>
             </div>
@@ -99,8 +95,8 @@ const GovernmentNavigation = () => {
                   to={item.path}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive(item.path)
-                      ? 'bg-indigo-600/10 text-indigo-400'
-                      : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                      ? "bg-indigo-600/10 text-indigo-400"
+                      : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
                   }`}
                 >
                   <item.icon className="w-4 h-4" />
@@ -111,7 +107,6 @@ const GovernmentNavigation = () => {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-2">
-              
               {/* User Menu */}
               <Button
                 variant="ghost"
@@ -152,7 +147,6 @@ const GovernmentNavigation = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-zinc-800 bg-black">
             <div className="container mx-auto px-4 py-4">
-              
               {/* Mobile Navigation Items */}
               <div className="space-y-1 mb-4">
                 {navItems.map((item, index) => (
@@ -162,8 +156,8 @@ const GovernmentNavigation = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                       isActive(item.path)
-                        ? 'bg-indigo-600/10 text-indigo-400'
-                        : 'text-zinc-300 hover:bg-zinc-800'
+                        ? "bg-indigo-600/10 text-indigo-400"
+                        : "text-zinc-300 hover:bg-zinc-800"
                     }`}
                   >
                     <item.icon className="h-5 w-5" />
