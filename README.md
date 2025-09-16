@@ -1,8 +1,8 @@
-# AquaScope Pro - AI-Powered Ocean Data Platform
+# OceanMind Pro - AI-Powered Ocean Data Platform
 
 🌊 A comprehensive oceanographic data visualization platform developed for the Government of India's Ministry of Earth Sciences, featuring advanced ARGO float data analysis with AI-assisted insights.
 
-![AquaScope Pro](https://img.shields.io/badge/Version-1.0.0-blue) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6) ![Vite](https://img.shields.io/badge/Vite-5.4.20-646CFF)
+![OceanMind Pro](https://img.shields.io/badge/Version-1.0.0-blue) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6) ![Vite](https://img.shields.io/badge/Vite-5.4.20-646CFF)
 
 ## 🚀 Features
 
@@ -266,7 +266,7 @@ This project is developed for the Government of India, Ministry of Earth Science
 ## 📞 Support
 
 For technical support or questions:
-- 📧 Email: support@aquascope.gov.in
+- 📧 Email: support@OceanMind.gov.in
 - 🏛️ Policy: policy@moes.gov.in
 - 📞 Phone: 1800-XXX-XXXX (Toll Free)
 
