@@ -28,7 +28,7 @@ const Login = () => {
         localStorage.setItem('auth_token', 'mock_token_' + Date.now());
         window.location.href = '/dashboard';
       } else {
-        setError('Invalid email or password. Use admin@oceandataportal.gov.in / admin123 for demo');
+        setError('Invalid email or password. Use demo credentials provided.');
       }
       setLoading(false);
     }, 1500);
@@ -42,27 +42,27 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4">
+          <div className="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
             <Database className="h-8 w-8 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-foreground">Sign In</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h2 className="text-3xl font-bold text-white">Sign In</h2>
+          <p className="mt-2 text-sm text-zinc-400">
             Access your Ocean Data Portal account
           </p>
         </div>
 
         {/* Login Form */}
-        <Card className="shadow-lg border-0 bg-white">
+        <Card className="shadow-lg border-zinc-800 bg-zinc-900">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-center text-lg font-semibold">
+            <CardTitle className="text-center text-lg font-semibold text-white">
               Authorized Personnel Only
             </CardTitle>
-            <div className="flex items-center justify-center text-sm text-muted-foreground">
-              <Shield className="h-4 w-4 mr-1" />
+            <div className="flex items-center justify-center text-sm text-zinc-400">
+              <Shield className="h-4 w-4 mr-1 text-green-400" />
               Secure Government Portal
             </div>
           </CardHeader>
@@ -75,7 +75,7 @@ const Login = () => {
               )}
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email" className="text-zinc-300">Email Address</Label>
                 <Input
                   id="email"
                   name="email"
@@ -84,12 +84,12 @@ const Login = () => {
                   placeholder="your.email@gov.in"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full"
+                  className="w-full bg-zinc-950 border-zinc-700 text-white placeholder-zinc-500 focus:border-indigo-500"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-zinc-300">Password</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -99,7 +99,7 @@ const Login = () => {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full pr-10"
+                    className="w-full pr-10 bg-zinc-950 border-zinc-700 text-white placeholder-zinc-500 focus:border-indigo-500"
                   />
                   <button
                     type="button"
@@ -107,9 +107,9 @@ const Login = () => {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4 text-zinc-500" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4 text-zinc-500" />
                     )}
                   </button>
                 </div>
@@ -119,7 +119,7 @@ const Login = () => {
                 <div className="text-sm">
                   <Link 
                     to="/forgot-password" 
-                    className="text-primary hover:text-primary/80 font-medium"
+                    className="text-indigo-400 hover:text-indigo-300 font-medium"
                   >
                     Forgot password?
                   </Link>
@@ -128,7 +128,7 @@ const Login = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary/90"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
                 disabled={loading}
               >
                 {loading ? (
@@ -148,14 +148,14 @@ const Login = () => {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-muted" />
+                  <div className="w-full border-t border-zinc-700" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-muted-foreground">Demo Credentials</span>
+                  <span className="bg-zinc-900 px-2 text-zinc-400">Demo Credentials</span>
                 </div>
               </div>
               <div className="mt-4 text-center">
-                <div className="text-sm text-muted-foreground bg-muted p-3 rounded-md">
+                <div className="text-sm text-zinc-300 bg-zinc-950 p-3 rounded-md border border-zinc-800">
                   <p className="font-medium">Email: admin@oceandataportal.gov.in</p>
                   <p className="font-medium">Password: admin123</p>
                 </div>
@@ -163,11 +163,11 @@ const Login = () => {
             </div>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-zinc-400">
                 Don't have an account?{' '}
                 <Link 
                   to="/signup" 
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-medium text-indigo-400 hover:text-indigo-300"
                 >
                   Register here
                 </Link>
@@ -177,7 +177,7 @@ const Login = () => {
         </Card>
 
         {/* Footer */}
-        <div className="text-center text-xs text-muted-foreground">
+        <div className="text-center text-xs text-zinc-500">
           <p>Ministry of Earth Sciences, Government of India</p>
           <p className="mt-1">
             By signing in, you agree to our Terms of Service and Privacy Policy

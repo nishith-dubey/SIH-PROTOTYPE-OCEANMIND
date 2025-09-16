@@ -178,7 +178,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, floats }) => 
     if (content.includes('quality') || content.includes('flags')) {
       return {
         distribution: [
-          { flag: 'Good (1)', count: 1450, percentage: 72.5, color: '#10b981', description: 'High quality, no issues detected' },
+          { flag: 'Good (1)', count: 1450, percentage: 72.5, color: '#22c55e', description: 'High quality, no issues detected' },
           { flag: 'Probably Good (2)', count: 420, percentage: 21.0, color: '#f59e0b', description: 'Minor flags, data usable with caution' },
           { flag: 'Probably Bad (3)', count: 80, percentage: 4.0, color: '#f97316', description: 'Significant issues, requires review' },
           { flag: 'Bad (4)', count: 50, percentage: 2.5, color: '#ef4444', description: 'Poor quality, should be excluded' }
@@ -450,8 +450,8 @@ For technical support, contact the data management team.
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 p-3 rounded-lg shadow-xl">
-          <p className="text-cyan-300 font-semibold mb-1">{label}</p>
+        <div className="bg-zinc-950/90 backdrop-blur-xl border border-indigo-500/30 p-3 rounded-lg shadow-xl">
+          <p className="text-indigo-300 font-semibold mb-1">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} style={{ color: entry.color }} className="text-sm">
               {`${entry.name || entry.dataKey}: ${entry.value?.toFixed?.(2) || entry.value}`}
@@ -480,9 +480,9 @@ For technical support, contact the data management team.
                 label={{ value: 'Temperature (°C)', angle: -90, position: 'insideLeft' }} />
               <Tooltip content={<CustomTooltip />} />
               <Line type="monotone" dataKey="temperature"
-                stroke="#ef4444" strokeWidth={3}
-                dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: '#ef4444', stroke: '#fff', strokeWidth: 2 }}
+                stroke="#4f46e5" strokeWidth={3}
+                dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, fill: '#4f46e5', stroke: '#fff', strokeWidth: 2 }}
               />
             </RechartsLineChart>
           </ResponsiveContainer>
@@ -499,8 +499,8 @@ For technical support, contact the data management team.
               <XAxis dataKey="month" stroke="rgba(255,255,255,0.7)" fontSize={11} />
               <YAxis stroke="rgba(255,255,255,0.7)" fontSize={11} />
               <Tooltip content={<CustomTooltip />} />
-              <Line type="monotone" dataKey="temperature" stroke="#ef4444" strokeWidth={3} name="Surface Temp (°C)" />
-              <Line type="monotone" dataKey="thermocline_depth" stroke="#06b6d4" strokeWidth={3} name="Thermocline Depth (m)" />
+              <Line type="monotone" dataKey="temperature" stroke="#4f46e5" strokeWidth={3} name="Surface Temp (°C)" />
+              <Line type="monotone" dataKey="thermocline_depth" stroke="#22c55e" strokeWidth={3} name="Thermocline Depth (m)" />
             </RechartsLineChart>
           </ResponsiveContainer>
         </div>
@@ -519,9 +519,9 @@ For technical support, contact the data management team.
               <YAxis
                 stroke="rgba(255,255,255,0.7)" fontSize={11} label={{ value: 'Salinity (PSU)', angle: -90, position: 'insideLeft' }} />
               <Tooltip content={<CustomTooltip />} />
-              <Line type="monotone" dataKey="Arabian Sea" stroke="#8b5cf6" strokeWidth={3} />
-              <Line type="monotone" dataKey="Bay of Bengal" stroke="#06b6d4" strokeWidth={3} />
-              <Line type="monotone" dataKey="Indian Ocean" stroke="#10b981" strokeWidth={3} />
+              <Line type="monotone" dataKey="Arabian Sea" stroke="#4f46e5" strokeWidth={3} />
+              <Line type="monotone" dataKey="Bay of Bengal" stroke="#3b82f6" strokeWidth={3} />
+              <Line type="monotone" dataKey="Indian Ocean" stroke="#22c55e" strokeWidth={3} />
             </RechartsLineChart>
           </ResponsiveContainer>
         </div>
@@ -537,7 +537,7 @@ For technical support, contact the data management team.
               <XAxis dataKey="depth" stroke="rgba(255,255,255,0.7)" fontSize={11} label={{ value: 'Depth (m)', position: 'insideBottom', offset: -5 }} />
               <YAxis stroke="rgba(255,255,255,0.7)" fontSize={11} label={{ value: 'Oxygen (μmol/kg)', angle: -90, position: 'insideLeft' }} />
               <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="oxygen" stroke="#10b981" fill="#10b98120" strokeWidth={3} name="Dissolved Oxygen" />
+              <Area type="monotone" dataKey="oxygen" stroke="#22c55e" fill="#22c55e20" strokeWidth={3} name="Dissolved Oxygen" />
               <Area type="monotone" dataKey="saturation" stroke="#f59e0b" fill="#f59e0b20" strokeWidth={2} name="% Saturation" />
             </AreaChart>
           </ResponsiveContainer>
@@ -568,8 +568,8 @@ For technical support, contact the data management team.
                   if (payload && payload[0]) {
                     const data = payload[0].payload;
                     return (
-                      <div className="bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 p-3 rounded-lg shadow-xl">
-                        <p className="text-cyan-300 font-semibold">{data.flag}</p>
+                      <div className="bg-zinc-950/90 backdrop-blur-xl border border-indigo-500/30 p-3 rounded-lg shadow-xl">
+                        <p className="text-indigo-300 font-semibold">{data.flag}</p>
                         <p className="text-sm">Count: {data.count}</p>
                         <p className="text-sm">Percentage: {data.percentage}%</p>
                       </div>
@@ -589,11 +589,11 @@ For technical support, contact the data management team.
 
   const getVariableIcon = () => {
     const content = message.content.toLowerCase();
-    if (content.includes('temperature')) return <Thermometer className="h-4 w-4 text-red-400" />;
+    if (content.includes('temperature')) return <Thermometer className="h-4 w-4 text-indigo-400" />;
     if (content.includes('salinity')) return <Droplets className="h-4 w-4 text-blue-400" />;
     if (content.includes('oxygen')) return <Wind className="h-4 w-4 text-green-400" />;
-    if (content.includes('quality')) return <Activity className="h-4 w-4 text-purple-400" />;
-    return <TrendingUp className="h-4 w-4 text-cyan-400" />;
+    if (content.includes('quality')) return <Activity className="h-4 w-4 text-indigo-400" />;
+    return <TrendingUp className="h-4 w-4 text-indigo-400" />;
   };
 
   const getChartTitle = () => {
@@ -619,7 +619,7 @@ For technical support, contact the data management team.
     <div className="w-full">
       <div className="text-sm leading-relaxed whitespace-pre-line">{message.content}</div>
       {shouldShowVisualization && (
-        <Card className="mt-4 bg-slate-800/50 backdrop-blur-xl border-slate-600">
+        <Card className="mt-4 bg-zinc-900/50 backdrop-blur-xl border-zinc-800">
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-3">
@@ -629,7 +629,7 @@ For technical support, contact the data management team.
                 </span>
               </div>
               <div className="flex items-center space-x-3">
-                <Badge className="bg-cyan-500/20 text-cyan-300 border-cyan-500/30 px-3 py-1">
+                <Badge className="bg-blue-600/20 text-blue-300 border-blue-500/30 px-3 py-1">
                   <Zap className="h-3 w-3 mr-1" />
                   Live Data
                 </Badge>
@@ -637,7 +637,7 @@ For technical support, contact the data management team.
                   size="sm"
                   variant="ghost"
                   onClick={handleExportData}
-                  className="text-cyan-400 hover:text-white hover:bg-slate-700 px-3 py-1"
+                  className="text-indigo-400 hover:text-white hover:bg-zinc-700 px-3 py-1"
                 >
                   <Download className="h-4 w-4 mr-1" />
                   Export Report
@@ -645,31 +645,31 @@ For technical support, contact the data management team.
               </div>
             </div>
             {renderEnhancedVisualization()}
-            <div className="mt-4 p-3 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg border border-slate-600">
+            <div className="mt-4 p-3 bg-zinc-950 rounded-lg border border-zinc-800">
               <div className="flex items-center space-x-2 mb-2">
-                <Eye className="h-4 w-4 text-cyan-400" />
-                <span className="text-sm font-medium text-cyan-300">AI Analysis</span>
+                <Eye className="h-4 w-4 text-indigo-400" />
+                <span className="text-sm font-medium text-indigo-300">AI Analysis</span>
               </div>
-              <div className="text-xs text-slate-300 leading-relaxed whitespace-pre-line font-mono">
+              <div className="text-xs text-zinc-300 leading-relaxed whitespace-pre-line font-mono">
                 {getComprehensiveAnalysisText()}
               </div>
             </div>
             <div className="mt-3 grid grid-cols-4 gap-2">
-              <div className="text-center p-2 bg-slate-700/30 rounded">
+              <div className="text-center p-2 bg-zinc-800/50 rounded">
                 <div className="text-sm font-bold text-white">{visualizationData?.length || 0}</div>
-                <div className="text-[10px] text-slate-400">Points</div>
+                <div className="text-[10px] text-zinc-400">Points</div>
               </div>
-              <div className="text-center p-2 bg-slate-700/30 rounded">
+              <div className="text-center p-2 bg-zinc-800/50 rounded">
                 <div className="text-sm font-bold text-green-400">98.2%</div>
-                <div className="text-[10px] text-slate-400">Accuracy</div>
+                <div className="text-[10px] text-zinc-400">Accuracy</div>
               </div>
-              <div className="text-center p-2 bg-slate-700/30 rounded">
+              <div className="text-center p-2 bg-zinc-800/50 rounded">
                 <div className="text-sm font-bold text-blue-400">Live</div>
-                <div className="text-[10px] text-slate-400">Data</div>
+                <div className="text-[10px] text-zinc-400">Data</div>
               </div>
-              <div className="text-center p-2 bg-slate-700/30 rounded">
-                <div className="text-sm font-bold text-cyan-400">IOC</div>
-                <div className="text-[10px] text-slate-400">QC</div>
+              <div className="text-center p-2 bg-zinc-800/50 rounded">
+                <div className="text-sm font-bold text-indigo-400">IOC</div>
+                <div className="text-[10px] text-zinc-400">QC</div>
               </div>
             </div>
           </CardContent>
@@ -791,19 +791,19 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="flex h-screen bg-black">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 right-0 z-50 w-80 bg-slate-800/95 backdrop-blur-xl border-l border-slate-700 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex items-center justify-between p-4 border-b border-slate-700">
+      <div className={`fixed inset-y-0 right-0 z-50 w-80 bg-zinc-950 backdrop-blur-xl border-l border-zinc-800 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex items-center justify-between p-4 border-b border-zinc-800">
           <h2 className="text-lg font-semibold text-white flex items-center">
-            <Search className="h-5 w-5 mr-2 text-cyan-400" />
+            <Search className="h-5 w-5 mr-2 text-indigo-400" />
             Quick Questions
           </h2>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setSidebarOpen(false)}
-            className="text-slate-400 hover:text-white"
+            className="text-zinc-400 hover:text-white"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -815,14 +815,14 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
               <div key={categoryIndex} className="space-y-2">
                 <button
                   onClick={() => setActiveCategory(activeCategory === category.category ? null : category.category)}
-                  className="w-full flex items-center justify-between p-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors"
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="text-cyan-400">{category.icon}</div>
+                    <div className="text-indigo-400">{category.icon}</div>
                     <span className="text-sm font-medium text-white">{category.category}</span>
                   </div>
                   <div className={`transform transition-transform ${activeCategory === category.category ? 'rotate-180' : ''}`}>
-                    <TrendingUp className="h-4 w-4 text-slate-400" />
+                    <TrendingUp className="h-4 w-4 text-zinc-400" />
                   </div>
                 </button>
 
@@ -832,7 +832,7 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
                       <button
                         key={questionIndex}
                         onClick={() => handleQuickQuestion(question)}
-                        className="w-full text-left p-2 text-sm text-slate-300 hover:text-white hover:bg-slate-600/50 rounded transition-colors"
+                        className="w-full text-left p-2 text-sm text-zinc-300 hover:text-white hover:bg-zinc-800 rounded transition-colors"
                       >
                         {question}
                       </button>
@@ -848,7 +848,7 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
       {/* Sidebar Toggle Button */}
       <Button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed top-4 right-4 z-40 bg-cyan-600 hover:bg-cyan-700 text-white shadow-lg"
+        className="fixed top-4 right-4 z-40 bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg"
         size="sm"
       >
         {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -857,14 +857,14 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <div className="bg-slate-800/50 backdrop-blur-xl border-b border-slate-700 p-4">
+        <div className="bg-zinc-950 backdrop-blur-xl border-b border-zinc-800 p-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
               <Globe className="h-5 w-5 text-white" />
             </div>
             <div>
               <h1 className="text-lg font-semibold text-white">Oceanographic Analysis System</h1>
-              <p className="text-sm text-slate-400">AI-powered marine data analysis</p>
+              <p className="text-sm text-zinc-400">AI-powered marine data analysis</p>
             </div>
           </div>
         </div>
@@ -877,8 +877,8 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
               <div className={`flex max-w-[85%] ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start space-x-3`}>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   message.type === 'user'
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600'
-                    : 'bg-gradient-to-r from-cyan-500 to-green-500'
+                    ? 'bg-indigo-600'
+                    : 'bg-zinc-700'
                 }`}>
                   {message.type === 'user'
                     ? <User className="h-4 w-4 text-white" />
@@ -887,10 +887,10 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
                 </div>
                 <div className={`rounded-2xl p-4 ${
                   message.type === 'user'
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white ml-3'
-                    : 'bg-slate-700/50 text-slate-100 mr-3'
+                    ? 'bg-indigo-600 text-white ml-3'
+                    : 'bg-zinc-900 text-zinc-100 mr-3'
                 } backdrop-blur-xl border ${
-                  message.type === 'user' ? 'border-blue-500/30' : 'border-slate-600'
+                  message.type === 'user' ? 'border-indigo-500/30' : 'border-zinc-800'
                 }`}>
                   <ChatMessage message={message} floats={[]} />
                   <div className="text-xs opacity-70 mt-2">
@@ -904,17 +904,17 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
           {isLoading && (
             <div className="flex justify-start">
               <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-green-500 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center">
                   <Bot className="h-4 w-4 text-white" />
                 </div>
-                <div className="bg-slate-700/50 rounded-2xl p-4 backdrop-blur-xl border border-slate-600">
+                <div className="bg-zinc-900 rounded-2xl p-4 backdrop-blur-xl border border-zinc-800">
                   <div className="flex items-center space-x-2">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                     </div>
-                    <span className="text-sm text-slate-400">Analyzing data...</span>
+                    <span className="text-sm text-zinc-400">Analyzing data...</span>
                   </div>
                 </div>
               </div>
@@ -924,7 +924,7 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
         </div>
 
         {/* Input Area - Fixed */}
-        <div className="bg-slate-800/50 backdrop-blur-xl border-t border-slate-700 p-4">
+        <div className="bg-zinc-950 backdrop-blur-xl border-t border-zinc-800 p-4">
           <div className="flex items-center space-x-3">
             <div className="flex-1">
               <Input
@@ -932,20 +932,20 @@ Please specify which aspect you'd like me to focus on - temperature, salinity, o
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage(inputValue)}
                 placeholder="Ask about temperature profiles, salinity, oxygen zones, or data quality..."
-                className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 focus:border-cyan-500"
+                className="bg-zinc-900 border-zinc-800 text-white placeholder-zinc-500 focus:border-indigo-500"
                 disabled={isLoading}
               />
             </div>
             <Button
               onClick={() => handleSendMessage(inputValue)}
               disabled={isLoading || !inputValue.trim()}
-              className="bg-cyan-600 hover:bg-cyan-700 text-white"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white"
               size="sm"
             >
               <Send className="h-4 w-4" />
             </Button>
           </div>
-          <div className="flex items-center justify-between mt-2 text-xs text-slate-500">
+          <div className="flex items-center justify-between mt-2 text-xs text-zinc-500">
             <span>Press Enter to send • Shift+Enter for new line</span>
             <span className="flex items-center space-x-1">
               <Database className="h-3 w-3" />

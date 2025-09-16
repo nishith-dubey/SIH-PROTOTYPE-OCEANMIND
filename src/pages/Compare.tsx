@@ -15,10 +15,10 @@ import {
 const OceanBackground = () => (
   <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 800">
-      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(6, 182, 212, 0.03)">
+      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(79, 70, 229, 0.03)">
         <animateTransform attributeName="transform" type="translate" values="0,0;50,0;0,0" dur="12s" repeatCount="indefinite"/>
       </path>
-      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(8, 145, 178, 0.02)">
+      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(59, 130, 246, 0.02)">
         <animateTransform attributeName="transform" type="translate" values="0,0;-30,0;0,0" dur="15s" repeatCount="indefinite"/>
       </path>
     </svg>
@@ -128,7 +128,7 @@ const Compare = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white relative overflow-x-hidden overflow-y-auto">
+    <div className="min-h-screen bg-black text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       
       {/* Floating Particles */}
@@ -136,7 +136,7 @@ const Compare = () => {
         {Array.from({ length: 12 }).map((_, i) => (
           <div
             key={i}
-            className="absolute w-1.5 h-1.5 bg-purple-400/30 rounded-full animate-pulse"
+            className="absolute w-1.5 h-1.5 bg-indigo-400/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -149,35 +149,35 @@ const Compare = () => {
 
       <div className="relative z-20">
         {/* Enhanced Header */}
-        <div className="border-b border-purple-500/20 bg-white/5 backdrop-blur-xl">
+        <div className="border-b border-indigo-500/20 bg-zinc-950/50 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className={`flex items-center justify-between transition-all duration-1000 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
               <div className="flex items-center space-x-4">
                 <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
-                  <div className="relative p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-purple-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                    <GitCompare className="h-8 w-8 text-purple-400" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
+                  <div className="relative p-3 bg-zinc-900 backdrop-blur-xl rounded-xl border border-indigo-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <GitCompare className="h-8 w-8 text-indigo-400" />
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Float Comparison
                   </h1>
-                  <p className="text-purple-200/80">
+                  <p className="text-indigo-200/80">
                     Compare oceanographic data between different Argo floats
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4">
-                <Badge className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border-purple-500/30 px-4 py-2 backdrop-blur-sm">
+                <Badge className="bg-indigo-600/20 text-indigo-300 border-indigo-500/30 px-4 py-2 backdrop-blur-sm">
                   <Activity className="h-4 w-4 mr-2" />
                   Advanced Analytics
                 </Badge>
                 {comparisonData.length > 0 && (
-                  <Badge className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 text-green-300 border-green-500/30 px-4 py-2 backdrop-blur-sm">
+                  <Badge className="bg-green-600/20 text-green-300 border-green-500/30 px-4 py-2 backdrop-blur-sm">
                     <Target className="h-4 w-4 mr-2" />
                     {comparisonData.length} data points
                   </Badge>
@@ -196,23 +196,23 @@ const Compare = () => {
             }`}>
               
               {/* Float Selection */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-105">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-indigo-500/30 transition-all duration-300 hover:scale-105">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Layers className="h-5 w-5 mr-2 text-purple-400" />
+                    <Layers className="h-5 w-5 mr-2 text-indigo-400" />
                     Select Floats
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="text-sm text-purple-300 mb-2 block">First Float</label>
+                    <label className="text-sm text-indigo-300 mb-2 block">First Float</label>
                     <Select value={float1} onValueChange={setFloat1}>
-                      <SelectTrigger className="bg-white/10 border-white/20 text-white hover:border-purple-500/50 transition-colors duration-300">
+                      <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white hover:border-indigo-500/50 transition-colors duration-300">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700 backdrop-blur-xl">
+                      <SelectContent className="bg-zinc-900 border-zinc-800 backdrop-blur-xl">
                         {floats.map(f => (
-                          <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-purple-500/20">
+                          <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-indigo-500/20">
                             {f.wmo_id} - {f.institution}
                           </SelectItem>
                         ))}
@@ -221,14 +221,14 @@ const Compare = () => {
                   </div>
                   
                   <div>
-                    <label className="text-sm text-purple-300 mb-2 block">Second Float</label>
+                    <label className="text-sm text-indigo-300 mb-2 block">Second Float</label>
                     <Select value={float2} onValueChange={setFloat2}>
-                      <SelectTrigger className="bg-white/10 border-white/20 text-white hover:border-purple-500/50 transition-colors duration-300">
+                      <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white hover:border-indigo-500/50 transition-colors duration-300">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700 backdrop-blur-xl">
+                      <SelectContent className="bg-zinc-900 border-zinc-800 backdrop-blur-xl">
                         {floats.map(f => (
-                          <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-purple-500/20">
+                          <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-indigo-500/20">
                             {f.wmo_id} - {f.institution}
                           </SelectItem>
                         ))}
@@ -239,19 +239,19 @@ const Compare = () => {
               </Card>
 
               {/* Analysis Options */}
-              <Card className="bg-slate-800 border-purple-500/30 hover:scale-105 transition-all duration-300">
+              <Card className="bg-zinc-900 border-indigo-500/30 hover:scale-105 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Brain className="h-5 w-5 mr-2 text-pink-400" />
+                    <Brain className="h-5 w-5 mr-2 text-indigo-400" />
                     Analysis Type
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Select value={selectedVariable} onValueChange={(v: any) => setSelectedVariable(v)}>
-                    <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
                       <SelectItem value="temperature" className="text-white">🌡️ Temperature</SelectItem>
                       <SelectItem value="salinity" className="text-white">🧂 Salinity</SelectItem>
                       <SelectItem value="oxygen" className="text-white">💨 Oxygen</SelectItem>
@@ -259,10 +259,10 @@ const Compare = () => {
                   </Select>
                   
                   <Select value={comparisonType} onValueChange={(v: any) => setComparisonType(v)}>
-                    <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
                       <SelectItem value="profiles" className="text-white">📊 Profile Comparison</SelectItem>
                       <SelectItem value="statistics" className="text-white">📈 Statistical Analysis</SelectItem>
                       <SelectItem value="timeseries" className="text-white">⏱️ Time Series</SelectItem>
@@ -272,24 +272,24 @@ const Compare = () => {
               </Card>
 
               {/* Insights Panel */}
-              <Card className="bg-slate-800 border-cyan-500/30">
+              <Card className="bg-zinc-900 border-blue-500/30">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Sparkles className="h-5 w-5 mr-2 text-cyan-400 animate-pulse" />
+                    <Sparkles className="h-5 w-5 mr-2 text-blue-400 animate-pulse" />
                     AI Insights
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-cyan-200 leading-relaxed">
-                    Comparing <span className="font-semibold text-cyan-300">{getVariableLabel()}</span> using{' '}
-                    <span className="font-semibold text-purple-300">{comparisonType.replace('_', ' ')}</span> method 
+                  <p className="text-sm text-blue-200 leading-relaxed">
+                    Comparing <span className="font-semibold text-blue-300">{getVariableLabel()}</span> using{' '}
+                    <span className="font-semibold text-indigo-300">{comparisonType.replace('_', ' ')}</span> method 
                     between floats <span className="font-mono text-white">{currentFloat1?.wmo_id}</span> and{' '}
                     <span className="font-mono text-white">{currentFloat2?.wmo_id}</span>.
                   </p>
                   {comparisonData.length > 0 && (
-                    <div className="mt-4 p-3 bg-white/5 rounded-lg border border-cyan-500/30">
+                    <div className="mt-4 p-3 bg-zinc-950 rounded-lg border border-blue-500/30">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-cyan-300">Data Points:</span>
+                        <span className="text-blue-300">Data Points:</span>
                         <span className="text-white font-semibold">{comparisonData.length}</span>
                       </div>
                     </div>
@@ -298,10 +298,10 @@ const Compare = () => {
               </Card>
 
               {/* Export Options */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-green-500/30 transition-all duration-300">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-green-500/30 transition-all duration-300">
                 <CardContent className="pt-6">
                   <HeroButton 
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white hover:scale-105 transition-all duration-300"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white hover:scale-105 transition-all duration-300"
                     disabled={comparisonData.length === 0}
                   >
                     <Download className="mr-2 h-4 w-4" />
@@ -315,18 +315,18 @@ const Compare = () => {
             <div className={`xl:col-span-3 transition-all duration-1400 delay-500 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-purple-500/30 transition-all duration-300">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-indigo-500/30 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <div className="flex items-center">
-                      <BarChart3 className="h-6 w-6 mr-2 text-purple-400" />
+                      <BarChart3 className="h-6 w-6 mr-2 text-indigo-400" />
                       Comparison Visualization
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                      <Badge variant="secondary" className="bg-indigo-600/20 text-indigo-300 border-indigo-500/30">
                         {getVariableLabel()} Analysis
                       </Badge>
-                      <Button size="sm" variant="ghost" className="text-purple-400 hover:text-white">
+                      <Button size="sm" variant="ghost" className="text-indigo-400 hover:text-white">
                         <TrendingUp className="h-4 w-4" />
                       </Button>
                     </div>
@@ -345,17 +345,17 @@ const Compare = () => {
                               dataKey="depth" 
                               stroke="rgba(255,255,255,0.7)"
                               fontSize={12}
-                              label={{ value: 'Depth (m)', position: 'insideBottom', offset: -5, style: { textAnchor: 'middle', fill: '#94a3b8' } }}
+                              label={{ value: 'Depth (m)', position: 'insideBottom', offset: -5, style: { textAnchor: 'middle', fill: '#a1a1aa' } }}
                             />
                             <YAxis 
                               stroke="rgba(255,255,255,0.7)"
                               fontSize={12}
-                              label={{ value: `${getVariableLabel()} (${getVariableUnit()})`, angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#94a3b8' } }}
+                              label={{ value: `${getVariableLabel()} (${getVariableUnit()})`, angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#a1a1aa' } }}
                             />
                             <Tooltip 
                               contentStyle={{ 
-                                backgroundColor: 'rgba(0,0,0,0.8)', 
-                                border: '1px solid rgba(147, 51, 234, 0.3)',
+                                backgroundColor: 'rgba(9, 9, 11, 0.8)', 
+                                border: '1px solid rgba(99, 102, 241, 0.3)',
                                 borderRadius: '8px'
                               }}
                               labelStyle={{ color: '#fff' }}
@@ -364,17 +364,17 @@ const Compare = () => {
                             <Line 
                               type="monotone" 
                               dataKey={currentFloat1?.wmo_id} 
-                              stroke="#8b5cf6" 
+                              stroke="#6366f1" 
                               strokeWidth={3}
-                              dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
+                              dot={{ fill: '#6366f1', strokeWidth: 2, r: 4 }}
                               name={`Float ${currentFloat1?.wmo_id}`}
                             />
                             <Line 
                               type="monotone" 
                               dataKey={currentFloat2?.wmo_id} 
-                              stroke="#06b6d4" 
+                              stroke="#3b82f6" 
                               strokeWidth={3}
-                              dot={{ fill: '#06b6d4', strokeWidth: 2, r: 4 }}
+                              dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
                               name={`Float ${currentFloat2?.wmo_id}`}
                             />
                           </LineChart>
@@ -382,13 +382,13 @@ const Compare = () => {
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <div className="text-center">
-                            <div className="w-16 h-16 mx-auto bg-purple-600 rounded-full flex items-center justify-center mb-6">
+                            <div className="w-16 h-16 mx-auto bg-indigo-600 rounded-full flex items-center justify-center mb-6">
                               <GitCompare className="h-8 w-8 text-white animate-bounce" />
                             </div>
                             <h3 className="text-xl font-bold text-white mb-3">
                               Ready to Compare
                             </h3>
-                            <p className="text-slate-300 max-w-md mx-auto">
+                            <p className="text-zinc-300 max-w-md mx-auto">
                               Select two different floats to compare their data and discover oceanographic patterns.
                             </p>
                           </div>
@@ -399,7 +399,7 @@ const Compare = () => {
                     {/* Statistical Comparison */}
                     {comparisonData.length > 0 && (
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <Card className="bg-slate-800 border-blue-500/30">
+                        <Card className="bg-zinc-950 border-blue-500/30">
                           <CardHeader>
                             <CardTitle className="text-white flex items-center">
                               <BarChart3 className="h-5 w-5 mr-2 text-blue-400" />
@@ -415,21 +415,21 @@ const Compare = () => {
                                   <YAxis stroke="rgba(255,255,255,0.7)" fontSize={10} />
                                   <Tooltip 
                                     contentStyle={{
-                                      backgroundColor: 'rgba(0,0,0,0.8)',
+                                      backgroundColor: 'rgba(9, 9, 11, 0.8)',
                                       border: '1px solid rgba(59, 130, 246, 0.3)',
                                       borderRadius: '8px'
                                     }}
                                   />
                                   <Legend />
-                                  <Bar dataKey={currentFloat1?.wmo_id} fill="#8b5cf6" name={`Float ${currentFloat1?.wmo_id}`} />
-                                  <Bar dataKey={currentFloat2?.wmo_id} fill="#06b6d4" name={`Float ${currentFloat2?.wmo_id}`} />
+                                  <Bar dataKey={currentFloat1?.wmo_id} fill="#6366f1" name={`Float ${currentFloat1?.wmo_id}`} />
+                                  <Bar dataKey={currentFloat2?.wmo_id} fill="#3b82f6" name={`Float ${currentFloat2?.wmo_id}`} />
                                 </BarChart>
                               </ResponsiveContainer>
                             </div>
                           </CardContent>
                         </Card>
                         
-                        <Card className="bg-slate-800 border-green-500/30">
+                        <Card className="bg-zinc-950 border-green-500/30">
                           <CardHeader>
                             <CardTitle className="text-white flex items-center">
                               <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
@@ -445,7 +445,7 @@ const Compare = () => {
                                   <YAxis stroke="rgba(255,255,255,0.7)" fontSize={10} />
                                   <Tooltip 
                                     contentStyle={{
-                                      backgroundColor: 'rgba(0,0,0,0.8)',
+                                      backgroundColor: 'rgba(9, 9, 11, 0.8)',
                                       border: '1px solid rgba(34, 197, 94, 0.3)',
                                       borderRadius: '8px'
                                     }}
@@ -468,38 +468,38 @@ const Compare = () => {
                     
                     {/* Data Summary */}
                     {comparisonData.length > 0 && (
-                      <Card className="bg-slate-800 border-yellow-500/30">
+                      <Card className="bg-zinc-950 border-zinc-700">
                         <CardHeader>
                           <CardTitle className="text-white flex items-center">
-                            <Activity className="h-5 w-5 mr-2 text-yellow-400" />
+                            <Activity className="h-5 w-5 mr-2 text-indigo-400" />
                             Comparison Summary
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
-                              <div className="text-2xl font-bold text-purple-300">
+                            <div className="text-center p-3 bg-zinc-900 rounded-lg border border-indigo-500/30">
+                              <div className="text-2xl font-bold text-indigo-300">
                                 {comparisonData.length}
                               </div>
-                              <div className="text-sm text-gray-300">Data Points</div>
+                              <div className="text-sm text-zinc-300">Data Points</div>
                             </div>
-                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-blue-500/30">
+                            <div className="text-center p-3 bg-zinc-900 rounded-lg border border-blue-500/30">
                               <div className="text-2xl font-bold text-blue-300">
                                 {Math.abs(comparisonData.reduce((sum, d) => sum + (d.difference || 0), 0) / comparisonData.length).toFixed(2)}
                               </div>
-                              <div className="text-sm text-gray-300">Avg Difference</div>
+                              <div className="text-sm text-zinc-300">Avg Difference</div>
                             </div>
-                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-green-500/30">
+                            <div className="text-center p-3 bg-zinc-900 rounded-lg border border-green-500/30">
                               <div className="text-2xl font-bold text-green-300">
                                 {Math.max(...comparisonData.map(d => Math.abs(d.difference || 0))).toFixed(2)}
                               </div>
-                              <div className="text-sm text-gray-300">Max Difference</div>
+                              <div className="text-sm text-zinc-300">Max Difference</div>
                             </div>
-                            <div className="text-center p-3 bg-slate-700 rounded-lg border border-yellow-500/30">
-                              <div className="text-2xl font-bold text-yellow-300">
+                            <div className="text-center p-3 bg-zinc-900 rounded-lg border border-zinc-700">
+                              <div className="text-2xl font-bold text-zinc-300">
                                 {getVariableUnit()}
                               </div>
-                              <div className="text-sm text-gray-300">Units</div>
+                              <div className="text-sm text-zinc-300">Units</div>
                             </div>
                           </div>
                         </CardContent>

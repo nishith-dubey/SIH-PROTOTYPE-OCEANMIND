@@ -19,7 +19,7 @@ const NotFound = () => {
         <div className="mb-8">
           <div className="text-8xl md:text-9xl font-bold text-zinc-800 mb-4">404</div>
           <div className="inline-flex p-4 bg-zinc-900 rounded-2xl border border-zinc-800">
-            <Search className="h-12 w-12 text-red-500" />
+            <Search className="h-12 w-12 text-indigo-500" />
           </div>
         </div>
 
@@ -33,7 +33,7 @@ const NotFound = () => {
               The page you're looking for seems to have drifted away like an ocean current.
             </p>
             <div className="text-sm text-zinc-500 font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800">
-              Requested path: <span className="text-red-400">{location.pathname}</span>
+              Requested path: <span className="text-indigo-400">{location.pathname}</span>
             </div>
           </CardContent>
         </Card>
@@ -42,7 +42,7 @@ const NotFound = () => {
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl">
+              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl">
                 <Home className="h-5 w-5 mr-2" />
                 Return to Home
               </Button>
@@ -62,19 +62,19 @@ const NotFound = () => {
           <div className="mt-12">
             <p className="text-zinc-500 mb-4">Or try one of these popular pages:</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Link to="/explore" className="text-zinc-400 hover:text-blue-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
+              <Link to="/explore" className="text-zinc-400 hover:text-indigo-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
                 <Globe className="h-4 w-4 mx-auto mb-1" />
                 Explore
               </Link>
-              <Link to="/profiles" className="text-zinc-400 hover:text-blue-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
+              <Link to="/profiles" className="text-zinc-400 hover:text-indigo-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
                 <Search className="h-4 w-4 mx-auto mb-1" />
                 Profiles
               </Link>
-              <Link to="/chat" className="text-zinc-400 hover:text-blue-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
+              <Link to="/chat" className="text-zinc-400 hover:text-indigo-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
                 <Search className="h-4 w-4 mx-auto mb-1" />
                 Chat
               </Link>
-              <Link to="/teachme" className="text-zinc-400 hover:text-blue-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
+              <Link to="/teachme" className="text-zinc-400 hover:text-indigo-400 text-sm border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors">
                 <Search className="h-4 w-4 mx-auto mb-1" />
                 Learn
               </Link>

@@ -28,7 +28,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider
       attribute="class"
-      defaultTheme="light"
+      defaultTheme="dark"
       enableSystem={false}
       disableTransitionOnChange
     >
@@ -37,10 +37,10 @@ const App = () => (
           <BrowserRouter>
             <div className="min-h-screen bg-background">
               <Navigation />
-              <main className="pt-[90px]">
+              <main>
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/chat" element={<div className="-mt-[90px] pt-[90px] h-screen"><Chat /></div>} />
+                  <Route path="/chat" element={<Chat />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/explore" element={<Explore />} />
                   <Route path="/analytics" element={<Analytics />} />

@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useApp } from '@/contexts/AppContext';
-import { 
-  Home, 
-  MessageSquare, 
-  Map, 
-  LineChart, 
+import {
+  Home,
+  MessageSquare,
+  Map,
+  LineChart,
   Activity,
-  BarChart3, 
-  BookOpen, 
+  BarChart3,
   FileText,
   Globe,
-  Database,
-  Moon,
-  Sun,
   User,
   LogIn,
   Menu,
   X
 } from 'lucide-react';
 import { BarChart3 as DashboardIcon } from 'lucide-react';
-import { useTheme } from 'next-themes';
 
 const GovernmentNavigation = () => {
-  const { language, setLanguage, t } = useApp();
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -36,14 +28,12 @@ const GovernmentNavigation = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Show/hide navbar based on scroll direction
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
-      // Add background when scrolled
+
       setIsScrolled(currentScrollY > 10);
       setLastScrollY(currentScrollY);
     };
@@ -55,135 +45,152 @@ const GovernmentNavigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navItems = [
-    { path: '/', icon: Home, label: t('home') },
-    { path: '/chat', icon: MessageSquare, label: t('chat') },
+    { path: '/', icon: Home, label: 'Home' },
+    { path: '/chat', icon: MessageSquare, label: 'Chat' },
     { path: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
-    { path: '/explore', icon: Map, label: t('explore') },
+    { path: '/explore', icon: Map, label: 'Explore' },
     { path: '/analytics', icon: BarChart3, label: 'Analytics' },
-    { path: '/profiles', icon: LineChart, label: t('profiles') },
-    { path: '/hovmoller', icon: Activity, label: t('hovmoller') },
-    { path: '/compare', icon: BarChart3, label: t('compare') },
-    { path: '/provenance', icon: FileText, label: t('provenance') }
+    { path: '/profiles', icon: LineChart, label: 'Profiles' },
+    { path: '/hovmoller', icon: Activity, label: 'Hovmöller' },
+    { path: '/compare', icon: BarChart3, label: 'Compare' },
+    { path: '/provenance', icon: FileText, label: 'Provenance' }
   ];
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <>
       {/* Government Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}>
-        {/* Top Header with Government Identity */}
-        <div className="bg-orange-600 text-white py-1 text-xs">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <span className="text-xs">For Government of India</span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-                  className="flex items-center space-x-1 hover:underline text-xs"
-                >
-                  <Globe className="h-3 w-3" />
-                  <span>{language === 'en' ? 'हिंदी' : 'English'}</span>
-                </button>
-                <Link to="/signup" className="flex items-center space-x-1 hover:underline text-xs">
-                  <User className="h-3 w-3" />
-                  <span>Register</span>
-                </Link>
-                <Link to="/login" className="flex items-center space-x-1 hover:underline text-xs">
-                  <LogIn className="h-3 w-3" />
-                  <span>Login</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Header */}
-        <div className={`bg-slate-900 text-white py-2 transition-all duration-300 ${
-          isScrolled ? 'bg-slate-900/95 backdrop-blur-sm shadow-lg' : ''
-        }`}>
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <Database className="h-5 w-5 text-white" />
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        } ${
+          isScrolled
+            ? 'bg-black border-b border-zinc-800 shadow-lg'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            
+            {/* Logo and Brand */}
+            <div className="flex items-center space-x-3">
+              <Link to="/" className="flex items-center space-x-2 group">
+                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300">
+                  <Globe className="w-6 h-6 text-white" />
                 </div>
-                <div>
-                  <h1 className="text-lg font-bold">AquaScope Pro</h1>
-                  <p className="text-xs opacity-90">Advanced Ocean Analytics</p>
+                <div className="hidden sm:block">
+                  <h1 className="text-xl font-bold text-white">
+                    OceanPortal
+                  </h1>
+                  <p className="text-xs text-zinc-400 -mt-1">
+                    Advanced Data Analytics
+                  </p>
                 </div>
               </Link>
+            </div>
 
-              {/* Desktop Navigation */}
-              <nav className="hidden lg:flex items-center space-x-1">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.path);
-                  
-                  return (
-                    <Link key={item.path} to={item.path}>
-                      <div className={`
-                        flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-colors
-                        ${active 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-white/80 hover:bg-slate-800 hover:text-white'
-                        }
-                      `}>
-                        <Icon className="h-3 w-3 mr-2" />
-                        {item.label}
-                      </div>
-                    </Link>
-                  );
-                })}
-              </nav>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navItems.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.path}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive(item.path)
+                      ? 'bg-indigo-600/10 text-indigo-400'
+                      : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                  }`}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </nav>
 
-              {/* Mobile Menu Button */}
-              <button
-                className="lg:hidden p-1.5 rounded-md hover:bg-slate-800"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            {/* Right Side Actions */}
+            <div className="flex items-center space-x-2">
+              
+              {/* User Menu */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 text-zinc-400 hover:text-zinc-200"
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
+                <User className="h-5 w-5" />
+              </Button>
+
+              {/* Login Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden sm:inline-flex items-center space-x-2 px-3 py-1.5 text-sm border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+              >
+                <LogIn className="h-4 w-4" />
+                <span>Login</span>
+              </Button>
+
+              {/* Mobile Menu Toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="lg:hidden p-2 text-zinc-400"
+                onClick={toggleMobileMenu}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </Button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-slate-900 border-t border-slate-700">
-            <div className="max-w-7xl mx-auto px-4 py-3">
-              <nav className="space-y-1">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.path);
-                  
-                  return (
-                    <Link 
-                      key={item.path} 
-                      to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <div className={`
-                        flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors
-                        ${active 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-white/80 hover:bg-slate-800 hover:text-white'
-                        }
-                      `}>
-                        <Icon className="h-3 w-3 mr-2" />
-                        {item.label}
-                      </div>
-                    </Link>
-                  );
-                })}
-              </nav>
+          <div className="lg:hidden border-t border-zinc-800 bg-black">
+            <div className="container mx-auto px-4 py-4">
+              
+              {/* Mobile Navigation Items */}
+              <div className="space-y-1 mb-4">
+                {navItems.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'bg-indigo-600/10 text-indigo-400'
+                        : 'text-zinc-300 hover:bg-zinc-800'
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Mobile Actions */}
+              <div className="pt-4 border-t border-zinc-800 space-y-2">
+                <Button
+                  variant="outline"
+                  className="w-full justify-center px-4 py-3 text-base font-medium border-zinc-700 text-zinc-300"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <LogIn className="h-5 w-5 mr-2" />
+                  Login
+                </Button>
+              </div>
             </div>
           </div>
         )}
       </header>
 
+      {/* Spacer to prevent content from hiding behind fixed header */}
+      <div className="h-16" />
     </>
   );
 };

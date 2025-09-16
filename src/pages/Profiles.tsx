@@ -17,20 +17,20 @@ const OceanBackground = () => (
     <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 800">
       <defs>
         <linearGradient id="profileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)" />
-          <stop offset="100%" stopColor="rgba(37, 99, 235, 0.05)" />
+          <stop offset="0%" stopColor="rgba(79, 70, 229, 0.1)" />
+          <stop offset="100%" stopColor="rgba(59, 130, 246, 0.05)" />
         </linearGradient>
       </defs>
       
-      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(59, 130, 246, 0.05)">
+      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(79, 70, 229, 0.05)">
         <animateTransform attributeName="transform" type="translate" values="0,0;50,0;0,0" dur="10s" repeatCount="indefinite"/>
       </path>
       
-      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(37, 99, 235, 0.03)">
+      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(59, 130, 246, 0.03)">
         <animateTransform attributeName="transform" type="translate" values="0,0;-30,0;0,0" dur="14s" repeatCount="indefinite"/>
       </path>
       
-      <path d="M0,500 C200,400 1000,600 1200,500 L1200,800 L0,800 Z" fill="rgba(59, 130, 246, 0.02)">
+      <path d="M0,500 C200,400 1000,600 1200,500 L1200,800 L0,800 Z" fill="rgba(79, 70, 229, 0.02)">
         <animateTransform attributeName="transform" type="translate" values="0,0;25,0;0,0" dur="18s" repeatCount="indefinite"/>
       </path>
     </svg>
@@ -53,7 +53,7 @@ const FloatingParticles = () => {
       {particles.map((particle) => (
         <div
           key={particle.id}
-          className="absolute bg-blue-400/25 rounded-full animate-bounce"
+          className="absolute bg-indigo-400/25 rounded-full animate-bounce"
           style={{
             width: `${particle.size}px`,
             height: `${particle.size}px`,
@@ -134,18 +134,18 @@ const Profiles = () => {
 
   const getVariableColor = () => {
     switch (selectedVariable) {
-      case 'temperature': return ['#ef4444', '#f97316', '#eab308'];
-      case 'salinity': return ['#3b82f6', '#06b6d4', '#8b5cf6'];
-      case 'oxygen': return ['#10b981', '#059669', '#047857'];
-      default: return ['#6b7280', '#9ca3af', '#d1d5db'];
+      case 'temperature': return ['#6366f1', '#818cf8', '#a5b4fc'];
+      case 'salinity': return ['#3b82f6', '#60a5fa', '#93c5fd'];
+      case 'oxygen': return ['#22c55e', '#4ade80', '#86efac'];
+      default: return ['#a1a1aa', '#d4d4d8', '#e4e4e7'];
     }
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-900/95 backdrop-blur-xl border border-blue-500/30 p-4 rounded-lg shadow-xl">
-          <p className="text-blue-300 font-semibold mb-2">{`Depth: ${label}m`}</p>
+        <div className="bg-zinc-950/95 backdrop-blur-xl border border-indigo-500/30 p-4 rounded-lg shadow-xl">
+          <p className="text-indigo-300 font-semibold mb-2">{`Depth: ${label}m`}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} style={{ color: entry.color }} className="text-sm">
               {`${entry.dataKey}: ${entry.value?.toFixed(2)} ${getVariableUnit()}`}
@@ -158,41 +158,41 @@ const Profiles = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white relative overflow-x-hidden overflow-y-auto">
+    <div className="min-h-screen bg-black text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       <FloatingParticles />
 
       <div className="relative z-20">
         {/* Enhanced Header */}
-        <div className="border-b border-blue-500/20 bg-white/5 backdrop-blur-xl">
+        <div className="border-b border-indigo-500/20 bg-zinc-950/50 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className={`flex items-center justify-between transition-all duration-1000 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
               <div className="flex items-center space-x-4">
                 <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
-                  <div className="relative p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-blue-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                    <LineChartIcon className="h-8 w-8 text-blue-400" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
+                  <div className="relative p-3 bg-zinc-900 backdrop-blur-xl rounded-xl border border-indigo-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <LineChartIcon className="h-8 w-8 text-indigo-400" />
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Profile Analysis
                   </h1>
-                  <p className="text-blue-200/80">
+                  <p className="text-indigo-200/80">
                     Detailed oceanographic profile visualization and analysis
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4">
-                <Badge className="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-300 border-blue-500/30 px-4 py-2 backdrop-blur-sm">
+                <Badge className="bg-indigo-600/20 text-indigo-300 border-indigo-500/30 px-4 py-2 backdrop-blur-sm">
                   <Activity className="h-4 w-4 mr-2" />
                   Advanced Analytics
                 </Badge>
                 {profileData.length > 0 && (
-                  <Badge className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 text-green-300 border-green-500/30 px-4 py-2 backdrop-blur-sm">
+                  <Badge className="bg-green-600/20 text-green-300 border-green-500/30 px-4 py-2 backdrop-blur-sm">
                     <Target className="h-4 w-4 mr-2" />
                     {profileData.length} depth levels
                   </Badge>
@@ -211,23 +211,23 @@ const Profiles = () => {
             }`}>
               
               {/* Float Selection */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-blue-500/30 transition-all duration-300 hover:scale-105">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-indigo-500/30 transition-all duration-300 hover:scale-105">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Layers className="h-5 w-5 mr-2 text-blue-400" />
+                    <Layers className="h-5 w-5 mr-2 text-indigo-400" />
                     Select Float
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="text-sm text-blue-300 mb-2 block">Argo Float</label>
+                    <label className="text-sm text-indigo-300 mb-2 block">Argo Float</label>
                     <Select value={selectedFloat} onValueChange={setSelectedFloat}>
-                      <SelectTrigger className="bg-white/10 border-white/20 text-white hover:border-blue-500/50 transition-colors duration-300">
+                      <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white hover:border-indigo-500/50 transition-colors duration-300">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700 backdrop-blur-xl">
+                      <SelectContent className="bg-zinc-900 border-zinc-800 backdrop-blur-xl">
                         {floats.map(f => (
-                          <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-blue-500/20">
+                          <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-indigo-500/20">
                             {f.wmo_id} - {f.institution}
                           </SelectItem>
                         ))}
@@ -236,13 +236,13 @@ const Profiles = () => {
                   </div>
                   
                   <div>
-                    <label className="text-sm text-blue-300 mb-2 block">Variable</label>
+                    <label className="text-sm text-indigo-300 mb-2 block">Variable</label>
                     <Select value={selectedVariable} onValueChange={(v: any) => setSelectedVariable(v)}>
-                      <SelectTrigger className="bg-white/10 border-white/20 text-white hover:border-blue-500/50 transition-colors duration-300">
+                      <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white hover:border-indigo-500/50 transition-colors duration-300">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700 backdrop-blur-xl">
-                        <SelectItem value="temperature" className="text-white hover:bg-red-500/20">
+                      <SelectContent className="bg-zinc-900 border-zinc-800 backdrop-blur-xl">
+                        <SelectItem value="temperature" className="text-white hover:bg-indigo-500/20">
                           🌡️ Temperature
                         </SelectItem>
                         <SelectItem value="salinity" className="text-white hover:bg-blue-500/20">
@@ -256,12 +256,12 @@ const Profiles = () => {
                   </div>
                   
                   <div>
-                    <label className="text-sm text-blue-300 mb-2 block">Max Cycles to Show</label>
+                    <label className="text-sm text-indigo-300 mb-2 block">Max Cycles to Show</label>
                     <Select value={maxCycles.toString()} onValueChange={(v) => setMaxCycles(parseInt(v))}>
-                      <SelectTrigger className="bg-white/10 border-white/20 text-white hover:border-blue-500/50 transition-colors duration-300">
+                      <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white hover:border-indigo-500/50 transition-colors duration-300">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700 backdrop-blur-xl">
+                      <SelectContent className="bg-zinc-900 border-zinc-800 backdrop-blur-xl">
                         <SelectItem value="3" className="text-white">3 cycles</SelectItem>
                         <SelectItem value="5" className="text-white">5 cycles</SelectItem>
                         <SelectItem value="10" className="text-white">10 cycles</SelectItem>
@@ -273,31 +273,31 @@ const Profiles = () => {
               </Card>
 
               {/* Variable Info */}
-              <Card className="bg-slate-800 border-blue-500/30 hover:scale-105 transition-all duration-300">
+              <Card className="bg-zinc-900 border-indigo-500/30 hover:scale-105 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    {React.createElement(getVariableIcon(), { className: "h-5 w-5 mr-2 text-blue-400 animate-pulse" })}
+                    {React.createElement(getVariableIcon(), { className: "h-5 w-5 mr-2 text-indigo-400 animate-pulse" })}
                     {getVariableLabel()} Analysis
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-2 bg-white/5 rounded-lg border border-blue-500/30">
-                      <span className="text-blue-300">Unit:</span>
+                    <div className="flex items-center justify-between p-2 bg-zinc-950 rounded-lg border border-indigo-500/30">
+                      <span className="text-indigo-300">Unit:</span>
                       <span className="text-white font-semibold">{getVariableUnit()}</span>
                     </div>
-                    <div className="flex items-center justify-between p-2 bg-white/5 rounded-lg border border-blue-500/30">
-                      <span className="text-blue-300">Cycles:</span>
+                    <div className="flex items-center justify-between p-2 bg-zinc-950 rounded-lg border border-indigo-500/30">
+                      <span className="text-indigo-300">Cycles:</span>
                       <span className="text-white font-semibold">{maxCycles}</span>
                     </div>
-                    <div className="flex items-center justify-between p-2 bg-white/5 rounded-lg border border-blue-500/30">
-                      <span className="text-blue-300">Data Points:</span>
+                    <div className="flex items-center justify-between p-2 bg-zinc-950 rounded-lg border border-indigo-500/30">
+                      <span className="text-indigo-300">Data Points:</span>
                       <span className="text-white font-semibold">{profileData.length}</span>
                     </div>
                   </div>
                   
-                  <div className="mt-4 p-3 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-lg border border-blue-400/50">
-                    <p className="text-sm text-blue-200 leading-relaxed">
+                  <div className="mt-4 p-3 bg-gradient-to-r from-indigo-500/20 to-blue-500/20 rounded-lg border border-indigo-400/50">
+                    <p className="text-sm text-indigo-200 leading-relaxed">
                       <Sparkles className="inline h-4 w-4 mr-1" />
                       Showing latest {maxCycles} cycles for {currentFloat?.wmo_id}
                     </p>
@@ -306,10 +306,10 @@ const Profiles = () => {
               </Card>
 
               {/* Export Options */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-green-500/30 transition-all duration-300">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-green-500/30 transition-all duration-300">
                 <CardContent className="pt-6 space-y-3">
                   <HeroButton 
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white hover:scale-105 transition-all duration-300"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white hover:scale-105 transition-all duration-300"
                     disabled={profileData.length === 0}
                   >
                     <Download className="mr-2 h-4 w-4" />
@@ -318,7 +318,7 @@ const Profiles = () => {
                   
                   <Button 
                     variant="ghost" 
-                    className="w-full text-blue-400 hover:text-white hover:bg-blue-500/20 border border-blue-500/30"
+                    className="w-full text-indigo-400 hover:text-white hover:bg-indigo-500/20 border border-indigo-500/30"
                   >
                     <TrendingUp className="mr-2 h-4 w-4" />
                     View Statistics
@@ -331,18 +331,18 @@ const Profiles = () => {
             <div className={`xl:col-span-3 transition-all duration-1400 delay-500 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-blue-500/30 transition-all duration-300">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-indigo-500/30 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <div className="flex items-center">
-                      <LineChartIcon className="h-6 w-6 mr-2 text-blue-400" />
+                      <LineChartIcon className="h-6 w-6 mr-2 text-indigo-400" />
                       Ocean Profile Visualization
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                      <Badge variant="secondary" className="bg-indigo-600/20 text-indigo-300 border-indigo-500/30">
                         {getVariableLabel()} ({getVariableUnit()})
                       </Badge>
-                      <Button size="sm" variant="ghost" className="text-blue-400 hover:text-white">
+                      <Button size="sm" variant="ghost" className="text-indigo-400 hover:text-white">
                         <Zap className="h-4 w-4" />
                       </Button>
                     </div>
@@ -359,12 +359,12 @@ const Profiles = () => {
                             dataKey="depth" 
                             stroke="rgba(255,255,255,0.7)"
                             fontSize={12}
-                            label={{ value: 'Depth (m)', position: 'insideBottom', offset: -5, style: { textAnchor: 'middle', fill: '#94a3b8' } }}
+                            label={{ value: 'Depth (m)', position: 'insideBottom', offset: -5, style: { textAnchor: 'middle', fill: '#a1a1aa' } }}
                           />
                           <YAxis 
                             stroke="rgba(255,255,255,0.7)"
                             fontSize={12}
-                            label={{ value: `${getVariableLabel()} (${getVariableUnit()})`, angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#94a3b8' } }}
+                            label={{ value: `${getVariableLabel()} (${getVariableUnit()})`, angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#a1a1aa' } }}
                           />
                           <Tooltip content={<CustomTooltip />} />
                           <Legend />
@@ -390,15 +390,15 @@ const Profiles = () => {
                       <div className="flex items-center justify-center h-full">
                         <div className="text-center">
                           <div className="relative mb-6">
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-indigo-500/20 rounded-full blur-xl animate-pulse"></div>
-                            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-full blur-xl animate-pulse"></div>
+                            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center">
                               <LineChartIcon className="h-8 w-8 text-white animate-bounce" />
                             </div>
                           </div>
                           <h3 className="text-xl font-bold text-white mb-3">
                             Ready to Analyze
                           </h3>
-                          <p className="text-slate-300 max-w-md mx-auto">
+                          <p className="text-zinc-300 max-w-md mx-auto">
                             Select a float and variable to view detailed oceanographic profiles and discover patterns in the data.
                           </p>
                         </div>
@@ -412,7 +412,7 @@ const Profiles = () => {
               {profileData.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   {/* Depth Distribution Chart */}
-                  <Card className="bg-slate-800 border-blue-500/30">
+                  <Card className="bg-zinc-950 border-blue-500/30">
                     <CardHeader>
                       <CardTitle className="text-white flex items-center">
                         <BarChart className="h-5 w-5 mr-2 text-blue-400" />
@@ -435,7 +435,7 @@ const Profiles = () => {
                   </Card>
 
                   {/* Area Chart for Trend Analysis */}
-                  <Card className="bg-slate-800 border-green-500/30">
+                  <Card className="bg-zinc-950 border-green-500/30">
                     <CardHeader>
                       <CardTitle className="text-white flex items-center">
                         <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
@@ -453,8 +453,8 @@ const Profiles = () => {
                             <Area 
                               type="monotone" 
                               dataKey={Object.keys(profileData[0] || {}).filter(k => k !== 'depth')[0]} 
-                              stroke="#10b981" 
-                              fill="#10b981" 
+                              stroke="#22c55e" 
+                              fill="#22c55e" 
                               fillOpacity={0.3}
                             />
                           </AreaChart>
@@ -467,38 +467,38 @@ const Profiles = () => {
 
               {/* Statistics Summary */}
               {profileData.length > 0 && (
-                <Card className="bg-slate-800 border-purple-500/30 mt-6">
+                <Card className="bg-zinc-950 border-indigo-500/30 mt-6">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center">
-                      <Brain className="h-5 w-5 mr-2 text-purple-400" />
+                      <Brain className="h-5 w-5 mr-2 text-indigo-400" />
                       Statistical Summary
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
-                        <div className="text-2xl font-bold text-purple-300">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-indigo-500/30">
+                        <div className="text-2xl font-bold text-indigo-300">
                           {Math.min(...profileData.map(d => d.depth || 0))}m
                         </div>
-                        <div className="text-sm text-gray-300">Min Depth</div>
+                        <div className="text-sm text-zinc-300">Min Depth</div>
                       </div>
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
-                        <div className="text-2xl font-bold text-purple-300">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-indigo-500/30">
+                        <div className="text-2xl font-bold text-indigo-300">
                           {Math.max(...profileData.map(d => d.depth || 0))}m
                         </div>
-                        <div className="text-sm text-gray-300">Max Depth</div>
+                        <div className="text-sm text-zinc-300">Max Depth</div>
                       </div>
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
-                        <div className="text-2xl font-bold text-purple-300">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-indigo-500/30">
+                        <div className="text-2xl font-bold text-indigo-300">
                           {profileData.length}
                         </div>
-                        <div className="text-sm text-gray-300">Data Points</div>
+                        <div className="text-sm text-zinc-300">Data Points</div>
                       </div>
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-purple-500/30">
-                        <div className="text-2xl font-bold text-purple-300">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-indigo-500/30">
+                        <div className="text-2xl font-bold text-indigo-300">
                           {maxCycles}
                         </div>
-                        <div className="text-sm text-gray-300">Cycles</div>
+                        <div className="text-sm text-zinc-300">Cycles</div>
                       </div>
                     </div>
                   </CardContent>
@@ -507,7 +507,7 @@ const Profiles = () => {
 
               {/* Analysis Insights */}
               {profileData.length > 0 && (
-                <Card className="bg-slate-800 border-indigo-500/30 mt-6">
+                <Card className="bg-zinc-950 border-zinc-800 mt-6">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center">
                       <Brain className="h-5 w-5 mr-2 text-indigo-400" />
@@ -516,17 +516,17 @@ const Profiles = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-indigo-500/30">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-zinc-800">
                         <Target className="h-8 w-8 mx-auto mb-2 text-indigo-400" />
                         <h4 className="font-semibold text-white mb-1">Data Quality</h4>
                         <p className="text-sm text-indigo-200">High resolution vertical profiles</p>
                       </div>
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-indigo-500/30">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-zinc-800">
                         <TrendingUp className="h-8 w-8 mx-auto mb-2 text-indigo-400" />
                         <h4 className="font-semibold text-white mb-1">Temporal Analysis</h4>
                         <p className="text-sm text-indigo-200">Compare cycles over time</p>
                       </div>
-                      <div className="text-center p-3 bg-slate-700 rounded-lg border border-indigo-500/30">
+                      <div className="text-center p-3 bg-zinc-900 rounded-lg border border-zinc-800">
                         <Waves className="h-8 w-8 mx-auto mb-2 text-indigo-400" />
                         <h4 className="font-semibold text-white mb-1">Ocean Structure</h4>
                         <p className="text-sm text-indigo-200">Identify mixing layers and thermoclines</p>

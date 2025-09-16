@@ -16,16 +16,16 @@ const OceanBackground = () => (
     <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 800">
       <defs>
         <linearGradient id="oceanGradientHovmoller" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="rgba(249, 115, 22, 0.1)" />
-          <stop offset="100%" stopColor="rgba(194, 65, 12, 0.05)" />
+          <stop offset="0%" stopColor="rgba(79, 70, 229, 0.1)" />
+          <stop offset="100%" stopColor="rgba(59, 130, 246, 0.05)" />
         </linearGradient>
       </defs>
       
-      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(249, 115, 22, 0.05)">
+      <path d="M0,400 C300,300 600,500 1200,400 L1200,800 L0,800 Z" fill="rgba(79, 70, 229, 0.05)">
         <animateTransform attributeName="transform" type="translate" values="0,0;50,0;0,0" dur="9s" repeatCount="indefinite"/>
       </path>
       
-      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(194, 65, 12, 0.03)">
+      <path d="M0,450 C400,350 800,550 1200,450 L1200,800 L0,800 Z" fill="rgba(59, 130, 246, 0.03)">
         <animateTransform attributeName="transform" type="translate" values="0,0;-30,0;0,0" dur="13s" repeatCount="indefinite"/>
       </path>
     </svg>
@@ -38,7 +38,7 @@ const FloatingParticles = () => (
     {Array.from({ length: 18 }).map((_, i) => (
       <div
         key={i}
-        className="absolute w-1 h-1 bg-orange-400/30 rounded-full animate-pulse"
+        className="absolute w-1 h-1 bg-indigo-400/30 rounded-full animate-pulse"
         style={{
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
@@ -96,10 +96,10 @@ const Hovmoller = () => {
 
   const getVariableColor = () => {
     switch (selectedVariable) {
-      case 'temperature': return 'from-red-500 to-orange-600';
+      case 'temperature': return 'from-indigo-500 to-blue-600';
       case 'salinity': return 'from-blue-500 to-cyan-600';
       case 'oxygen': return 'from-green-500 to-emerald-600';
-      default: return 'from-orange-500 to-red-600';
+      default: return 'from-indigo-500 to-blue-600';
     }
   };
 
@@ -124,19 +124,16 @@ const Hovmoller = () => {
   const getColorScale = (value: number) => {
     if (selectedVariable === 'temperature') {
       const normalized = Math.max(0, Math.min(1, (value - 0) / 30));
-      const blue = Math.round(255 * (1 - normalized));
-      const red = Math.round(255 * normalized);
-      return `rgb(${red}, 0, ${blue})`;
+      const hue = 240 - normalized * 60; // Blue to Indigo
+      return `hsl(${hue}, 70%, ${50 + normalized * 15}%)`;
     } else if (selectedVariable === 'salinity') {
       const normalized = Math.max(0, Math.min(1, (value - 33) / 4));
-      const green = Math.round(255 * (1 - normalized));
-      const red = Math.round(255 * normalized);
-      return `rgb(${red}, ${green}, 0)`;
-    } else {
+      const hue = 210 - normalized * 40; // Cyan to Blue
+      return `hsl(${hue}, 70%, ${50 + normalized * 15}%)`;
+    } else { // Oxygen
       const normalized = Math.max(0, Math.min(1, (value - 50) / 200));
-      const purple = Math.round(255 * (1 - normalized));
-      const orange = Math.round(255 * normalized);
-      return `rgb(${orange}, ${purple/2}, ${purple})`;
+      const hue = 140 + normalized * 40; // Green to Teal
+      return `hsl(${hue}, 60%, ${50 + normalized * 15}%)`;
     }
   };
 
@@ -161,41 +158,41 @@ const Hovmoller = () => {
   const cycles = currentFloat?.profiles?.map((p: any) => p.cycle) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-orange-950 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <OceanBackground />
       <FloatingParticles />
 
       <div className="relative z-20">
         {/* Enhanced Header */}
-        <div className="border-b border-orange-500/20 bg-white/5 backdrop-blur-xl">
+        <div className="border-b border-indigo-500/20 bg-zinc-950/50 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className={`flex items-center justify-between transition-all duration-1000 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
               <div className="flex items-center space-x-4">
                 <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
-                  <div className="relative p-3 bg-white/10 backdrop-blur-xl rounded-xl border border-orange-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                    <Activity className="h-8 w-8 text-orange-400" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
+                  <div className="relative p-3 bg-zinc-900 backdrop-blur-xl rounded-xl border border-indigo-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <Activity className="h-8 w-8 text-indigo-400" />
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent">
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Hovmöller Analysis
                   </h1>
-                  <p className="text-orange-200/80">
+                  <p className="text-indigo-200/80">
                     Temporal analysis of oceanographic profiles
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4">
-                <Badge className="bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border-orange-500/30 px-4 py-2 backdrop-blur-sm">
+                <Badge className="bg-indigo-600/20 text-indigo-300 border-indigo-500/30 px-4 py-2 backdrop-blur-sm">
                   <Clock className="h-4 w-4 mr-2" />
                   Time-Depth Analysis
                 </Badge>
                 {hovmollerData.length > 0 && (
-                  <Badge className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-300 border-green-500/30 px-4 py-2 backdrop-blur-sm animate-pulse">
+                  <Badge className="bg-green-600/20 text-green-300 border-green-500/30 px-4 py-2 backdrop-blur-sm animate-pulse">
                     <Layers className="h-4 w-4 mr-2" />
                     {hovmollerData.length} depth levels
                   </Badge>
@@ -214,23 +211,23 @@ const Hovmoller = () => {
             }`}>
               
               {/* Float Selection */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-orange-500/30 transition-all duration-300 hover:scale-105">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-indigo-500/30 transition-all duration-300 hover:scale-105">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Waves className="h-5 w-5 mr-2 text-orange-400" />
+                    <Waves className="h-5 w-5 mr-2 text-indigo-400" />
                     Select Float
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Select value={selectedFloat} onValueChange={setSelectedFloat}>
-                    <SelectTrigger className="bg-white/10 border-white/20 text-white hover:border-orange-500/50 transition-colors duration-300">
+                    <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white hover:border-indigo-500/50 transition-colors duration-300">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700 backdrop-blur-xl">
+                    <SelectContent className="bg-zinc-900 border-zinc-800 backdrop-blur-xl">
                       {floats.map(f => (
-                        <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-orange-500/20">
+                        <SelectItem key={f.wmo_id} value={f.wmo_id} className="text-white hover:bg-indigo-500/20">
                           <div className="flex items-center">
-                            <Activity className="h-4 w-4 mr-2 text-orange-400" />
+                            <Activity className="h-4 w-4 mr-2 text-indigo-400" />
                             {f.wmo_id} - {f.profiles?.length || 0} profiles
                           </div>
                         </SelectItem>
@@ -241,22 +238,22 @@ const Hovmoller = () => {
               </Card>
 
               {/* Variable Selection */}
-              <Card className={`bg-gradient-to-br ${getVariableColor()}/10 backdrop-blur-xl border-orange-500/20 hover:scale-105 transition-all duration-300`}>
+              <Card className={`bg-zinc-900 border-indigo-500/20 hover:scale-105 transition-all duration-300`}>
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    {React.createElement(getVariableIcon(), { className: "h-5 w-5 mr-2 text-orange-400" })}
+                    {React.createElement(getVariableIcon(), { className: "h-5 w-5 mr-2 text-indigo-400" })}
                     Variable Analysis
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Select value={selectedVariable} onValueChange={(v: any) => setSelectedVariable(v)}>
-                    <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectTrigger className="bg-zinc-950 border-zinc-700 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectContent className="bg-zinc-900 border-zinc-800">
                       <SelectItem value="temperature" className="text-white">
                         <div className="flex items-center">
-                          <Thermometer className="h-4 w-4 mr-2 text-red-400" />
+                          <Thermometer className="h-4 w-4 mr-2 text-indigo-400" />
                           🌡️ Temperature
                         </div>
                       </SelectItem>
@@ -278,54 +275,54 @@ const Hovmoller = () => {
               </Card>
 
               {/* Analysis Info */}
-              <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl border-purple-500/20">
+              <Card className="bg-zinc-900 border-zinc-800">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Info className="h-5 w-5 mr-2 text-purple-400" />
+                    <Info className="h-5 w-5 mr-2 text-blue-400" />
                     About Hovmöller
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-purple-200 leading-relaxed mb-4">
+                  <p className="text-sm text-zinc-300 leading-relaxed mb-4">
                     A Hovmöller diagram shows how a variable changes over time and depth, 
                     providing insights into temporal patterns in the water column.
                   </p>
                   <div className="space-y-2 text-xs">
-                    <div className="p-2 bg-white/5 rounded border border-purple-500/30">
-                      <span className="text-purple-300">💡 Look for patterns like seasonal thermoclines, mixing events, or water mass changes.</span>
+                    <div className="p-2 bg-zinc-950 rounded border border-blue-500/30">
+                      <span className="text-blue-300">💡 Look for patterns like seasonal thermoclines, mixing events, or water mass changes.</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Float Statistics */}
-              <Card className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border-cyan-500/20">
+              <Card className="bg-zinc-900 border-zinc-800">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
-                    <Sparkles className="h-5 w-5 mr-2 text-cyan-400 animate-pulse" />
+                    <Sparkles className="h-5 w-5 mr-2 text-indigo-400 animate-pulse" />
                     Float Statistics
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3 text-sm">
-                    <div className="flex justify-between p-2 bg-white/5 rounded border border-white/10">
-                      <span className="text-cyan-300">Float ID:</span>
+                    <div className="flex justify-between p-2 bg-zinc-950 rounded border border-zinc-800">
+                      <span className="text-zinc-400">Float ID:</span>
                       <span className="text-white font-mono">{currentFloat?.wmo_id || 'N/A'}</span>
                     </div>
-                    <div className="flex justify-between p-2 bg-white/5 rounded border border-white/10">
-                      <span className="text-blue-300">Institution:</span>
+                    <div className="flex justify-between p-2 bg-zinc-950 rounded border border-zinc-800">
+                      <span className="text-zinc-400">Institution:</span>
                       <span className="text-white">{currentFloat?.institution || 'N/A'}</span>
                     </div>
-                    <div className="flex justify-between p-2 bg-white/5 rounded border border-white/10">
-                      <span className="text-orange-300">Total Cycles:</span>
+                    <div className="flex justify-between p-2 bg-zinc-950 rounded border border-zinc-800">
+                      <span className="text-zinc-400">Total Cycles:</span>
                       <span className="text-white font-bold">{cycles.length}</span>
                     </div>
-                    <div className="flex justify-between p-2 bg-white/5 rounded border border-white/10">
-                      <span className="text-green-300">Depth Levels:</span>
+                    <div className="flex justify-between p-2 bg-zinc-950 rounded border border-zinc-800">
+                      <span className="text-zinc-400">Depth Levels:</span>
                       <span className="text-white font-bold">{hovmollerData.length}</span>
                     </div>
-                    <div className="flex justify-between p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded border border-purple-500/30">
-                      <span className="text-purple-300">Value Range:</span>
+                    <div className="flex justify-between p-2 bg-indigo-950/50 rounded border border-indigo-500/30">
+                      <span className="text-indigo-300">Value Range:</span>
                       <span className="text-white text-xs">
                         {valueRange.min.toFixed(1)} - {valueRange.max.toFixed(1)} {getVariableUnit()}
                       </span>
@@ -335,10 +332,10 @@ const Hovmoller = () => {
               </Card>
 
               {/* Export Options */}
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-green-500/30 transition-all duration-300">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-green-500/30 transition-all duration-300">
                 <CardContent className="pt-6">
                   <HeroButton 
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white hover:scale-105 transition-all duration-300"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white hover:scale-105 transition-all duration-300"
                     disabled={hovmollerData.length === 0}
                   >
                     <Download className="mr-2 h-4 w-4" />
@@ -352,18 +349,18 @@ const Hovmoller = () => {
             <div className={`xl:col-span-3 transition-all duration-1400 delay-500 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <Card className="bg-white/5 backdrop-blur-xl border-white/10 hover:border-orange-500/30 transition-all duration-300">
+              <Card className="bg-zinc-900 border-zinc-800 hover:border-indigo-500/30 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <div className="flex items-center">
-                      <BarChart3 className="h-6 w-6 mr-2 text-orange-400" />
+                      <BarChart3 className="h-6 w-6 mr-2 text-indigo-400" />
                       Hovmöller Diagram - {getVariableLabel()}
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="bg-orange-500/20 text-orange-300 border-orange-500/30">
+                      <Badge variant="secondary" className="bg-indigo-600/20 text-indigo-300 border-indigo-500/30">
                         {cycles.length} time steps
                       </Badge>
-                      <Button size="sm" variant="ghost" className="text-orange-400 hover:text-white">
+                      <Button size="sm" variant="ghost" className="text-indigo-400 hover:text-white">
                         <TrendingUp className="h-4 w-4" />
                       </Button>
                     </div>
@@ -376,15 +373,15 @@ const Hovmoller = () => {
                       <>
                         {/* Hovmöller Heatmap */}
                         <div className="relative">
-                          <div className="grid gap-px bg-slate-700 p-1 rounded-lg" 
+                          <div className="grid gap-px bg-zinc-700 p-1 rounded-lg" 
                                style={{ gridTemplateColumns: `auto repeat(${cycles.length}, 1fr)` }}>
                             
                             {/* Header row */}
-                            <div className="bg-slate-800 p-2 text-xs font-semibold text-center text-orange-300 rounded-tl">
+                            <div className="bg-zinc-800 p-2 text-xs font-semibold text-center text-indigo-300 rounded-tl">
                               Depth (m)
                             </div>
                             {cycles.map(cycle => (
-                              <div key={cycle} className="bg-slate-800 p-2 text-xs font-semibold text-center text-white">
+                              <div key={cycle} className="bg-zinc-800 p-2 text-xs font-semibold text-center text-white">
                                 C{cycle}
                               </div>
                             ))}
@@ -392,7 +389,7 @@ const Hovmoller = () => {
                             {/* Data rows */}
                             {hovmollerData.map((row, rowIndex) => (
                               <React.Fragment key={row.depth}>
-                                <div className="bg-slate-800 p-2 text-xs font-semibold text-orange-300 text-center">
+                                <div className="bg-zinc-800 p-2 text-xs font-semibold text-indigo-300 text-center">
                                   {row.depth}
                                 </div>
                                 {cycles.map(cycle => {
@@ -402,12 +399,12 @@ const Hovmoller = () => {
                                     <div
                                       key={cycle}
                                       className={`p-2 text-xs font-medium text-center transition-all duration-300 hover:scale-110 hover:z-10 relative ${
-                                        hasValue ? 'text-white cursor-pointer' : 'text-slate-500'
+                                        hasValue ? 'text-white cursor-pointer' : 'text-zinc-500'
                                       }`}
                                       style={{
                                         backgroundColor: hasValue 
                                           ? getColorScale(value)
-                                          : 'rgb(51, 65, 85)',
+                                          : '#27272a',
                                       }}
                                       title={hasValue ? `Cycle ${cycle}, ${row.depth}m: ${value.toFixed(2)} ${getVariableUnit()}` : 'No data'}
                                     >
@@ -421,7 +418,7 @@ const Hovmoller = () => {
 
                           {/* Color Scale Legend */}
                           <div className="mt-6 flex items-center justify-center space-x-4">
-                            <span className="text-sm text-slate-300">Low</span>
+                            <span className="text-sm text-zinc-300">Low</span>
                             <div className="flex h-4 w-48 rounded overflow-hidden">
                               {Array.from({ length: 20 }).map((_, i) => {
                                 const value = valueRange.min + (valueRange.max - valueRange.min) * (i / 19);
@@ -434,11 +431,11 @@ const Hovmoller = () => {
                                 );
                               })}
                             </div>
-                            <span className="text-sm text-slate-300">High</span>
+                            <span className="text-sm text-zinc-300">High</span>
                           </div>
                           
                           <div className="mt-2 text-center">
-                            <span className="text-xs text-slate-400">
+                            <span className="text-xs text-zinc-400">
                               {getVariableLabel()} ({getVariableUnit()}) - Range: {valueRange.min.toFixed(1)} to {valueRange.max.toFixed(1)}
                             </span>
                           </div>
@@ -446,7 +443,7 @@ const Hovmoller = () => {
 
                         {/* Axis Labels */}
                         <div className="grid grid-cols-2 gap-8 mt-8">
-                          <Card className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 backdrop-blur-sm border-blue-500/20 p-4">
+                          <Card className="bg-zinc-950 border-blue-500/20 p-4">
                             <div className="flex items-center">
                               <Clock className="h-5 w-5 mr-3 text-blue-400" />
                               <div>
@@ -456,12 +453,12 @@ const Hovmoller = () => {
                             </div>
                           </Card>
                           
-                          <Card className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border-purple-500/20 p-4">
+                          <Card className="bg-zinc-950 border-indigo-500/20 p-4">
                             <div className="flex items-center">
-                              <TrendingUp className="h-5 w-5 mr-3 text-purple-400" />
+                              <TrendingUp className="h-5 w-5 mr-3 text-indigo-400" />
                               <div>
                                 <h4 className="font-semibold text-white">Depth Axis (Vertical)</h4>
-                                <p className="text-sm text-purple-200">Ocean depth in meters, from surface (0m) to deeper waters (500m).</p>
+                                <p className="text-sm text-indigo-200">Ocean depth in meters, from surface (0m) to deeper waters (500m).</p>
                               </div>
                             </div>
                           </Card>
@@ -471,15 +468,15 @@ const Hovmoller = () => {
                       <div className="flex items-center justify-center h-96">
                         <div className="text-center">
                           <div className="relative mb-6">
-                            <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-red-500/20 rounded-full blur-xl animate-pulse"></div>
-                            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-full blur-xl animate-pulse"></div>
+                            <div className="relative w-16 h-16 mx-auto bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center">
                               <Activity className="h-8 w-8 text-white animate-bounce" />
                             </div>
                           </div>
                           <h3 className="text-xl font-bold text-white mb-3">
                             Ready for Time Analysis
                           </h3>
-                          <p className="text-slate-300 max-w-md mx-auto">
+                          <p className="text-zinc-300 max-w-md mx-auto">
                             Select a float with multiple profiles to create a Hovmöller diagram showing temporal oceanographic patterns.
                           </p>
                         </div>
