@@ -126,7 +126,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black/10 text-white relative overflow-hidden">
       <OceanBackground />
       <VideoBackground />
 

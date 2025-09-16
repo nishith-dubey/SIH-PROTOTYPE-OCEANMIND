@@ -128,7 +128,7 @@ const Compare = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-x-hidden overflow-y-auto">
+    <div className="min-h-screen bg-black/10 text-white relative overflow-x-hidden overflow-y-auto">
       <OceanBackground />
       
       {/* Floating Particles */}
@@ -156,7 +156,7 @@ const Compare = () => {
             }`}>
               <div className="flex items-center space-x-4">
                 <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 animate-pulse"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                   <div className="relative p-3 bg-zinc-900 backdrop-blur-xl rounded-xl border border-indigo-400/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                     <GitCompare className="h-8 w-8 text-indigo-400" />
                   </div>

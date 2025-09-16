@@ -547,17 +547,17 @@ const CompareTab = ({ floats, t }: any) => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-zinc-950/50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg">
                   <span className="text-sm font-medium text-zinc-300">Data Points</span>
                   <span className="text-lg font-bold text-indigo-400">{comparisonData.length}</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-zinc-950/50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg">
                   <span className="text-sm font-medium text-zinc-300">Avg Difference</span>
                   <span className="text-lg font-bold text-indigo-400">
                     {Math.abs(comparisonData.reduce((sum, d) => sum + (d.difference || 0), 0) / comparisonData.length).toFixed(2)} {getVariableUnit()}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-zinc-950/50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg">
                   <span className="text-sm font-medium text-zinc-300">Max Difference</span>
                   <span className="text-lg font-bold text-indigo-400">
                     {Math.max(...comparisonData.map(d => Math.abs(d.difference || 0))).toFixed(2)} {getVariableUnit()}
@@ -885,7 +885,7 @@ const Analytics = () => {
       
       <div className="relative z-20">
         {/* Enhanced Header */}
-        <div className="border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md">
+        <div className="border-b border-zinc-800 bg-zinc-900 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className={`flex items-center justify-between transition-all duration-1000 ${
               isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'

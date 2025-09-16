@@ -13,7 +13,8 @@ import {
   User,
   LogIn,
   Menu,
-  X
+  X,
+  Waves
 } from 'lucide-react';
 import { BarChart3 as DashboardIcon } from 'lucide-react';
 
@@ -64,11 +65,11 @@ const GovernmentNavigation = () => {
     <>
       {/* Government Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 bg-black right-0 z-50 transition-all duration-300 ease-in-out border-zinc-800 shadow-lg ${
           isVisible ? 'translate-y-0' : '-translate-y-full'
         } ${
           isScrolled
-            ? 'bg-black border-b border-zinc-800 shadow-lg'
+            ? 'border-b'
             : 'bg-transparent'
         }`}
       >
@@ -76,18 +77,16 @@ const GovernmentNavigation = () => {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo and Brand */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 pr-5">
               <Link to="/" className="flex items-center space-x-2 group">
                 <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300">
-                  <Globe className="w-6 h-6 text-white" />
+                  {/* < className="w-6 h-6 text-white" /> */}
+                  <Waves className="w-6 h-6 text-white"/>
                 </div>
                 <div className="hidden sm:block">
                   <h1 className="text-xl font-bold text-white">
-                    OceanPortal
+                    OceanMind
                   </h1>
-                  <p className="text-xs text-zinc-400 -mt-1">
-                    Advanced Data Analytics
-                  </p>
                 </div>
               </Link>
             </div>
@@ -117,7 +116,7 @@ const GovernmentNavigation = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-2 text-zinc-400 hover:text-zinc-200"
+                className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-white hover:text-black"
               >
                 <User className="h-5 w-5" />
               </Button>
@@ -126,7 +125,7 @@ const GovernmentNavigation = () => {
               <Button
                 variant="outline"
                 size="sm"
-                className="hidden sm:inline-flex items-center space-x-2 px-3 py-1.5 text-sm border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                className="hidden sm:inline-flex items-center space-x-2 px-3 py-1.5 text-sm hover:bg-white hover:text-black"
               >
                 <LogIn className="h-4 w-4" />
                 <span>Login</span>
